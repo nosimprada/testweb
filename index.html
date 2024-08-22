@@ -5,90 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Форма Escort Plus</title>
     <style>
-        /* Основные стили для всей страницы */
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg'); /* URL фоновой картинки */
-            background-size: cover; /* Картинка будет растягиваться, чтобы покрыть весь фон */
-            background-position: center; /* Центрируем картинку */
-            margin: 0; /* Убираем отступы у body */
-            padding: 0; /* Убираем внутренние отступы у body */
-            color: white; /* Белый цвет текста */
-            display: flex; /* Используем Flexbox для выравнивания */
-            flex-direction: column; /* Элементы располагаются по вертикали */
-            align-items: center; /* Центрируем элементы по горизонтали */
-            min-height: 100vh; /* Минимальная высота страницы - 100% от высоты экрана */
-            overflow-x: hidden; /* Отключаем горизонтальное пролистывание */
+            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Стили для контейнера формы */
         .container {
-            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
-            padding: 20px; /* Внутренние отступы */
-            border-radius: 10px; /* Скругленные углы */
-            max-width: 400px; /* Максимальная ширина контейнера */
-            width: calc(100% - 40px); /* Ширина контейнера с учетом отступов */
-            margin-top: 30px; /* Отступ сверху */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: calc(100% - 40px);
+            margin-top: 30px;
         }
 
-        /* Стили для заголовка */
         h2 {
-            text-align: center; /* Текст выравнивается по центру */
-            margin-bottom: 20px; /* Отступ снизу */
-            font-size: 24px; /* Размер шрифта */
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
-        /* Стили для группы элементов формы */
         .form-group {
-            margin-bottom: 15px; /* Отступ снизу */
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
-        /* Стили для лейблов (названий полей формы) */
         label {
-            margin-bottom: 5px; /* Отступ снизу */
-            font-size: 16px; /* Размер шрифта */
+            margin-bottom: 5px;
+            font-size: 16px;
         }
 
-        /* Стили для полей ввода */
-        input[type="text"], input[type="number"], input[type="file"], select {
-            width: 100%; /* Поля ввода на всю ширину контейнера */
-            padding: 8px; /* Внутренние отступы */
-            border-radius: 5px; /* Скругленные углы */
-            border: none; /* Убираем рамку */
-            font-size: 16px; /* Размер шрифта */
-            margin-top: 5px; /* Отступ сверху */
-            box-sizing: border-box; /* Поля ввода учитывают границы и внутренние отступы */
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box;
         }
 
-        /* Стили для кнопки */
         button {
-            width: 100%; /* Ширина на всю ширину контейнера */
-            padding: 10px; /* Внутренние отступы */
-            border-radius: 5px; /* Скругленные углы */
-            background-color: #007bff; /* Синий фон кнопки */
-            border: none; /* Убираем рамку */
-            color: white; /* Белый текст */
-            font-size: 18px; /* Размер шрифта */
-            cursor: pointer; /* Указатель при наведении на кнопку */
-            margin-top: 10px; /* Отступ сверху */
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        /* Стили при наведении на кнопку */
         button:hover {
-            background-color: #0056b3; /* Темно-синий фон кнопки при наведении */
+            background-color: #0056b3;
         }
 
-        /* Запрет изменения масштаба при фокусе на полях ввода */
         input:focus, select:focus {
-            outline: none; /* Убираем обводку при фокусе */
+            outline: none;
         }
     </style>
 </head>
 <body>
-    <!-- Основной контейнер формы -->
     <div class="container">
         <h2>Создание анкеты</h2>
         <form id="escortForm">
@@ -98,7 +88,15 @@
             </div>
             <div class="form-group">
                 <label for="age">Возраст:</label>
-                <input type="number" id="age" name="age" required min="18" max="55">
+                <select id="age" name="age" required>
+                    <!-- Генерация значений возраста -->
+                    <option value="" disabled selected>Выберите возраст</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <!-- Добавьте остальные значения возраста... -->
+                    <option value="55">55</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="hairColor">Цвет волос:</label>
@@ -119,15 +117,37 @@
             </div>
             <div class="form-group">
                 <label for="height">Рост (см):</label>
-                <input type="number" id="height" name="height" required min="140" max="210">
+                <select id="height" name="height" required>
+                    <!-- Генерация значений роста -->
+                    <option value="" disabled selected>Выберите рост</option>
+                    <option value="140">140</option>
+                    <option value="141">141</option>
+                    <option value="142">142</option>
+                    <!-- Добавьте остальные значения роста... -->
+                    <option value="210">210</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="weight">Вес (кг):</label>
-                <input type="number" id="weight" name="weight" required min="40" max="150">
+                <select id="weight" name="weight" required>
+                    <!-- Генерация значений веса -->
+                    <option value="" disabled selected>Выберите вес</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <!-- Добавьте остальные значения веса... -->
+                    <option value="150">150</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="breastSize">Размер груди:</label>
-                <input type="number" id="breastSize" name="breastSize" required min="1" max="5">
+                <select id="breastSize" name="breastSize" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="locationType">Локация:</label>
@@ -151,12 +171,13 @@
         // Убираем клавиатуру при нажатии на пустое место
         document.addEventListener('click', function (event) {
             if (!event.target.closest('.form-group')) {
-                document.activeElement.blur(); // Снимаем фокус с текущего элемента
+                document.activeElement.blur();
             }
         });
     </script>
 </body>
 </html>
+
 
 
 
