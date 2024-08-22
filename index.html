@@ -40,19 +40,21 @@
         /* Стили для группы элементов формы */
         .form-group {
             margin-bottom: 15px; /* Отступ снизу */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         /* Стили для лейблов (названий полей формы) */
         label {
-            display: block; /* Лейбл занимает всю ширину родителя */
             margin-bottom: 5px; /* Отступ снизу */
             font-size: 16px; /* Размер шрифта */
         }
 
         /* Стили для полей ввода */
         input[type="text"], input[type="number"], input[type="file"], select {
-            width: 100%; /* Ширина на всю ширину контейнера */
-            padding: 10px; /* Внутренние отступы */
+            width: 200px; /* Уменьшаем ширину полей ввода */
+            padding: 8px; /* Внутренние отступы */
             border-radius: 5px; /* Скругленные углы */
             border: none; /* Убираем рамку */
             font-size: 16px; /* Размер шрифта */
@@ -144,6 +146,14 @@
             <button type="submit">Отправить</button>
         </form>
     </div>
+    <script>
+        // Убираем клавиатуру при нажатии на пустое место
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.form-group')) {
+                document.activeElement.blur(); // Снимаем фокус с текущего элемента
+            }
+        });
+    </script>
 </body>
 </html>
 
