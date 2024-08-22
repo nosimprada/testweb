@@ -89,8 +89,8 @@
             <div class="form-group">
                 <label for="age">Возраст:</label>
                 <select id="age" name="age" required>
-                    <!-- Генерация значений возраста -->
                     <option value="" disabled selected>Выберите возраст</option>
+                    <!-- Значения возраста -->
                     <option value="18">18</option>
                     <option value="19">19</option>
                     <option value="20">20</option>
@@ -117,27 +117,11 @@
             </div>
             <div class="form-group">
                 <label for="height">Рост (см):</label>
-                <select id="height" name="height" required>
-                    <!-- Генерация значений роста -->
-                    <option value="" disabled selected>Выберите рост</option>
-                    <option value="140">140</option>
-                    <option value="141">141</option>
-                    <option value="142">142</option>
-                    <!-- Добавьте остальные значения роста... -->
-                    <option value="210">210</option>
-                </select>
+                <select id="height" name="height" required></select>
             </div>
             <div class="form-group">
                 <label for="weight">Вес (кг):</label>
-                <select id="weight" name="weight" required>
-                    <!-- Генерация значений веса -->
-                    <option value="" disabled selected>Выберите вес</option>
-                    <option value="40">40</option>
-                    <option value="41">41</option>
-                    <option value="42">42</option>
-                    <!-- Добавьте остальные значения веса... -->
-                    <option value="150">150</option>
-                </select>
+                <select id="weight" name="weight" required></select>
             </div>
             <div class="form-group">
                 <label for="breastSize">Размер груди:</label>
@@ -168,6 +152,25 @@
         </form>
     </div>
     <script>
+        // Функция для динамического создания опций для роста
+        function populateSelectOptions(selectElement, start, end) {
+            for (let i = start; i <= end; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Заполняем выпадающие списки для роста и веса
+        document.addEventListener("DOMContentLoaded", function() {
+            const heightSelect = document.getElementById("height");
+            const weightSelect = document.getElementById("weight");
+
+            populateSelectOptions(heightSelect, 140, 210); // Рост от 140 до 210 см
+            populateSelectOptions(weightSelect, 40, 70);   // Вес от 40 до 70 кг
+        });
+
         // Убираем клавиатуру при нажатии на пустое место
         document.addEventListener('click', function (event) {
             if (!event.target.closest('.form-group')) {
@@ -177,6 +180,7 @@
     </script>
 </body>
 </html>
+
 
 
 
