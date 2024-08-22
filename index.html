@@ -2,137 +2,151 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Управление масштабированием на мобильных устройствах -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Форма Escort Plus</title>
     <style>
+        /* Основные стили для всей страницы */
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg');
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            padding: 0;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg'); /* URL фоновой картинки */
+            background-size: cover; /* Картинка будет растягиваться, чтобы покрыть весь фон */
+            background-position: center; /* Центрируем картинку */
+            margin: 0; /* Убираем отступы у body */
+            padding: 0; /* Убираем внутренние отступы у body */
+            color: white; /* Белый цвет текста */
+            display: flex; /* Используем Flexbox для выравнивания */
+            flex-direction: column; /* Элементы располагаются по вертикали */
+            align-items: center; /* Центрируем элементы по горизонтали */
+            min-height: 100vh; /* Минимальная высота страницы - 100% от высоты экрана */
         }
 
+        /* Стили для шапки страницы */
         .header {
-            width: 100%;
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            width: 100%; /* Шапка занимает всю ширину страницы */
+            text-align: center; /* Текст выравнивается по центру */
+            padding: 20px; /* Внутренние отступы */
+            background: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Тень для создания эффекта глубины */
         }
 
+        /* Стили для контейнера формы */
         .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 100%;
-            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+            padding: 20px; /* Внутренние отступы */
+            border-radius: 10px; /* Скругленные углы */
+            max-width: 400px; /* Максимальная ширина контейнера */
+            width: 100%; /* Ширина контейнера - 100% от родителя */
+            margin-top: 30px; /* Отступ сверху */
         }
 
+        /* Стили для заголовка */
         h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
+            text-align: center; /* Текст выравнивается по центру */
+            margin-bottom: 20px; /* Отступ снизу */
+            font-size: 24px; /* Размер шрифта */
         }
 
+        /* Стили для группы элементов формы */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 15px; /* Отступ снизу */
         }
 
+        /* Стили для лейблов (названий полей формы) */
         label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 16px;
+            display: block; /* Лейбл занимает всю ширину родителя */
+            margin-bottom: 5px; /* Отступ снизу */
+            font-size: 16px; /* Размер шрифта */
         }
 
-        input[type="text"], input[type="number"], input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            margin-top: 5px;
+        /* Стили для полей ввода */
+        input[type="text"], input[type="number"], input[type="file"], select {
+            width: 100%; /* Ширина на всю ширину контейнера */
+            padding: 10px; /* Внутренние отступы */
+            border-radius: 5px; /* Скругленные углы */
+            border: none; /* Убираем рамку */
+            font-size: 16px; /* Размер шрифта */
+            margin-top: 5px; /* Отступ сверху */
+            box-sizing: border-box; /* Поля ввода учитывают границы и внутренние отступы */
         }
 
+        /* Стили для кнопки */
         button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 10px;
+            width: 100%; /* Ширина на всю ширину контейнера */
+            padding: 10px; /* Внутренние отступы */
+            border-radius: 5px; /* Скругленные углы */
+            background-color: #007bff; /* Синий фон кнопки */
+            border: none; /* Убираем рамку */
+            color: white; /* Белый текст */
+            font-size: 18px; /* Размер шрифта */
+            cursor: pointer; /* Указатель при наведении на кнопку */
+            margin-top: 10px; /* Отступ сверху */
         }
 
+        /* Стили при наведении на кнопку */
         button:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* Темно-синий фон кнопки при наведении */
         }
 
-        .footer {
-            margin-top: auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 20px;
-            }
-            label {
-                font-size: 14px;
-            }
-            input[type="text"], input[type="number"], input[type="file"] {
-                font-size: 14px;
-            }
-            button {
-                font-size: 16px;
-            }
+        /* Запрет изменения масштаба при фокусе на полях ввода */
+        input:focus, select:focus {
+            outline: none; /* Убираем обводку при фокусе */
         }
     </style>
 </head>
 <body>
+    <!-- Шапка страницы -->
     <div class="header">
         <h1>Добро пожаловать в Escort Plus</h1>
     </div>
     
+    <!-- Основной контейнер формы -->
     <div class="container">
         <h2>Создание анкеты</h2>
         <form id="escortForm">
             <div class="form-group">
                 <label for="name">Имя модели:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" required maxlength="9">
             </div>
             <div class="form-group">
                 <label for="age">Возраст:</label>
-                <input type="number" id="age" name="age" required>
+                <input type="number" id="age" name="age" required min="18" max="55">
             </div>
             <div class="form-group">
                 <label for="hairColor">Цвет волос:</label>
-                <input type="text" id="hairColor" name="hairColor" required>
+                <select id="hairColor" name="hairColor" required>
+                    <option value="Блондинка">Блондинка</option>
+                    <option value="Брюнетка">Брюнетка</option>
+                    <option value="Шатенка">Шатенка</option>
+                    <option value="Рыжая">Рыжая</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="race">Раса:</label>
-                <input type="text" id="race" name="race" required>
+                <select id="race" name="race" required>
+                    <option value="Европейка">Европейка</option>
+                    <option value="Азиатка">Азиатка</option>
+                    <option value="Мулатка">Мулатка</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="height">Рост (см):</label>
-                <input type="number" id="height" name="height" required>
+                <input type="number" id="height" name="height" required min="140" max="210">
             </div>
             <div class="form-group">
                 <label for="weight">Вес (кг):</label>
-                <input type="number" id="weight" name="weight" required>
+                <input type="number" id="weight" name="weight" required min="40" max="150">
+            </div>
+            <div class="form-group">
+                <label for="breastSize">Размер груди:</label>
+                <input type="number" id="breastSize" name="breastSize" required min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="locationType">Локация:</label>
+                <select id="locationType" name="locationType" required>
+                    <option value="Апартаменты">Апартаменты</option>
+                    <option value="Выезд">Выезд</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="mainPhoto">Основное фото:</label>
@@ -145,11 +159,8 @@
             <button type="submit">Отправить</button>
         </form>
     </div>
-
-    <div class="footer">
-        <p>Escort Plus © 2024</p>
-    </div>
 </body>
 </html>
+
 
 
