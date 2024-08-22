@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://boombo.biz/uploads/posts/2022-04/thumbs/1651077396_41-boombo-biz-p-polugolie-devushki-bez-litsa-erotika-41.jpg');
+            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -47,7 +47,7 @@
             font-size: 16px;
         }
 
-        input[type="text"], input[type="file"], select {
+        input[type="text"], input[type="file"], input[type="number"], select {
             width: 100%;
             padding: 8px;
             border-radius: 5px;
@@ -55,6 +55,18 @@
             font-size: 16px;
             margin-top: 5px;
             box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            margin-bottom: 3px;
         }
 
         button {
@@ -161,6 +173,12 @@
                 <input type="number" id="pricePerHour" name="pricePerHour" required>
             </div>
 
+            <!-- Цена за ночь -->
+            <div class="form-group">
+                <label for="pricePerNight">Цена за ночь (в рублях):</label>
+                <input type="number" id="pricePerNight" name="pricePerNight" required>
+            </div>
+
             <!-- Основное фото -->
             <div class="form-group">
                 <label for="mainPhoto">Основное фото:</label>
@@ -172,12 +190,26 @@
                 <label for="additionalPhotos">Дополнительные фото:</label>
                 <input type="file" id="additionalPhotos" name="additionalPhotos" accept="image/*" multiple>
             </div>
-            
+
+            <!-- Услуги аренды автомобиля -->
+            <div class="form-group">
+                <label for="carRentalServices">Услуги аренды автомобиля:</label>
+                <div class="checkbox-group" id="carRentalServices">
+                    <label><input type="checkbox" name="service" value="Аренда с водителем"> Аренда с водителем</label>
+                    <label><input type="checkbox" name="service" value="Аренда без водителя"> Аренда без водителя</label>
+                    <label><input type="checkbox" name="service" value="Почасовая аренда"> Почасовая аренда</label>
+                    <label><input type="checkbox" name="service" value="Аренда на сутки"> Аренда на сутки</label>
+                    <label><input type="checkbox" name="service" value="Долгосрочная аренда"> Долгосрочная аренда</label>
+                    <label><input type="checkbox" name="service" value="Трансфер в/из аэропорта"> Трансфер в/из аэропорта</label>
+                    <label><input type="checkbox" name="service" value="Аренда VIP-авто"> Аренда VIP-авто</label>
+                </div>
+            </div>
+
             <button type="submit">Отправить</button>
         </form>
     </div>
     <script>
-        // Функция для динамического создания опций для списка
+        // Функция для динамического создания опций для возраста, роста, веса и минимального количества часов
         function populateSelectOptions(selectElement, start, end) {
             for (let i = start; i <= end; i++) {
                 const option = document.createElement("option");
@@ -187,17 +219,17 @@
             }
         }
 
-        // Заполняем выпадающие списки для роста, веса, возраста и минимального количества часов
+        // Заполняем выпадающие списки для возраста, роста, веса и минимального количества часов
         document.addEventListener("DOMContentLoaded", function() {
+            const ageSelect = document.getElementById("age");
             const heightSelect = document.getElementById("height");
             const weightSelect = document.getElementById("weight");
-            const ageSelect = document.getElementById("age");
             const minHoursSelect = document.getElementById("minHours");
 
+            populateSelectOptions(ageSelect, 18, 55); // Возраст от 18 до 55 лет
             populateSelectOptions(heightSelect, 140, 210); // Рост от 140 до 210 см
-            populateSelectOptions(weightSelect, 40, 70);   // Вес от 40 до 70 кг
-            populateSelectOptions(ageSelect, 18, 55);      // Возраст от 18 до 55 лет
-            populateSelectOptions(minHoursSelect, 1, 8);   // Минимальное количество часов от 1 до 8
+            populateSelectOptions(weightSelect, 40, 150);   // Вес от 40 до 150 кг
+            populateSelectOptions(minHoursSelect, 1, 8);    // Минимальное количество часов от 1 до 8
         });
 
         // Убираем клавиатуру при нажатии на пустое место
@@ -209,6 +241,7 @@
     </script>
 </body>
 </html>
+
 
 
 
