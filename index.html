@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escort Plus Form</title>
+    <title>Форма Escort Plus</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg'); /* URL фоновой картинки */
+            background-image: url('https://img.freepik.com/premium-vector/hearts-seamless-background_126205-202.jpg');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -17,19 +17,22 @@
             align-items: center;
             height: 100vh;
             color: white;
+            overflow: hidden; /* Убираем прокрутку */
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 10px;
             max-width: 400px;
             width: 100%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Добавляем тень */
         }
 
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .form-group {
@@ -39,15 +42,16 @@
         label {
             display: block;
             margin-bottom: 5px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"], input[type="number"], input[type="file"] {
             width: 100%;
             padding: 10px;
             border-radius: 5px;
             border: none;
             font-size: 16px;
+            margin-top: 5px;
         }
 
         button {
@@ -57,44 +61,68 @@
             background-color: #007bff;
             border: none;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: #0056b3;
         }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 20px;
+            }
+            label {
+                font-size: 14px;
+            }
+            input[type="text"], input[type="number"], input[type="file"] {
+                font-size: 14px;
+            }
+            button {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Create Escort Plus Form</h2>
+        <h2>Создание анкеты Escort Plus</h2>
         <form id="escortForm">
             <div class="form-group">
-                <label for="name">Model Name:</label>
+                <label for="name">Имя модели:</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="age">Age:</label>
+                <label for="age">Возраст:</label>
                 <input type="number" id="age" name="age" required>
             </div>
             <div class="form-group">
-                <label for="hairColor">Hair Color:</label>
+                <label for="hairColor">Цвет волос:</label>
                 <input type="text" id="hairColor" name="hairColor" required>
             </div>
             <div class="form-group">
-                <label for="race">Race:</label>
+                <label for="race">Раса:</label>
                 <input type="text" id="race" name="race" required>
             </div>
             <div class="form-group">
-                <label for="height">Height:</label>
+                <label for="height">Рост (см):</label>
                 <input type="number" id="height" name="height" required>
             </div>
             <div class="form-group">
-                <label for="weight">Weight:</label>
+                <label for="weight">Вес (кг):</label>
                 <input type="number" id="weight" name="weight" required>
             </div>
-            <button type="submit">Submit</button>
+            <div class="form-group">
+                <label for="mainPhoto">Основное фото:</label>
+                <input type="file" id="mainPhoto" name="mainPhoto" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="additionalPhotos">Дополнительные фото:</label>
+                <input type="file" id="additionalPhotos" name="additionalPhotos" accept="image/*" multiple>
+            </div>
+            <button type="submit">Отправить</button>
         </form>
     </div>
 </body>
