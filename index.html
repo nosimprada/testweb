@@ -88,15 +88,7 @@
             </div>
             <div class="form-group">
                 <label for="age">Возраст:</label>
-                <select id="age" name="age" required>
-                    <option value="" disabled selected>Выберите возраст</option>
-                    <!-- Значения возраста -->
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <!-- Добавьте остальные значения возраста... -->
-                    <option value="55">55</option>
-                </select>
+                <select id="age" name="age" required></select>
             </div>
             <div class="form-group">
                 <label for="hairColor">Цвет волос:</label>
@@ -153,7 +145,7 @@
         </form>
     </div>
     <script>
-        // Функция для динамического создания опций для роста
+        // Функция для динамического создания опций для списка
         function populateSelectOptions(selectElement, start, end) {
             for (let i = start; i <= end; i++) {
                 const option = document.createElement("option");
@@ -163,13 +155,15 @@
             }
         }
 
-        // Заполняем выпадающие списки для роста и веса
+        // Заполняем выпадающие списки для роста, веса и возраста
         document.addEventListener("DOMContentLoaded", function() {
             const heightSelect = document.getElementById("height");
             const weightSelect = document.getElementById("weight");
+            const ageSelect = document.getElementById("age");
 
             populateSelectOptions(heightSelect, 140, 210); // Рост от 140 до 210 см
             populateSelectOptions(weightSelect, 40, 70);   // Вес от 40 до 70 кг
+            populateSelectOptions(ageSelect, 18, 55);      // Возраст от 18 до 55 лет
         });
 
         // Убираем клавиатуру при нажатии на пустое место
@@ -181,6 +175,7 @@
     </script>
 </body>
 </html>
+
 
 
 
