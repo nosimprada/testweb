@@ -1,52 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escort Profiles</title>
+    <title>Доступные модели</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .profile {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .profile img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Модели</h1>
+    <h1>Доступные модели</h1>
     <div id="profiles"></div>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключение Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключаем Telegram WebApp SDK -->
 
     <script>
-        // Инициализация Telegram WebApp
+        // Инициализация WebApp через SDK Telegram
         const tg = window.Telegram.WebApp;
 
-        // Получение ID пользователя (workerId) из параметров WebApp
+        // Получаем workerId из данных Telegram пользователя
         const workerId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
         if (!workerId) {
-            console.error('Не удалось получить workerId');
+            document.getElementById('profiles').innerText = 'Ошибка: не удалось получить workerId';
         } else {
-            fetchProfiles(workerId);  // Передаем ID воркера в функцию для загрузки профилей
+            fetchProfiles(workerId);  // Загружаем профили моделей для конкретного воркера
         }
 
+        // Функция для запроса профилей моделей
         async function fetchProfiles(workerId) {
             try {
-                const response = await fetch(`https://avdbackend.onrender.com/escort/profile/${workerId}/all/`);
+                const response = await fetch(`https://your-backend-url.com/profile/${workerId}/all/`);
                 const profiles = await response.json();
                 displayProfiles(profiles);
             } catch (error) {
-                console.error('Ошибка при загрузке профилей:', error);
+                document.getElementById('profiles').innerText = 'Ошибка при загрузке профилей: ' + error;
             }
         }
 
+        // Функция для отображения профилей на странице
         function displayProfiles(profiles) {
             const profilesContainer = document.getElementById('profiles');
+            profilesContainer.innerHTML = '';  // Очищаем контейнер
+
+            if (profiles.length === 0) {
+                profilesContainer.innerText = 'Нет доступных моделей.';
+                return;
+            }
+
             profiles.forEach(profile => {
                 const profileDiv = document.createElement('div');
+                profileDiv.classList.add('profile');
+
                 profileDiv.innerHTML = `
                     <h2>${profile.name}</h2>
-                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}" width="200">
-                    <p>${profile.description}</p>
+                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}">
+                    <p>Описание: ${profile.description || 'Описание отсутствует.'}</p>
                 `;
+
                 profilesContainer.appendChild(profileDiv);
             });
         }
-
     </script>
 </body>
 </html>
