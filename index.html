@@ -1,211 +1,40 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Форма Escort Plus</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://boombo.biz/uploads/posts/2022-04/thumbs/1651077396_41-boombo-biz-p-polugolie-devushki-bez-litsa-erotika-41.jpg');
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            padding: 0;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: calc(100% - 40px);
-            margin-top: 30px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        label {
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-
-        input[type="text"], input[type="file"], select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escort Profiles</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Создание анкеты</h2>
-        <form id="escortForm">
-            <!-- Имя модели -->
-            <div class="form-group">
-                <label for="name">Имя модели:</label>
-                <input type="text" id="name" name="name" required maxlength="9">
-            </div>
-            
-            <!-- Возраст -->
-            <div class="form-group">
-                <label for="age">Возраст:</label>
-                <select id="age" name="age" required></select>
-            </div>
-            
-            <!-- Цвет волос -->
-            <div class="form-group">
-                <label for="hairColor">Цвет волос:</label>
-                <select id="hairColor" name="hairColor" required>
-                    <option value="Блондинка">Блондинка</option>
-                    <option value="Брюнетка">Брюнетка</option>
-                    <option value="Шатенка">Шатенка</option>
-                    <option value="Рыжая">Рыжая</option>
-                </select>
-            </div>
-            
-            <!-- Раса -->
-            <div class="form-group">
-                <label for="race">Раса:</label>
-                <select id="race" name="race" required>
-                    <option value="Европейка">Европейка</option>
-                    <option value="Азиатка">Азиатка</option>
-                    <option value="Мулатка">Мулатка</option>
-                </select>
-            </div>
-            
-            <!-- Рост -->
-            <div class="form-group">
-                <label for="height">Рост (см):</label>
-                <select id="height" name="height" required></select>
-            </div>
-            
-            <!-- Вес -->
-            <div class="form-group">
-                <label for="weight">Вес (кг):</label>
-                <select id="weight" name="weight" required></select>
-            </div>
-            
-            <!-- Размер груди -->
-            <div class="form-group">
-                <label for="breastSize">Размер груди:</label>
-                <select id="breastSize" name="breastSize" required>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-            
-            <!-- Локация -->
-            <div class="form-group">
-                <label for="locationType">Локация:</label>
-                <select id="locationType" name="locationType" required>
-                    <option value="Апартаменты">Апартаменты</option>
-                    <option value="Выезд">Выезд</option>
-                    <option value="Апартаменты и Выезд">Апартаменты/Выезд</option>
-                </select>
-            </div>
+    <h1>Модели</h1>
+    <div id="profiles"></div>
 
-            <!-- Минимальное количество часов -->
-            <div class="form-group">
-                <label for="minHours">Минимальное количество часов:</label>
-                <select id="minHours" name="minHours" required></select>
-            </div>
-
-            <!-- Цена за час -->
-            <div class="form-group">
-                <label for="pricePerHour">Цена за час (в рублях):</label>
-                <input type="number" id="pricePerHour" name="pricePerHour" required>
-            </div>
-
-            <!-- Основное фото -->
-            <div class="form-group">
-                <label for="mainPhoto">Основное фото:</label>
-                <input type="file" id="mainPhoto" name="mainPhoto" accept="image/*" required>
-            </div>
-            
-            <!-- Дополнительные фото -->
-            <div class="form-group">
-                <label for="additionalPhotos">Дополнительные фото:</label>
-                <input type="file" id="additionalPhotos" name="additionalPhotos" accept="image/*" multiple>
-            </div>
-            
-            <button type="submit">Отправить</button>
-        </form>
-    </div>
     <script>
-        // Функция для динамического создания опций для списка
-        function populateSelectOptions(selectElement, start, end) {
-            for (let i = start; i <= end; i++) {
-                const option = document.createElement("option");
-                option.value = i;
-                option.textContent = i;
-                selectElement.appendChild(option);
+        async function fetchProfiles(workerId) {
+            try {
+                const response = await fetch(`https://yourapi.com/profile/${workerId}/all/`);
+                const profiles = await response.json();
+                displayProfiles(profiles);
+            } catch (error) {
+                console.error('Ошибка при загрузке профилей:', error);
             }
         }
 
-        // Заполняем выпадающие списки для роста, веса, возраста и минимального количества часов
-        document.addEventListener("DOMContentLoaded", function() {
-            const heightSelect = document.getElementById("height");
-            const weightSelect = document.getElementById("weight");
-            const ageSelect = document.getElementById("age");
-            const minHoursSelect = document.getElementById("minHours");
+        function displayProfiles(profiles) {
+            const profilesContainer = document.getElementById('profiles');
+            profiles.forEach(profile => {
+                const profileDiv = document.createElement('div');
+                profileDiv.innerHTML = `
+                    <h2>${profile.name}</h2>
+                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}" width="200">
+                    <p>${profile.description}</p>
+                `;
+                profilesContainer.appendChild(profileDiv);
+            });
+        }
 
-            populateSelectOptions(heightSelect, 140, 210); // Рост от 140 до 210 см
-            populateSelectOptions(weightSelect, 40, 70);   // Вес от 40 до 70 кг
-            populateSelectOptions(ageSelect, 18, 55);      // Возраст от 18 до 55 лет
-            populateSelectOptions(minHoursSelect, 1, 8);   // Минимальное количество часов от 1 до 8
-        });
-
-        // Убираем клавиатуру при нажатии на пустое место
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.form-group')) {
-                document.activeElement.blur();
-            }
-        });
+        // Загрузка профилей для определенного воркера
+        fetchProfiles(1);  // Пример ID воркера
     </script>
 </body>
 </html>
