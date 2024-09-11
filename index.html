@@ -48,7 +48,11 @@
             try {
                 const response = await fetch(`https://avdbackend.onrender.com/escort/profile/${workerId}/all/`);
                 const profiles = await response.json();
-                
+
+                // Отобразим, что именно возвращает API
+                console.log('Ответ от API:', profiles);
+                document.getElementById('profiles').innerText = 'Ответ от API: ' + JSON.stringify(profiles, null, 2);
+
                 // Проверка, что возвращён массив
                 if (Array.isArray(profiles)) {
                     displayProfiles(profiles);
@@ -96,6 +100,7 @@
     </script>
 </body>
 </html>
+
 
 
 
