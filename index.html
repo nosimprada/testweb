@@ -48,12 +48,13 @@
             try {
                 const response = await fetch(`https://avdbackend.onrender.com/escort/profile/${workerId}/all/`);
                 const profiles = await response.json();
-
-                // Проверка, что возвращенные данные это массив
+                
+                // Проверка, что возвращён массив
                 if (Array.isArray(profiles)) {
                     displayProfiles(profiles);
                 } else {
-                    document.getElementById('profiles').innerText = 'Ошибка: Неверный формат данных. Ожидался массив.';
+                    console.error('Ошибка: Ожидался массив');
+                    document.getElementById('profiles').innerText = 'Ошибка: Ожидался массив.';
                 }
             } catch (error) {
                 document.getElementById('profiles').innerText = 'Ошибка при загрузке профилей: ' + error;
@@ -74,10 +75,19 @@
                 const profileDiv = document.createElement('div');
                 profileDiv.classList.add('profile');
 
+                // Обработка фотографий
+                const photos = profile.photos.split(';');
+                const photo = photos[0];  // Берём первую фотографию
+
                 profileDiv.innerHTML = `
-                    <h2>${profile.name}</h2>
-                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}" width="200">
-                    <p>Описание: ${profile.description || 'Описание отсутствует.'}</p>
+                    <h2>${profile.name}, ${profile.age} лет</h2>
+                    <img src="${photo}" alt="${profile.name}" width="200">
+                    <p>Цена за час: ${profile.price_per_hour} руб.</p>
+                    <p>Описание: ${profile.desc || 'Описание отсутствует.'}</p>
+                    <p>Дополнительные услуги:</p>
+                    <ul>
+                        ${profile.additional_facilities.map(facility => `<li>${facility.desc}: ${facility.price} руб.</li>`).join('')}
+                    </ul>
                 `;
 
                 profilesContainer.appendChild(profileDiv);
@@ -86,8 +96,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
