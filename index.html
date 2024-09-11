@@ -26,7 +26,7 @@
 
         async function fetchProfiles(workerId) {
             try {
-                const response = await fetch(`https://avdbackend.onrender.com/profile/${workerId}/all/`);
+                const response = await fetch(`https://avdbackend.onrender.com/escort/profile/${workerId}/all/`);
                 const profiles = await response.json();
                 displayProfiles(profiles);
             } catch (error) {
