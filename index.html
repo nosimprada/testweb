@@ -25,17 +25,20 @@
     <h1>Доступные модели</h1>
     <div id="profiles"></div>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключаем Telegram WebApp SDK -->
-
     <script>
-        // Инициализация WebApp через SDK Telegram
-        const tg = window.Telegram.WebApp;
+        // Функция для получения параметров из URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                workerId: params.get('worker_id')
+            };
+        }
 
-        // Получаем workerId из данных Telegram пользователя
-        const workerId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
-
+        // Получаем workerId из URL
+        const { workerId } = getQueryParams();
+        
         if (!workerId) {
-            document.getElementById('profiles').innerText = 'Ошибка: не удалось получить workerId';
+            document.getElementById('profiles').innerText = 'Ошибка: worker_id не найден';
         } else {
             fetchProfiles(workerId);  // Загружаем профили моделей для конкретного воркера
         }
@@ -67,7 +70,7 @@
 
                 profileDiv.innerHTML = `
                     <h2>${profile.name}</h2>
-                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}">
+                    <img src="${profile.photos.split(';')[0]}" alt="${profile.name}" width="200">
                     <p>Описание: ${profile.description || 'Описание отсутствует.'}</p>
                 `;
 
