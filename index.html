@@ -103,8 +103,7 @@
         }
 
         .swiper-pagination {
-            position: relative;
-            margin-top: 5px;
+            display: none; /* Скрыть точки пагинации */
         }
 
         /* Стиль для модального окна */
@@ -134,7 +133,7 @@
         .close-btn {
             position: absolute;
             top: 10px;
-            right: 20px;
+            right: 10px; /* Увеличить отступ справа для крестика */
             font-size: 1.2em;
             cursor: pointer;
         }
@@ -151,13 +150,12 @@
             border: 1px solid black;
             border-radius: 10px;
             background-color: #f4f4f4;
-            width: 100%;
-            margin-bottom: 10px;
-            box-sizing: border-box;
+            width: 48%;
         }
 
-        .content-container-half {
-            width: 48%;
+        .content-container-large {
+            width: 100%;
+            margin-bottom: 10px;
         }
 
         .button-container {
@@ -226,19 +224,17 @@
                 <span class="close-btn" onclick="closeModal()">&times;</span>
 
                 <!-- Один большой контейнер -->
-                <div class="content-container">Большой контейнер</div>
+                <div class="content-container content-container-large">Большой контейнер</div>
 
-                <!-- Два контейнера рядом -->
+                <!-- Два контейнера в ряду -->
                 <div class="modal-row">
-                    <div class="content-container content-container-half">Контейнер 1</div>
-                    <div class="content-container content-container-half">Контейнер 2</div>
+                    <div class="content-container">Контейнер 1</div>
+                    <div class="content-container">Контейнер 2</div>
                 </div>
 
-                <!-- Один контейнер -->
-                <div class="content-container">Контейнер 3</div>
-
-                <!-- Еще один контейнер -->
-                <div class="content-container">Контейнер 4</div>
+                <!-- Контейнеры ниже -->
+                <div class="content-container content-container-large">Контейнер 3</div>
+                <div class="content-container content-container-large">Контейнер 4</div>
 
                 <!-- Кнопка Оформить -->
                 <div class="button-container">
@@ -261,10 +257,12 @@
         // Функции для открытия и закрытия модального окна
         function openModal() {
             document.getElementById('details-modal').style.display = 'flex';
+            swiper.pagination.destroy();  // Отключить пагинацию при открытии модального окна
         }
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
+            swiper.pagination.init();  // Инициализировать пагинацию снова после закрытия окна
         }
 
         // Закрытие модального окна при нажатии вне его
@@ -272,6 +270,7 @@
             var modal = document.getElementById('details-modal');
             if (event.target === modal) {
                 modal.style.display = 'none';
+                swiper.pagination.init();  // Инициализировать пагинацию снова после закрытия окна
             }
         }
     </script>
