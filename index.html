@@ -138,6 +138,31 @@
             font-size: 1.2em;
             cursor: pointer;
         }
+
+        .content-container {
+            padding: 15px;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: 10px 0;
+            background-color: #f4f4f4;
+        }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .form-button {
+            padding: 8px 15px;
+            background-color: white;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .form-button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -186,8 +211,25 @@
         <div class="modal" id="details-modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
-                <h2>Детали модели</h2>
-                <p>Здесь можно указать дополнительные сведения о модели, ее услугах или условиях.</p>
+
+                <!-- Четыре контейнера внутри модального окна -->
+                <div class="content-container">
+                    <p>Контейнер 1. Описание модели или услуги.</p>
+                </div>
+                <div class="content-container">
+                    <p>Контейнер 2. Дополнительные данные.</p>
+                </div>
+                <div class="content-container">
+                    <p>Контейнер 3. Еще информация.</p>
+                </div>
+                <div class="content-container">
+                    <p>Контейнер 4. Данные для оформления.</p>
+                </div>
+
+                <!-- Кнопка оформить -->
+                <div class="button-container">
+                    <button class="form-button">Оформить</button>
+                </div>
             </div>
         </div>
     </div>
@@ -222,6 +264,7 @@
 
 </body>
 </html>
+
 
 
 
