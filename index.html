@@ -139,16 +139,7 @@
             cursor: pointer;
         }
 
-        /* Централизованные контейнеры */
-        .content-container-large {
-            padding: 15px;
-            border: 1px solid black;
-            border-radius: 10px;
-            background-color: #f4f4f4;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
+        /* Контейнеры внутри модального окна */
         .modal-row {
             display: flex;
             justify-content: space-between;
@@ -160,7 +151,17 @@
             border: 1px solid black;
             border-radius: 10px;
             background-color: #f4f4f4;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .content-container-half {
             width: 48%;
+        }
+
+        .button-container {
+            margin-top: 10px;
         }
 
         .form-button {
@@ -170,7 +171,6 @@
             cursor: pointer;
             border-radius: 10px;
             font-size: 1em;
-            margin-top: 15px;
         }
 
         .form-button:hover {
@@ -225,23 +225,25 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
 
-                <!-- Один большой контейнер сверху -->
-                <div class="content-container-large">Большой контейнер</div>
+                <!-- Один большой контейнер -->
+                <div class="content-container">Большой контейнер</div>
 
-                <!-- Два контейнера в ряд -->
+                <!-- Два контейнера рядом -->
                 <div class="modal-row">
-                    <div class="content-container">Контейнер 1</div>
-                    <div class="content-container">Контейнер 2</div>
+                    <div class="content-container content-container-half">Контейнер 1</div>
+                    <div class="content-container content-container-half">Контейнер 2</div>
                 </div>
 
-                <!-- Еще один контейнер -->
-                <div class="content-container-large">Контейнер 3</div>
+                <!-- Один контейнер -->
+                <div class="content-container">Контейнер 3</div>
 
                 <!-- Еще один контейнер -->
-                <div class="content-container-large">Контейнер 4</div>
+                <div class="content-container">Контейнер 4</div>
 
                 <!-- Кнопка Оформить -->
-                <button class="form-button">Оформить</button>
+                <div class="button-container">
+                    <button class="form-button">Оформить</button>
+                </div>
             </div>
         </div>
     </div>
@@ -276,6 +278,7 @@
 
 </body>
 </html>
+
 
 
 
