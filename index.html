@@ -50,22 +50,6 @@
             border-radius: 10px;
         }
 
-        .arrow {
-            position: absolute;
-            top: 50%;
-            font-size: 2em;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .arrow-left {
-            left: -30px;
-        }
-
-        .arrow-right {
-            right: -30px;
-        }
-
         .model-info {
             margin-top: 15px;
             font-size: 1.2em;
@@ -128,13 +112,11 @@
         <div class="subheader">Доступные модели: 10</div>
 
         <div class="photo-container">
-            <div class="arrow arrow-left">⬅</div>
-            <img class="photo" src="https://i.imgur.com/w7CvoTJ.jpeg" alt="Фото модели">
-            <div class="arrow arrow-right">➡</div>
+            <img class="photo" id="model-photo" src="https://i.imgur.com/w7CvoTJ.jpeg" alt="Фото модели">
         </div>
 
         <div class="model-info">
-            <h2>Имя модели, (Возраст)</h2>
+            <h2 id="model-name">Имя модели, (Возраст)</h2>
         </div>
 
         <!-- Услуги -->
@@ -153,6 +135,55 @@
             След. модель ↓
         </div>
     </div>
+
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <script>
+        // Массив с фотографиями моделей
+        const modelPhotos = [
+            "https://i.imgur.com/w7CvoTJ.jpeg",
+            "https://i.imgur.com/B1XopdK.jpeg",
+            "https://i.imgur.com/zYfFxMs.jpeg"
+        ];
+
+        // Массив с именами моделей
+        const modelNames = [
+            "Анна, 25",
+            "Мария, 22",
+            "София, 28"
+        ];
+
+        let currentIndex = 0;
+
+        const modelPhotoElement = document.getElementById('model-photo');
+        const modelNameElement = document.getElementById('model-name');
+
+        // Функция для смены фотографии
+        function changePhoto(index) {
+            if (index >= 0 && index < modelPhotos.length) {
+                modelPhotoElement.src = modelPhotos[index];
+                modelNameElement.textContent = modelNames[index];
+            }
+        }
+
+        // Инициализация Hammer.js
+        const photoContainer = document.querySelector('.photo-container');
+        const hammer = new Hammer(photoContainer);
+
+        // Обработка свайпов влево и вправо
+        hammer.on('swipeleft', function() {
+            if (currentIndex < modelPhotos.length - 1) {
+                currentIndex++;
+                changePhoto(currentIndex);
+            }
+        });
+
+        hammer.on('swiperight', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                changePhoto(currentIndex);
+            }
+        });
+    </script>
 </body>
 </html>
 
