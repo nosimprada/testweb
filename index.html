@@ -105,7 +105,6 @@
         .swiper-pagination {
             position: relative;
             margin-top: 5px;
-            display: none; /* Скрываем пагинацию */
         }
 
         /* Стиль для модального окна */
@@ -148,19 +147,17 @@
         }
 
         .content-container {
+            flex: 1; /* Добавляем автоматическое растяжение контейнеров */
             padding: 15px;
             border: 1px solid black;
             border-radius: 10px;
             background-color: #f4f4f4;
-            width: 100%; /* Делаем контейнеры на всю ширину */
+            margin: 5px;
         }
 
         .content-container-large {
+            width: 100%;
             margin-bottom: 10px;
-        }
-
-        .half-width-container {
-            width: 48%; /* Для контейнеров, которые должны занимать половину ширины */
         }
 
         .button-container {
@@ -231,10 +228,10 @@
                 <!-- Один большой контейнер -->
                 <div class="content-container content-container-large">Большой контейнер</div>
 
-                <!-- Два контейнера в ряд -->
+                <!-- Два контейнера в одном ряду -->
                 <div class="modal-row">
-                    <div class="content-container half-width-container">Контейнер 1</div>
-                    <div class="content-container half-width-container">Контейнер 2</div>
+                    <div class="content-container">Контейнер 1</div>
+                    <div class="content-container">Контейнер 2</div>
                 </div>
 
                 <!-- Еще один контейнер -->
@@ -243,7 +240,7 @@
                 <!-- Еще один контейнер -->
                 <div class="content-container content-container-large">Контейнер 4</div>
 
-                <!-- Кнопка Забронировать -->
+                <!-- Кнопка Оформить -->
                 <div class="button-container">
                     <button class="form-button">Оформить</button>
                 </div>
