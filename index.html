@@ -44,7 +44,8 @@
             border: 2px solid black;
             border-radius: 15px;
             background-color: white;
-            overflow: hidden; /* Предотвращаем вылазание контента */
+            overflow: hidden;
+            position: relative; /* Для предотвращения вылазания точек пагинации */
         }
 
         .swiper-slide img {
@@ -103,8 +104,10 @@
         }
 
         .swiper-pagination {
-            position: relative;
-            margin-top: 5px;
+            position: absolute;
+            bottom: 10px; /* Помещаем пагинацию внизу с плавающей точкой */
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         /* Стиль для модального окна */
@@ -129,6 +132,7 @@
             width: 90%;
             text-align: center;
             position: relative;
+            overflow: hidden; /* Прячем все, что вылезает */
         }
 
         .close-btn {
@@ -147,12 +151,12 @@
         }
 
         .content-container {
-            flex: 1; /* Добавляем автоматическое растяжение контейнеров */
             padding: 15px;
             border: 1px solid black;
             border-radius: 10px;
             background-color: #f4f4f4;
-            margin: 5px;
+            width: 48%;
+            box-sizing: border-box;
         }
 
         .content-container-large {
