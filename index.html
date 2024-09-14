@@ -44,7 +44,7 @@
             border: 2px solid black;
             border-radius: 15px;
             background-color: white;
-            overflow: hidden;
+            overflow: hidden; /* Предотвращаем вылазание контента */
         }
 
         .swiper-slide img {
@@ -139,12 +139,24 @@
             cursor: pointer;
         }
 
+        /* Контейнеры внутри модального окна */
+        .modal-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
         .content-container {
             padding: 15px;
             border: 1px solid black;
             border-radius: 10px;
-            margin: 10px 0;
             background-color: #f4f4f4;
+            width: 48%;
+        }
+
+        .content-container-large {
+            width: 100%;
+            margin-bottom: 10px;
         }
 
         .button-container {
@@ -212,23 +224,24 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
 
-                <!-- Четыре контейнера внутри модального окна -->
-                <div class="content-container">
-                    <p>Контейнер 1. Описание модели или услуги.</p>
-                </div>
-                <div class="content-container">
-                    <p>Контейнер 2. Дополнительные данные.</p>
-                </div>
-                <div class="content-container">
-                    <p>Контейнер 3. Еще информация.</p>
-                </div>
-                <div class="content-container">
-                    <p>Контейнер 4. Данные для оформления.</p>
+                <!-- Два контейнера сверху -->
+                <div class="modal-row">
+                    <div class="content-container">Контейнер 1</div>
+                    <div class="content-container">Контейнер 2</div>
                 </div>
 
-                <!-- Кнопка оформить -->
+                <!-- Один большой контейнер -->
+                <div class="content-container content-container-large">Большой контейнер</div>
+
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large">Контейнер 3</div>
+
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large">Контейнер 4</div>
+
+                <!-- Кнопка Забронировать -->
                 <div class="button-container">
-                    <button class="form-button">Оформить</button>
+                    <button class="form-button">Забронировать</button>
                 </div>
             </div>
         </div>
@@ -264,6 +277,7 @@
 
 </body>
 </html>
+
 
 
 
