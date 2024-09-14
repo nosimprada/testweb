@@ -15,7 +15,6 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            overflow-x: hidden; /* предотвращает горизонтальный скролл */
         }
 
         .container {
@@ -45,7 +44,7 @@
             border: 2px solid black;
             border-radius: 15px;
             background-color: white;
-            overflow: hidden;
+            overflow: hidden; /* Предотвращаем вылазание контента */
         }
 
         .swiper-slide img {
@@ -103,54 +102,78 @@
             background-color: #ddd;
         }
 
-        /* Модальное окно */
+        .swiper-pagination {
+            position: relative;
+            margin-top: 5px;
+        }
+
+        /* Стиль для модального окна */
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
             background-color: white;
-            margin: 50px auto;
             padding: 20px;
             border-radius: 15px;
-            width: 90%;
             max-width: 400px;
+            width: 90%;
             text-align: center;
             position: relative;
         }
 
-        .modal-content .close {
+        .close-btn {
             position: absolute;
             top: 10px;
-            right: 15px;
-            font-size: 24px;
+            right: 20px;
+            font-size: 1.2em;
             cursor: pointer;
         }
 
-        .modal-content .container-block {
+        /* Контейнеры внутри модального окна */
+        .modal-row {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #000;
+        }
+
+        .content-container {
+            padding: 15px;
+            border: 1px solid black;
             border-radius: 10px;
+            background-color: #f4f4f4;
+            width: 48%;
         }
 
-        .modal-content .button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            width: auto;
-            cursor: pointer;
+        .content-container-large {
+            width: 100%;
+            margin-bottom: 10px;
         }
 
-        .swiper-pagination {
+        .button-container {
             margin-top: 10px;
+        }
+
+        .form-button {
+            padding: 8px 15px;
+            background-color: white;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .form-button:hover {
+            background-color: #ddd;
         }
     </style>
 </head>
@@ -164,7 +187,7 @@
 
         <!-- Модель 1 с пролистыванием фото -->
         <div class="model-block">
-            <div class="swiper-container swiper1">
+            <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <img src="https://i.imgur.com/2t3B9lt.jpeg" alt="Фото модели 1 - 1">
@@ -183,61 +206,50 @@
             <div class="model-info">
                 Анна, 25
             </div>
+
             <div class="services">
                 <div class="service-item">Массаж</div>
                 <div class="service-item">Спа-процедуры</div>
                 <div class="service-item">Терапия</div>
             </div>
+
             <div class="buttons">
-                <div class="button" id="openModal">Детали</div>
+                <div class="button" onclick="openModal()">Детали</div>
                 <div class="button">Оформить</div>
             </div>
         </div>
 
-        <!-- Модель 2 -->
-        <div class="model-block">
-            <div class="swiper-container swiper2">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/zYfFxMs.jpeg" alt="Фото модели 2 - 1">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/w7CvoTJ.jpeg" alt="Фото модели 2 - 2">
-                    </div>
+        <!-- Модальное окно -->
+        <div class="modal" id="details-modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+
+                <!-- Два контейнера сверху -->
+                <div class="modal-row">
+                    <div class="content-container">Контейнер 1</div>
+                    <div class="content-container">Контейнер 2</div>
                 </div>
-                <div class="swiper-pagination"></div>
-            </div>
 
-            <div class="model-info">
-                Мария, 22
-            </div>
-            <div class="services">
-                <div class="service-item">Маникюр</div>
-                <div class="service-item">Терапия</div>
-            </div>
-            <div class="buttons">
-                <div class="button">Детали</div>
-                <div class="button">Оформить</div>
-            </div>
-        </div>
-    </div>
+                <!-- Один большой контейнер -->
+                <div class="content-container content-container-large">Большой контейнер</div>
 
-    <!-- Модальное окно -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="container-block">Контейнер 1</div>
-            <div class="container-block">Контейнер 2</div>
-            <div class="container-block">Большой контейнер</div>
-            <div class="container-block">Контейнер 3</div>
-            <div class="container-block">Контейнер 4</div>
-            <button class="button">Забронировать</button>
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large">Контейнер 3</div>
+
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large">Контейнер 4</div>
+
+                <!-- Кнопка Забронировать -->
+                <div class="button-container">
+                    <button class="form-button">Забронировать</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Инициализация Swiper -->
     <script>
-        var swiper1 = new Swiper('.swiper1', {
+        var swiper = new Swiper('.swiper-container', {
             loop: true,
             pagination: {
                 el: '.swiper-pagination',
@@ -245,37 +257,26 @@
             },
         });
 
-        var swiper2 = new Swiper('.swiper2', {
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-
-        // Открытие и закрытие модального окна
-        var modal = document.getElementById("myModal");
-        var btn = document.getElementById("openModal");
-        var span = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function () {
-            modal.style.display = "block";
+        // Функции для открытия и закрытия модального окна
+        function openModal() {
+            document.getElementById('details-modal').style.display = 'flex';
         }
 
-        span.onclick = function () {
-            modal.style.display = "none";
+        function closeModal() {
+            document.getElementById('details-modal').style.display = 'none';
         }
 
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        // Закрытие модального окна при нажатии вне его
+        window.onclick = function(event) {
+            var modal = document.getElementById('details-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
         }
     </script>
 
 </body>
 </html>
-
 
 
 
