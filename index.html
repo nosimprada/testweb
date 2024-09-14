@@ -103,7 +103,8 @@
         }
 
         .swiper-pagination {
-            display: none; /* Скрыть точки пагинации */
+            position: relative;
+            margin-top: 5px;
         }
 
         /* Стиль для модального окна */
@@ -133,7 +134,7 @@
         .close-btn {
             position: absolute;
             top: 10px;
-            right: 10px; /* Увеличить отступ справа для крестика */
+            right: 20px;
             font-size: 1.2em;
             cursor: pointer;
         }
@@ -143,6 +144,8 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .content-container {
@@ -150,7 +153,8 @@
             border: 1px solid black;
             border-radius: 10px;
             background-color: #f4f4f4;
-            width: 48%;
+            flex: 1;
+            margin: 5px;
         }
 
         .content-container-large {
@@ -226,17 +230,19 @@
                 <!-- Один большой контейнер -->
                 <div class="content-container content-container-large">Большой контейнер</div>
 
-                <!-- Два контейнера в ряду -->
+                <!-- Два контейнера в одном ряду -->
                 <div class="modal-row">
                     <div class="content-container">Контейнер 1</div>
                     <div class="content-container">Контейнер 2</div>
                 </div>
 
-                <!-- Контейнеры ниже -->
+                <!-- Еще один контейнер -->
                 <div class="content-container content-container-large">Контейнер 3</div>
+
+                <!-- Еще один контейнер -->
                 <div class="content-container content-container-large">Контейнер 4</div>
 
-                <!-- Кнопка Оформить -->
+                <!-- Кнопка Забронировать -->
                 <div class="button-container">
                     <button class="form-button">Оформить</button>
                 </div>
@@ -257,12 +263,10 @@
         // Функции для открытия и закрытия модального окна
         function openModal() {
             document.getElementById('details-modal').style.display = 'flex';
-            swiper.pagination.destroy();  // Отключить пагинацию при открытии модального окна
         }
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
-            swiper.pagination.init();  // Инициализировать пагинацию снова после закрытия окна
         }
 
         // Закрытие модального окна при нажатии вне его
@@ -270,7 +274,6 @@
             var modal = document.getElementById('details-modal');
             if (event.target === modal) {
                 modal.style.display = 'none';
-                swiper.pagination.init();  // Инициализировать пагинацию снова после закрытия окна
             }
         }
     </script>
