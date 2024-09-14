@@ -120,7 +120,7 @@
         </div>
 
         <!-- Услуги -->
-        <div class="services">
+        <div class="services" id="services-list">
             <div class="service-item">Массаж</div>
             <div class="service-item">Спа-процедуры</div>
             <div class="service-item">Терапия</div>
@@ -131,38 +131,61 @@
             <div class="button">Оформить</div>
         </div>
 
-        <div class="next-model">
+        <div class="next-model" id="next-model">
             След. модель ↓
         </div>
     </div>
 
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script>
-        // Массив с фотографиями моделей
-        const modelPhotos = [
-            "https://i.imgur.com/w7CvoTJ.jpeg",
-            "https://i.imgur.com/B1XopdK.jpeg",
-            "https://i.imgur.com/zYfFxMs.jpeg"
+        // Массив с данными о моделях
+        const models = [
+            {
+                name: "Анна, 25",
+                photos: [
+                    "https://i.imgur.com/w7CvoTJ.jpeg",
+                    "https://i.imgur.com/B1XopdK.jpeg"
+                ],
+                services: ["Массаж", "Спа-процедуры", "Терапия"]
+            },
+            {
+                name: "Мария, 22",
+                photos: [
+                    "https://i.imgur.com/zYfFxMs.jpeg",
+                    "https://i.imgur.com/GXLcZP1.jpeg"
+                ],
+                services: ["Педикюр", "Маникюр", "Татуировки"]
+            },
+            {
+                name: "София, 28",
+                photos: [
+                    "https://i.imgur.com/w7CvoTJ.jpeg",
+                    "https://i.imgur.com/B1XopdK.jpeg"
+                ],
+                services: ["Фитнес", "Йога", "Консультации"]
+            }
         ];
 
-        // Массив с именами моделей
-        const modelNames = [
-            "Анна, 25",
-            "Мария, 22",
-            "София, 28"
-        ];
-
-        let currentIndex = 0;
+        let currentModelIndex = 0;
+        let currentPhotoIndex = 0;
 
         const modelPhotoElement = document.getElementById('model-photo');
         const modelNameElement = document.getElementById('model-name');
+        const servicesListElement = document.getElementById('services-list');
+        const nextModelElement = document.getElementById('next-model');
 
-        // Функция для смены фотографии
-        function changePhoto(index) {
-            if (index >= 0 && index < modelPhotos.length) {
-                modelPhotoElement.src = modelPhotos[index];
-                modelNameElement.textContent = modelNames[index];
-            }
+        // Функция для обновления информации о модели
+        function updateModelInfo() {
+            const model = models[currentModelIndex];
+            modelPhotoElement.src = model.photos[currentPhotoIndex];
+            modelNameElement.textContent = model.name;
+            servicesListElement.innerHTML = '';
+            model.services.forEach(service => {
+                const serviceItem = document.createElement('div');
+                serviceItem.classList.add('service-item');
+                serviceItem.textContent = service;
+                servicesListElement.appendChild(serviceItem);
+            });
         }
 
         // Инициализация Hammer.js
@@ -171,22 +194,41 @@
 
         // Обработка свайпов влево и вправо
         hammer.on('swipeleft', function() {
-            if (currentIndex < modelPhotos.length - 1) {
-                currentIndex++;
-                changePhoto(currentIndex);
+            const model = models[currentModelIndex];
+            if (currentPhotoIndex < model.photos.length - 1) {
+                currentPhotoIndex++;
+            } else {
+                currentPhotoIndex = 0;
             }
+            updateModelInfo();
         });
 
         hammer.on('swiperight', function() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                changePhoto(currentIndex);
+            if (currentPhotoIndex > 0) {
+                currentPhotoIndex--;
+            } else {
+                const model = models[currentModelIndex];
+                currentPhotoIndex = model.photos.length - 1;
             }
+            updateModelInfo();
         });
+
+        // Смена модели по нажатию на "След. модель"
+        nextModelElement.addEventListener('click', function() {
+            if (currentModelIndex < models.length - 1) {
+                currentModelIndex++;
+            } else {
+                currentModelIndex = 0;
+            }
+            currentPhotoIndex = 0;
+            updateModelInfo();
+        });
+
+        // Первоначальная загрузка информации
+        updateModelInfo();
     </script>
 </body>
 </html>
-
 
 
 
