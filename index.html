@@ -3,108 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Доступные модели</title>
+    <title>Butterfly</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
         }
-        .profile {
-            border: 1px solid #ddd;
+
+        .header {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .subheader {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+            border: 2px solid black;
+            border-radius: 15px;
             padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
         }
-        .profile img {
-            width: 200px;
-            height: auto;
-            border-radius: 8px;
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .arrow-left {
+            left: -40px;
+        }
+
+        .arrow-right {
+            right: -40px;
+        }
+
+        .model-info {
+            margin-top: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .next-model {
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
-    <h1>Доступные модели</h1>
-    <div id="profiles"></div>
+    <div class="header">
+        Butterfly 🦋
+    </div>
+    <div class="subheader">ТЕСТ</div>
 
-    <script>
-        // Функция для получения параметров из URL
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                workerId: params.get('worker_id')
-            };
-        }
+    <div class="photo-container">
+        <div class="arrow arrow-left">⬅</div>
+        <img class="photo" src="https://i.imgur.com/example.jpg" alt="Фото модели">
+        <div class="arrow arrow-right">➡</div>
+    </div>
 
-        // Получаем workerId из URL
-        const { workerId } = getQueryParams();
-        
-        if (!workerId) {
-            document.getElementById('profiles').innerText = 'Ошибка: worker_id не найден';
-        } else {
-            fetchProfiles(workerId);  // Загружаем профили моделей для конкретного воркера
-        }
+    <div class="model-info">
+        <h2>Имя модели, (Возраст)</h2>
+    </div>
 
-        // Функция для запроса профилей моделей
-        async function fetchProfiles(workerId) {
-            try {
-                const response = await fetch(`https://avdbackend.onrender.com/escort/profile/${workerId}/all/`);
+    <div class="buttons">
+        <div class="button">Услуги</div>
+        <div class="button">Детали</div>
+        <div class="button">Оформить</div>
+    </div>
 
-                // Проверка, что запрос успешен
-                if (!response.ok) {
-                    throw new Error(`Ошибка HTTP: ${response.status}`);
-                }
-
-                const profiles = await response.json();
-
-                // Вывод типа данных и структуры ответа в консоль
-                console.log('Тип данных:', typeof profiles);
-                console.log('Ответ от API:', profiles);
-
-                // Проверка, что возвращён массив
-                if (Array.isArray(profiles)) {
-                    displayProfiles(profiles);
-                } else {
-                    console.error('Ошибка: Ожидался массив');
-                    document.getElementById('profiles').innerText = 'Ошибка: Ожидался массив.';
-                }
-            } catch (error) {
-                document.getElementById('profiles').innerText = 'Ошибка при загрузке профилей: ' + error.message;
-                console.error(error);
-            }
-        }
-
-        // Функция для отображения профилей на странице
-        function displayProfiles(profiles) {
-            const profilesContainer = document.getElementById('profiles');
-            profilesContainer.innerHTML = '';  // Очищаем контейнер
-
-            if (profiles.length === 0) {
-                profilesContainer.innerText = 'Нет доступных моделей.';
-                return;
-            }
-
-            profiles.forEach(profile => {
-                const profileDiv = document.createElement('div');
-                profileDiv.classList.add('profile');
-
-                // Обработка фотографий
-                const photos = profile.photos.split(';');
-                const photo = photos[0];  // Берём первую фотографию
-
-                profileDiv.innerHTML = `
-                    <h2>${profile.name}, ${profile.age} лет</h2>
-                    <img src="${photo}" alt="${profile.name}" width="200">
-                    <p>Цена за час: ${profile.price_per_hour} руб.</p>
-                    <p>Описание: ${profile.desc || 'Описание отсутствует.'}</p>
-                    <p>Дополнительные услуги:</p>
-                    <ul>
-                        ${profile.additional_facilities.map(facility => `<li>${facility.desc}: ${facility.price} руб.</li>`).join('')}
-                    </ul>
-                `;
-
-                profilesContainer.appendChild(profileDiv);
-            });
-        }
-    </script>
+    <div class="next-model">
+        След. модель ↓
+    </div>
 </body>
 </html>
 
