@@ -105,9 +105,23 @@
 
         .swiper-pagination {
             position: absolute;
-            bottom: 10px; /* Помещаем пагинацию внизу с плавающей точкой */
+            bottom: 10px; /* Помещаем пагинацию внизу */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); /* Центрируем по горизонтали */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-pagination-bullet {
+            background-color: gray;
+            margin: 0 5px; /* Добавляем отступы между точками */
+            opacity: 0.5;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: blue;
+            opacity: 1;
         }
 
         /* Стиль для модального окна */
