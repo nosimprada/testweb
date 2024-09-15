@@ -45,7 +45,7 @@
             border-radius: 15px;
             background-color: white;
             overflow: hidden;
-            position: relative; /* Для предотвращения вылазания точек пагинации */
+            position: relative;
         }
 
         .swiper-slide img {
@@ -53,6 +53,26 @@
             height: auto;
             object-fit: cover;
             border-radius: 10px;
+        }
+
+        .swiper-pagination {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+        }
+
+        .swiper-pagination-bullet {
+            background-color: gray;
+            margin: 0 5px;
+            opacity: 0.5;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: blue;
+            opacity: 1;
         }
 
         .model-info {
@@ -103,28 +123,6 @@
             background-color: #ddd;
         }
 
-        .swiper-pagination {
-            position: absolute;
-            bottom: 10px; /* Помещаем пагинацию внизу */
-            left: 50%;
-            transform: translateX(-50%); /* Центрируем по горизонтали */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .swiper-pagination-bullet {
-            background-color: gray;
-            margin: 0 5px; /* Добавляем отступы между точками */
-            opacity: 0.5;
-        }
-
-        .swiper-pagination-bullet-active {
-            background-color: blue;
-            opacity: 1;
-        }
-
-        /* Стиль для модального окна */
         .modal {
             display: none;
             position: fixed;
@@ -146,18 +144,18 @@
             width: 90%;
             text-align: center;
             position: relative;
-            overflow: hidden; /* Прячем все, что вылезает */
+            overflow: hidden;
         }
 
         .close-btn {
             position: absolute;
             top: 10px;
-            right: 20px;
+            right: 15px;
             font-size: 1.2em;
             cursor: pointer;
+            z-index: 10;
         }
 
-        /* Контейнеры внутри модального окна */
         .modal-row {
             display: flex;
             justify-content: space-between;
@@ -194,6 +192,11 @@
         .form-button:hover {
             background-color: #ddd;
         }
+
+        .swiper-container .swiper-pagination {
+            z-index: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -296,7 +299,6 @@
 
 </body>
 </html>
-
 
 
 
