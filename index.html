@@ -352,14 +352,103 @@
             }
         }
 
+        // Функция для добавления стандартных моделей
+        function addStandardModels() {
+            const models = [
+                {
+                    name: "Анна",
+                    age: 25,
+                    photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
+                    description: "Анна предоставляет услуги массажа, спа-процедур и терапии.",
+                    hour: "🌇 Час",
+                    twohours: "🏙 Два часа",
+                    night: "🌃 Ночь",
+                    addservices: "Дополнительные сервисы",
+                    services: ["Массаж", "Спа-процедуры", "Терапия"]
+                },
+                {
+                    name: "Елена",
+                    age: 28,
+                    photos: ["https://i.imgur.com/abc123.jpeg", "https://i.imgur.com/def456.jpeg", "https://i.imgur.com/ghi789.jpeg"],
+                    description: "Елена специализируется на фитнесе и йоге.",
+                    hour: "🌇 Час",
+                    twohours: "🏙 Два часа",
+                    night: "🌃 Ночь",
+                    addservices: "Дополнительные сервисы",
+                    services: ["Фитнес", "Йога"]
+                },
+                {
+                    name: "Виктория",
+                    age: 30,
+                    photos: ["https://i.imgur.com/jkl123.jpeg", "https://i.imgur.com/mno456.jpeg", "https://i.imgur.com/pqr789.jpeg"],
+                    description: "Виктория предлагает фотосессии и услуги по макияжу.",
+                    hour: "🌇 Час",
+                    twohours: "🏙 Два часа",
+                    night: "🌃 Ночь",
+                    addservices: "Дополнительные сервисы",
+                    services: ["Фотосессии", "Макияж"]
+                }
+            ];
+
+            models.forEach(modelData => {
+                let slidesHtml = '';
+                modelData.photos.forEach(photo => {
+                    slidesHtml += `
+                        <div class="swiper-slide">
+                            <img src="${photo}" alt="Фото модели">
+                        </div>
+                    `;
+                });
+
+                const modelHtml = `
+                    <div class="model-block">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                ${slidesHtml}
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="model-info">
+                            ${modelData.name}, ${modelData.age}
+                        </div>
+                        <div class="services">
+                            ${modelData.services.map(service => `<div class="service-item">${service}</div>`).join('')}
+                        </div>
+                        <div class="buttons">
+                            <div class="button" onclick="openModal(this)" 
+                                 data-description="${modelData.description}" 
+                                 data-hour="${modelData.hour}" 
+                                 data-twohours="${modelData.twohours}" 
+                                 data-night="${modelData.night}" 
+                                 data-addservices="${modelData.addservices}">Детали</div>
+                            <div class="button">Оформить</div>
+                        </div>
+                    </div>
+                `;
+
+                document.querySelector('.container').insertAdjacentHTML('beforeend', modelHtml);
+            });
+
+            // Инициализация Swiper для всех блоков
+            document.querySelectorAll('.swiper-container').forEach(swiperContainer => {
+                new Swiper(swiperContainer, {
+                    loop: true,
+                    pagination: {
+                        el: swiperContainer.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
+                });
+            });
+        }
+
         // Открытие модального окна
         function openModal(button) {
             // Получаем данные из атрибутов data-*
             var description = button.getAttribute('data-description');
             var hour = button.getAttribute('data-hour');
             var twohours = button.getAttribute('data-twohours');
-            var night = button.getAttribute('data-night')
-            var addservices = button.getAttribute('data-addservices')
+            var night = button.getAttribute('data-night');
+            var addservices = button.getAttribute('data-addservices');
 
             // Обновляем содержимое модального окна
             document.getElementById('model-description-large').textContent = description;
@@ -382,6 +471,8 @@
             const article = getQueryParam('article');
             if (article) {
                 addModel(article);
+            } else {
+                addStandardModels(); // Если артикула нет, показываем стандартные модели
             }
         };
     </script>
