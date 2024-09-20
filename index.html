@@ -50,14 +50,14 @@
         .swiper-container {
             width: 100%;
             max-width: 300px;
+            height: auto;
             margin: 0 auto;
             border: 2px solid black;
             border-radius: 15px;
-            background-image: url('https://i.imgur.com/XIm6imK.png'); /* Замените на ссылку на ваше изображение */
-            background-size: cover;
-            background-position: center;
+            background-color: rgba(255, 255, 255, 0.9);
             overflow: hidden;
             position: relative;
+            padding-bottom: 30px; /* Увеличиваем отступ снизу для точек */
         }
 
         .swiper-slide img {
@@ -68,13 +68,12 @@
         }
 
         .swiper-pagination {
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            z-index: 10; /* Чтобы точки были поверх изображения */
+            position: absolute !important;
+            bottom: 10px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            display: flex !important;
+            justify-content: center !important;
         }
 
         .swiper-pagination-bullet {
