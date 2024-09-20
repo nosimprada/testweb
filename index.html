@@ -467,13 +467,12 @@
         }
 
         // Вызов функции добавления модели при загрузке страницы
-        window.onload = function() {
+        window.onload = async function() {
             const article = getQueryParam('article');
             if (article) {
-                addModel(article);
-            } else {
-                addStandardModels(); // Если артикула нет, показываем стандартные модели
+                await addModel(article);  // Добавляем кастомную модель, если есть артикул
             }
+            addStandardModels(); // Показываем стандартные модели в любом случае
         };
     </script>
 
