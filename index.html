@@ -316,12 +316,20 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
 
-                <!-- Информация, которая будет меняться в зависимости от модели -->
-                <div class="content-container content-container-large">
-                    <h3 id="model-name">Имя модели</h3>
-                    <p id="model-age">Возраст: </p>
-                    <p id="model-description">Описание услуг</p>
+                <!-- Один большой контейнер -->
+                <div class="content-container content-container-large" id="model-description-large">Описание модели</div>
+
+                <!-- Два контейнера в одном ряду -->
+                <div class="modal-row">
+                    <div class="content-container" id="model-detail-1">Деталь 1</div>
+                    <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
+
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
+
+                <!-- Еще один контейнер -->
+                <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <!-- Кнопка Оформить -->
                 <div class="button-container">
@@ -349,9 +357,11 @@
             var description = button.getAttribute('data-description');
 
             // Обновляем содержимое модального окна
-            document.getElementById('model-name').textContent = name;
-            document.getElementById('model-age').textContent = 'Возраст: ' + age;
-            document.getElementById('model-description').textContent = description;
+            document.getElementById('model-description-large').textContent = description;
+            document.getElementById('model-detail-1').textContent = name + ' - деталь 1';
+            document.getElementById('model-detail-2').textContent = name + ' - деталь 2';
+            document.getElementById('model-detail-3').textContent = 'Возраст: ' + age;
+            document.getElementById('model-detail-4').textContent = name + ' - деталь 4';
 
             // Показываем модальное окно
             document.getElementById('details-modal').style.display = 'flex';
@@ -372,6 +382,7 @@
 
 </body>
 </html>
+
 
 
 
