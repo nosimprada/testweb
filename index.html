@@ -14,7 +14,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/iH68xzN.png'); /* Замените на ссылку на ваше изображение */
+            background-image: url('https://i.imgur.com/iH68xzN.png'); /* Фоновое изображение */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -54,7 +54,7 @@
             margin: 0 auto;
             border: 2px solid black;
             border-radius: 15px;
-            background-image: url('https://i.imgur.com/iH68xzN.png'); /* Замените на ссылку на ваше изображение для контейнера с фото */
+            background-image: url('https://i.imgur.com/iH68xzN.png'); /* Фоновое изображение для контейнера с фото */
             background-size: cover;
             background-position: center;
             overflow: hidden;
@@ -103,7 +103,7 @@
             display: inline-block;
             width: 90%;
             max-width: 300px;
-            background-image: url('https://i.imgur.com/WfHVlZv.png'); /* Замените на ссылку на ваше изображение для блока сервисов */
+            background-image: url('https://i.imgur.com/WfHVlZv.png'); /* Фоновое изображение для блока сервисов */
             background-size: cover;
             background-position: center;
             background-color: rgba(255, 255, 255, 0.9); /* Опционально, если хотите добавить прозрачность */
@@ -114,7 +114,7 @@
             margin: 3px 0;
             border: 1px solid #000;
             border-radius: 8px;
-            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Замените на ссылку на ваше изображение для каждого сервиса */
+            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Фоновое изображение для каждого сервиса */
             background-size: cover;
             background-position: center;
             font-size: 0.9em;
@@ -163,7 +163,7 @@
         }
 
         .modal-content {
-            background-image: url('https://i.imgur.com/e9O6C4O.png'); /* Замените на ссылку на ваше изображение для модального окна */
+            background-image: url('https://i.imgur.com/e9O6C4O.png'); /* Фоновое изображение для модального окна */
             background-size: cover;
             background-position: center;
             color: white;
@@ -195,7 +195,7 @@
             padding: 15px;
             border: 1px solid black;
             border-radius: 10px;
-            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Замените на ссылку на ваше изображение для контейнеров в деталях */
+            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Фоновое изображение для контейнеров в деталях */
             background-size: cover;
             background-position: center;
             width: 48%;
@@ -206,7 +206,7 @@
         .content-container-large {
             width: 100%;
             margin-bottom: 10px;
-            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Замените на ссылку на ваше изображение для больших контейнеров в деталях */
+            background-image: url('https://i.imgur.com/Ab6tx3G.png'); /* Фоновое изображение для больших контейнеров в деталях */
             background-size: cover;
             background-position: center;
             color: white; /* Цвет текста */
@@ -246,148 +246,113 @@
         </div>
         <div class="subheader">Доступные модели: 10</div>
 
-        <!-- Модель 1 с пролистыванием фото -->
-        <div class="model-block">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/2t3B9lt.jpeg" alt="Фото модели 1 - 1">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/ww3eU0N.jpeg" alt="Фото модели 1 - 2">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/beqLFaO.jpeg" alt="Фото модели 1 - 3">
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
+        <!-- Здесь будут динамически добавляться модели -->
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+
+            <!-- Один большой контейнер -->
+            <div class="content-container content-container-large" id="model-description-large">Описание модели</div>
+
+            <!-- Два контейнера в одном ряду -->
+            <div class="modal-row">
+                <div class="content-container" id="model-detail-1">Деталь 1</div>
+                <div class="content-container" id="model-detail-2">Деталь 2</div>
             </div>
 
-            <div class="model-info">
-                Анна, 25
-            </div>
+            <!-- Еще один контейнер -->
+            <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
 
-            <div class="services">
-                <div class="service-item">Массаж</div>
-                <div class="service-item">Спа-процедуры</div>
-                <div class="service-item">Терапия</div>
-            </div>
+            <!-- Еще один контейнер -->
+            <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
-            <div class="buttons">
-                <div class="button" onclick="openModal(this)" data-description="Описание" data-hour="🌇" data-twohours="🏙" data-night="🌃" data-addservices="Доп.сервисы">Детали</div>
-                <div class="button">Оформить</div>
-            </div>
-        </div>
-
-        <!-- Повторяйте аналогичные блоки для других моделей -->
-        <!-- Модель 2 с пролистыванием фото -->
-        <div class="model-block">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/abc123.jpeg" alt="Фото модели 2 - 1">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/def456.jpeg" alt="Фото модели 2 - 2">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/ghi789.jpeg" alt="Фото модели 2 - 3">
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-
-            <div class="model-info">
-                Елена, 28
-            </div>
-
-            <div class="services">
-                <div class="service-item">Фитнес</div>
-                <div class="service-item">Йога</div>
-            </div>
-
-            <div class="buttons">
-                <div class="button" onclick="openModal(this)" data-description="Описание" data-hour="🌇" data-twohours="🏙" data-night="🌃" data-addservices="Доп.сервисы">Детали</div>
-                <div class="button">Оформить</div>
-            </div>
-        </div>
-
-        <!-- Модель 3 с пролистыванием фото -->
-        <div class="model-block">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/jkl123.jpeg" alt="Фото модели 3 - 1">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/mno456.jpeg" alt="Фото модели 3 - 2">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://i.imgur.com/pqr789.jpeg" alt="Фото модели 3 - 3">
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-
-            <div class="model-info">
-                Виктория, 30
-            </div>
-
-            <div class="services">
-                <div class="service-item">Фотосессии</div>
-                <div class="service-item">Макияж</div>
-            </div>
-
-            <div class="buttons">
-                <div class="button" onclick="openModal(this)" data-description="Описание" data-hour="🌇" data-twohours="🏙" data-night="🌃" data-addservices="Доп.сервисы">Детали</div>
-                <div class="button">Оформить</div>
-            </div>
-        </div>
-
-        <!-- Добавьте аналогичные блоки для других моделей -->
-
-        <!-- Модальное окно -->
-        <div class="modal" id="details-modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal()">&times;</span>
-
-                <!-- Один большой контейнер -->
-                <div class="content-container content-container-large" id="model-description-large">Описание модели</div>
-
-                <!-- Два контейнера в одном ряду -->
-                <div class="modal-row">
-                    <div class="content-container" id="model-detail-1">Деталь 1</div>
-                    <div class="content-container" id="model-detail-2">Деталь 2</div>
-                </div>
-
-                <!-- Еще один контейнер -->
-                <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
-
-                <!-- Еще один контейнер -->
-                <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
-
-                <!-- Кнопка Оформить -->
-                <div class="button-container">
-                    <button class="form-button">Оформить</button>
-                </div>
+            <!-- Кнопка Оформить -->
+            <div class="button-container">
+                <button class="form-button">Оформить</button>
             </div>
         </div>
     </div>
 
     <!-- Инициализация Swiper и обновление модального окна -->
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
+        // Получение параметра из URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
-        // Функции для открытия и закрытия модального окна
+        // Запрос данных из FastAPI
+        async function fetchModelData(article) {
+            const response = await fetch(`https://your-fastapi-domain.com/api/models/${article}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return await response.json();
+        }
+
+        // Функция для добавления модели на страницу
+        async function addModel(article) {
+            try {
+                const modelData = await fetchModelData(article);
+
+                // Создание слайдов для фото
+                let slidesHtml = '';
+                modelData.photos.forEach(photo => {
+                    slidesHtml += `
+                        <div class="swiper-slide">
+                            <img src="${photo}" alt="Фото модели">
+                        </div>
+                    `;
+                });
+
+                // Создание HTML-кода для модели
+                const modelHtml = `
+                    <div class="model-block">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                ${slidesHtml}
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="model-info">
+                            ${modelData.name}, ${modelData.age}
+                        </div>
+                        <div class="services">
+                            ${modelData.services.map(service => `<div class="service-item">${service}</div>`).join('')}
+                        </div>
+                        <div class="buttons">
+                            <div class="button" onclick="openModal(this)" 
+                                 data-description="${modelData.description}" 
+                                 data-hour="${modelData.hour}" 
+                                 data-twohours="${modelData.twohours}" 
+                                 data-night="${modelData.night}" 
+                                 data-addservices="${modelData.addservices}">Детали</div>
+                            <div class="button">Оформить</div>
+                        </div>
+                    </div>
+                `;
+
+                // Вставляем HTML-код модели в контейнер
+                document.querySelector('.container').insertAdjacentHTML('afterbegin', modelHtml);
+
+                // Инициализация Swiper для нового блока
+                new Swiper('.swiper-container', {
+                    loop: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                });
+
+            } catch (error) {
+                console.error('Error fetching model data:', error);
+            }
+        }
+
+        // Открытие модального окна
         function openModal(button) {
             // Получаем данные из атрибутов data-*
             var description = button.getAttribute('data-description');
@@ -407,19 +372,21 @@
             document.getElementById('details-modal').style.display = 'flex';
         }
 
+        // Закрытие модального окна
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
         }
 
-        // Закрытие модального окна при нажатии вне его
-        window.onclick = function(event) {
-            var modal = document.getElementById('details-modal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        // Вызов функции добавления модели при загрузке страницы
+        window.onload = function() {
+            const article = getQueryParam('article');
+            if (article) {
+                addModel(article);
             }
-        }
+        };
     </script>
 
 </body>
 </html>
+
 
