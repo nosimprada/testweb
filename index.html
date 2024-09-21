@@ -284,7 +284,7 @@
         <div class="fixed-header">
             <div class="left-section">
                 <div id="city-name">Город: Москва</div>
-                <div id="model-count">Модели: 11</div>
+                <div id="model-count">Модели: 10</div>
             </div>
             <div class="right-section">
                 <div id="balance">Баланс: 1000₽</div>
@@ -405,7 +405,7 @@
         window.onload = function() {
             const workerId = getQueryParam('worker_id');
             if (workerId) {
-                document.getElementById('model-count').textContent = 'Доступные модели: 11';
+                document.getElementById('model-count').textContent = 'Модели: 11';
                 const customModel = {
                     name: "Кастомная модель",
                     photos: ["https://i.imgur.com/custom1.jpeg"],
