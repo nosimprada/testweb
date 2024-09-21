@@ -49,7 +49,7 @@
             z-index: 1000;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start; /* Выравнивание по верху */
             font-size: 0.9em; /* Уменьшенный шрифт */
         }
 
@@ -60,7 +60,8 @@
         .fixed-header .right-section {
             text-align: right;
             display: flex;
-            align-items: center;
+            flex-direction: column; /* Расположение элементов по вертикали */
+            align-items: flex-end;
         }
 
         .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
@@ -70,14 +71,14 @@
         }
 
         .recharge-button {
-            margin-left: 10px; /* Отступ между балансом и кнопкой */
-            padding: 5px 10px;
+            margin-top: 5px; /* Отступ между балансом и кнопкой */
+            padding: 3px 8px; /* Меньший размер кнопки */
             border: 1px solid #ff6666;
             background-color: #ff6666;
             cursor: pointer;
             border-radius: 5px;
             color: white;
-            font-size: 0.9em;
+            font-size: 0.8em; /* Уменьшенный шрифт кнопки */
         }
 
         .recharge-button:hover {
@@ -451,3 +452,4 @@
 
 </body>
 </html>
+
