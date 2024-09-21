@@ -58,9 +58,15 @@
             margin: 0;
         }
 
-        .fixed-header .city-info {
+        .fixed-header .right-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .city-info {
             text-align: right;
             color: white;
+            margin-right: 10px;
         }
 
         .city-info div {
@@ -68,7 +74,6 @@
         }
 
         .recharge-button {
-            margin: 15px auto;
             padding: 8px 15px;
             border: 2px solid transparent;
             background-image: url('https://i.imgur.com/khsi7kQ.png'); /* Замените на ссылку на ваше изображение для фона кнопки */
@@ -79,8 +84,6 @@
             font-size: 0.9em;
             color: white;
             text-align: center;
-            display: block;
-            width: 200px;
         }
 
         .recharge-button:hover {
@@ -286,18 +289,18 @@
         </div>
         <div class="fixed-header">
             <div class="subheader" id="model-count">Доступные модели: 10</div>
-            <div class="city-info">
-                <div id="city-name">Город: Москва</div>
-                <div id="balance">Баланс: 1000₽</div>
+            <div class="right-section">
+                <div class="city-info">
+                    <div id="city-name">Город: Москва</div>
+                    <div id="balance">Баланс: 1000₽</div>
+                </div>
+                <div class="recharge-button">Пополнить</div>
             </div>
         </div>
 
         <div id="models-container">
             <!-- Здесь будут добавляться модели -->
         </div>
-
-        <!-- Кнопка пополнения баланса -->
-        <div class="recharge-button">Пополнить</div>
 
         <!-- Модальное окно -->
         <div class="modal" id="details-modal">
@@ -466,3 +469,4 @@
 
 </body>
 </html>
+
