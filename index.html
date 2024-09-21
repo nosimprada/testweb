@@ -29,18 +29,6 @@
             text-align: center;
         }
 
-        .header {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-            max-height: 150px;
-        }
-
         .fixed-header {
             position: sticky;
             top: 0;
@@ -49,7 +37,7 @@
             z-index: 1000;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Выравнивание по верху */
+            align-items: center;
             font-size: 0.9em; /* Уменьшенный шрифт */
         }
 
@@ -60,8 +48,14 @@
         .fixed-header .right-section {
             text-align: right;
             display: flex;
-            flex-direction: column; /* Расположение элементов по вертикали */
+            flex-direction: column; /* Вертикальное расположение кнопки и баланса */
             align-items: flex-end;
+        }
+
+        .fixed-header .center-section {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
         }
 
         .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
@@ -70,15 +64,19 @@
             padding-right: 15px;
         }
 
+        .fixed-header img {
+            max-height: 40px;
+        }
+
         .recharge-button {
-            margin-top: 5px; /* Отступ между балансом и кнопкой */
-            padding: 3px 8px; /* Меньший размер кнопки */
+            margin-bottom: 5px; /* Отступ между кнопкой и балансом */
+            padding: 5px 10px;
             border: 1px solid #ff6666;
             background-color: #ff6666;
             cursor: pointer;
             border-radius: 5px;
             color: white;
-            font-size: 0.8em; /* Уменьшенный шрифт кнопки */
+            font-size: 0.9em;
         }
 
         .recharge-button:hover {
@@ -279,17 +277,17 @@
 <body>
 
     <div class="container">
-        <div class="header">
-            <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
-        </div>
         <div class="fixed-header">
             <div class="left-section">
                 <div id="city-name">Город: Москва</div>
                 <div id="model-count">Модели: 10</div>
             </div>
+            <div class="center-section">
+                <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
+            </div>
             <div class="right-section">
-                <div id="balance">Баланс: 1000₽</div>
                 <button class="recharge-button">Пополнить</button>
+                <div id="balance">Баланс: 1000₽</div>
             </div>
         </div>
 
@@ -452,4 +450,3 @@
 
 </body>
 </html>
-
