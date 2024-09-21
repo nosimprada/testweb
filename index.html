@@ -41,10 +41,30 @@
             max-height: 150px;
         }
 
-        .subheader {
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .fixed-header .subheader {
             font-size: 1.1em;
-            margin-bottom: 10px;
             color: #ccc;
+            margin: 0;
+        }
+
+        .fixed-header .city-info {
+            text-align: right;
+            color: white;
+        }
+
+        .city-info div {
+            margin: 0;
         }
 
         .swiper-container {
@@ -240,11 +260,13 @@
 <body>
 
     <div class="container">
-        <div class="header">
-            <!-- Используем загруженное изображение с Imgur -->
-            <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
+        <div class="fixed-header">
+            <div class="subheader" id="model-count">Доступные модели: 10</div>
+            <div class="city-info">
+                <div id="city-name">Город: Москва</div>
+                <div id="balance">Баланс: 1000₽</div>
+            </div>
         </div>
-        <div class="subheader" id="model-count">Доступные модели: 10</div>
 
         <div id="models-container">
             <!-- Здесь будут добавляться модели -->
