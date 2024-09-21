@@ -45,49 +45,43 @@
             position: sticky;
             top: 0;
             background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            z-index: 1000;
         }
 
-        .fixed-header .subheader {
-            font-size: 1.1em;
-            color: #ccc;
-            margin: 0;
+        .fixed-header .left-section {
+            text-align: left;
         }
 
         .fixed-header .right-section {
+            text-align: right;
             display: flex;
             align-items: center;
         }
 
-        .city-info {
-            text-align: right;
-            color: white;
-            margin-right: 10px;
-        }
-
-        .city-info div {
+        .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
+            font-size: 1.1em;
+            color: #ccc;
             margin: 0;
+            padding-right: 15px;
         }
 
         .recharge-button {
-            padding: 8px 15px;
-            border: 2px solid transparent;
-            background-image: url('https://i.imgur.com/khsi7kQ.png'); /* Замените на ссылку на ваше изображение для фона кнопки */
-            background-size: cover;
-            background-position: center;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: transparent;
             cursor: pointer;
-            border-radius: 10px;
+            color: #ff6666;
             font-size: 0.9em;
-            color: white;
-            text-align: center;
+            display: inline-block;
         }
 
         .recharge-button:hover {
-            opacity: 0.8;
+            text-decoration: underline;
         }
 
         .swiper-container {
@@ -284,17 +278,16 @@
 
     <div class="container">
         <div class="header">
-            <!-- Используем загруженное изображение с Imgur -->
             <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
         </div>
         <div class="fixed-header">
-            <div class="subheader" id="model-count">Доступные модели: 10</div>
+            <div class="left-section">
+                <div id="city-name">Город: Москва</div>
+                <div id="model-count">Доступные модели: 11</div>
+            </div>
             <div class="right-section">
-                <div class="city-info">
-                    <div id="city-name">Город: Москва</div>
-                    <div id="balance">Баланс: 1000₽</div>
-                </div>
-                <div class="recharge-button">Пополнить</div>
+                <div id="balance">Баланс: 1000₽</div>
+                <button class="recharge-button">— Пополнить</button>
             </div>
         </div>
 
@@ -307,22 +300,14 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
 
-                <!-- Один большой контейнер -->
                 <div class="content-container content-container-large" id="model-description-large">Описание модели</div>
-
-                <!-- Два контейнера в одном ряду -->
                 <div class="modal-row">
                     <div class="content-container" id="model-detail-1">Деталь 1</div>
                     <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
-
-                <!-- Еще один контейнер -->
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
-
-                <!-- Еще один контейнер -->
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
-                <!-- Кнопка Оформить -->
                 <div class="button-container">
                     <button class="form-button">Оформить</button>
                 </div>
@@ -330,9 +315,7 @@
         </div>
     </div>
 
-    <!-- Инициализация Swiper и обновление модального окна -->
     <script>
-        // Функция для добавления стандартных моделей
         function addStandardModels() {
             const models = [
                 {
@@ -372,7 +355,6 @@
             });
         }
 
-        // Функция для добавления модели в DOM
         function addModel(model) {
             const modelBlock = document.createElement('div');
             modelBlock.classList.add('model-block');
@@ -401,7 +383,6 @@
 
             document.getElementById('models-container').appendChild(modelBlock);
 
-            // Инициализация Swiper для нового блока
             new Swiper(modelBlock.querySelector('.swiper-container'), {
                 loop: true,
                 pagination: {
@@ -411,18 +392,15 @@
             });
         }
 
-        // Получение параметра из URL
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Запуск логики в зависимости от наличия worker_id
         window.onload = function() {
             const workerId = getQueryParam('worker_id');
             if (workerId) {
                 document.getElementById('model-count').textContent = 'Доступные модели: 11';
-                // Здесь можно сделать запрос к API для получения кастомной модели
                 const customModel = {
                     name: "Кастомная модель",
                     photos: ["https://i.imgur.com/custom1.jpeg"],
@@ -438,7 +416,6 @@
             addStandardModels();
         };
 
-        // Функции для открытия и закрытия модального окна
         function openModal(button) {
             const description = button.getAttribute('data-description');
             const hour = button.getAttribute('data-hour');
@@ -469,4 +446,3 @@
 
 </body>
 </html>
-
