@@ -50,6 +50,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.9em; /* Уменьшенный шрифт */
         }
 
         .fixed-header .left-section {
@@ -63,25 +64,24 @@
         }
 
         .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
-            font-size: 1.1em;
             color: #ccc;
             margin: 0;
             padding-right: 15px;
         }
 
         .recharge-button {
-            margin-left: 10px;
             padding: 5px 10px;
-            border: none;
-            background-color: transparent;
+            border: 1px solid #ff6666;
+            background-color: #ff6666;
             cursor: pointer;
-            color: #ff6666;
+            border-radius: 5px;
+            color: white;
             font-size: 0.9em;
-            display: inline-block;
         }
 
         .recharge-button:hover {
-            text-decoration: underline;
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
         }
 
         .swiper-container {
@@ -287,7 +287,7 @@
             </div>
             <div class="right-section">
                 <div id="balance">Баланс: 1000₽</div>
-                <button class="recharge-button">— Пополнить</button>
+                <button class="recharge-button">Пополнить</button>
             </div>
         </div>
 
@@ -316,6 +316,7 @@
     </div>
 
     <script>
+        // Функция для добавления стандартных моделей
         function addStandardModels() {
             const models = [
                 {
@@ -355,6 +356,7 @@
             });
         }
 
+        // Функция для добавления модели в DOM
         function addModel(model) {
             const modelBlock = document.createElement('div');
             modelBlock.classList.add('model-block');
@@ -383,6 +385,7 @@
 
             document.getElementById('models-container').appendChild(modelBlock);
 
+            // Инициализация Swiper для нового блока
             new Swiper(modelBlock.querySelector('.swiper-container'), {
                 loop: true,
                 pagination: {
@@ -392,15 +395,18 @@
             });
         }
 
+        // Получение параметра из URL
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
+        // Запуск логики в зависимости от наличия worker_id
         window.onload = function() {
             const workerId = getQueryParam('worker_id');
             if (workerId) {
                 document.getElementById('model-count').textContent = 'Доступные модели: 11';
+                // Здесь можно сделать запрос к API для получения кастомной модели
                 const customModel = {
                     name: "Кастомная модель",
                     photos: ["https://i.imgur.com/custom1.jpeg"],
@@ -416,6 +422,7 @@
             addStandardModels();
         };
 
+        // Функции для открытия и закрытия модального окна
         function openModal(button) {
             const description = button.getAttribute('data-description');
             const hour = button.getAttribute('data-hour');
