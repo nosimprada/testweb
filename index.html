@@ -405,10 +405,12 @@
             const tgId = getQueryParam('tg_id');
             if (tgId) {
                 const data = await fetchData(tgId);
+                // Устанавливаем город и баланс
                 document.getElementById('city-name').textContent = `Город: ${data.city}`;
                 document.getElementById('balance').textContent = `Баланс: ${data.balance}₽`;
 
-                if (data.type === 'custom') {
+                // Проверяем тип пользователя и наличие кастомной модели
+                if (data.type === 'custom' && data.customModel) {
                     document.getElementById('model-count').textContent = 'Модели: 11';
                     const customModel = {
                         name: data.customModel.name,
@@ -464,4 +466,3 @@
 
 </body>
 </html>
-
