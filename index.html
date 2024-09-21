@@ -67,6 +67,24 @@
             margin: 0;
         }
 
+        .recharge-button {
+            margin-top: 5px;
+            padding: 8px 15px;
+            border: 2px solid transparent;
+            background-image: url('https://i.imgur.com/khsi7kQ.png'); /* Замените на ссылку на ваше изображение для фона кнопки */
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: white;
+            text-align: center;
+        }
+
+        .recharge-button:hover {
+            opacity: 0.8;
+        }
+
         .swiper-container {
             width: 100%;
             max-width: 300px;
@@ -269,6 +287,7 @@
             <div class="city-info">
                 <div id="city-name">Город: Москва</div>
                 <div id="balance">Баланс: 1000₽</div>
+                <div class="recharge-button">Пополнить</div>
             </div>
         </div>
 
@@ -443,6 +462,7 @@
 
 </body>
 </html>
+
 
 
 
