@@ -318,7 +318,7 @@
     <script>
         // Функция для запроса данных с API
         async function fetchData(userId) {
-            const response = await fetch(`http://localhost:8000/butterfly/${userId}`);
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/${userId}`);
             return response.json();
         }
 
