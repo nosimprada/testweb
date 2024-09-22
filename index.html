@@ -306,6 +306,7 @@
                     <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
+                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div> <!-- Новый контейнер -->
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
@@ -333,7 +334,8 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
-                    addservices: "Доп.сервисы"
+                    addservices: "Доп.сервисы",
+                    video_call: "500₽"  // Добавляем video_call
                 },
                 {
                     name: "Елена, 28",
@@ -343,7 +345,8 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
-                    addservices: "Доп.сервисы"
+                    addservices: "Доп.сервисы",
+                    video_call: "500₽"  // Добавляем video_call
                 },
                 {
                     name: "Виктория, 30",
@@ -353,7 +356,8 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
-                    addservices: "Доп.сервисы"
+                    addservices: "Доп.сервисы",
+                    video_call: "500₽"  // Добавляем video_call
                 }
             ];
 
@@ -420,7 +424,8 @@
                         hour: data.customModel.hour,
                         twohours: data.customModel.twohours,
                         night: data.customModel.night,
-                        addservices: data.customModel.addservices
+                        addservices: data.customModel.addservices,
+                        video_call: data.customModel.video_call // Добавляем поле video_call
                     };
                     addModel(customModel);
                 } else {
@@ -436,12 +441,14 @@
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
             const addservices = button.getAttribute('data-addservices');
+            const video_call = button.getAttribute('data-video-call'); // Получение значения video_call
 
             document.getElementById('model-description-large').textContent = description;
             document.getElementById('model-detail-1').textContent = '🌇 ' + hour;
             document.getElementById('model-detail-2').textContent = '🏙 ' + twohours;
             document.getElementById('model-detail-3').textContent = '🌃 ' + night;
             document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
+            document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`; // Заполнение нового контейнера
 
             document.getElementById('details-modal').style.display = 'flex';
         }
