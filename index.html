@@ -209,7 +209,7 @@
             color: white;
             padding: 20px;
             border-radius: 15px;
-            max-width: 350px;
+            max-width: 300px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -225,40 +225,21 @@
             z-index: 10;
         }
 
-        .modal-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .content-container-large {
-            width: 100%;
-            margin-bottom: 10px;
-            background-image: url('https://i.imgur.com/Ab6tx3G.png');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            border-radius: 15px;
+        .content-container-large p {
+            font-size: 0.9em;
         }
 
         .input-field {
-            padding: 10px;
+            padding: 8px;
             border-radius: 15px;
             border: 1px solid #000;
-            width: 60%;
-            margin: 20px auto 10px auto;
+            width: 70%;
+            margin: 15px auto;
             display: block;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1em;
             background-color: #fff;
             color: #000;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-            display: none;
-            margin-bottom: 10px;
         }
 
         .button-container {
@@ -333,9 +314,8 @@
                 <span class="close-btn" onclick="closeRechargeModal()">&times;</span>
 
                 <div class="content-container-large">
-                    <p style="margin-bottom: 0;">Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
-                    <input type="number" id="recharge-amount" min="2000" max="30000" placeholder="2000" class="input-field">
-                    <div class="error-message" id="error-message"></div>
+                    <p>Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
+                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="input-field">
                 </div>
                 <div class="button-container">
                     <button class="form-button" onclick="submitRecharge()">Далее</button>
@@ -353,7 +333,8 @@
 
         // Функция для добавления стандартных моделей
         function addStandardModels() {
-            const models = [{
+            const models = [
+                {
                     name: "Анна, 25",
                     photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
                     services: ["Массаж", "Спа-процедуры", "Терапия"],
@@ -362,7 +343,7 @@
                     twohours: "🏙",
                     night: "🌃",
                     addservices: "Доп.сервисы",
-                    video_call: "500" // Добавляем video_call
+                    video_call: "500"  // Добавляем video_call
                 },
                 {
                     name: "Елена, 28",
@@ -373,7 +354,7 @@
                     twohours: "🏙",
                     night: "🌃",
                     addservices: "Доп.сервисы",
-                    video_call: "500" // Добавляем video_call
+                    video_call: "500"  // Добавляем video_call
                 },
                 {
                     name: "Виктория, 30",
@@ -384,7 +365,7 @@
                     twohours: "🏙",
                     night: "🌃",
                     addservices: "Доп.сервисы",
-                    video_call: "500" // Добавляем video_call
+                    video_call: "500"  // Добавляем video_call
                 }
             ];
 
@@ -432,7 +413,7 @@
         }
 
         // Запуск логики в зависимости от наличия tg_id
-        window.onload = async function() {
+        window.onload = async function () {
             const tgId = getQueryParam('tg_id');
             if (tgId) {
                 const data = await fetchData(tgId);
@@ -494,20 +475,16 @@
 
         function submitRecharge() {
             const amount = document.getElementById('recharge-amount').value;
-            const errorMessage = document.getElementById('error-message');
-
-            if (amount >= 2000 && amount <= 30000) {
-                errorMessage.style.display = 'none';
+            if (amount >= 2000) {
                 alert(`Вы выбрали пополнение на сумму: ${amount}₽`);
                 closeRechargeModal();
                 // Логика для обработки пополнения
             } else {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = "Сумма должна быть от 2000 до 30000 рублей.";
+                alert("Минимальная сумма пополнения 2000 рублей.");
             }
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const detailsModal = document.getElementById('details-modal');
             const rechargeModal = document.getElementById('recharge-modal');
             if (event.target === detailsModal) {
