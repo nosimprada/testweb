@@ -271,27 +271,25 @@
             border-color: #ff4d4d;
         }
 
-        .swiper-container .swiper-pagination {
-            z-index: 0;
-        }
-
-        #recharge-amount {
+        .input-field {
             padding: 10px;
-            border-radius: 20px;
-            width: 80%;
-            margin: 15px 0 10px;
+            border-radius: 15px;
+            width: 50%;
+            margin-top: 20px;
+            margin-bottom: 10px;
             box-sizing: border-box;
+            font-size: 1.1em;
             text-align: center;
-            font-size: 1.2em;
-            border: 2px solid black;
+            border: 1px solid black;
         }
 
-        #recharge-modal p {
+        .modal-content p {
             margin: 0;
-            padding: 0 5px;
-            font-size: 0.9em;
-            line-height: 1.4em;
+            padding: 10px;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
         }
+
     </style>
 </head>
 
@@ -307,7 +305,7 @@
                 <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
             </div>
             <div class="right-section">
-                <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button> <!-- Открытие модального окна для пополнения -->
+                <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button>
                 <div id="balance">Баланс: 1000₽</div>
             </div>
         </div>
@@ -327,7 +325,7 @@
                     <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
-                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div> <!-- Новый контейнер -->
+                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div>
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
@@ -343,7 +341,7 @@
 
                 <div class="content-container-large">
                     <p>Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
-                    <input type="number" id="recharge-amount" min="2000" placeholder="2000">
+                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="input-field">
                 </div>
                 <div class="button-container">
                     <button class="form-button" onclick="submitRecharge()">Далее</button>
