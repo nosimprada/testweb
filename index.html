@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,9 +58,7 @@
             justify-content: center;
         }
 
-        .fixed-header .subheader,
-        .fixed-header .city-info,
-        .fixed-header .balance-info {
+        .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
             color: #ccc;
             margin: 0;
             padding-right: 15px;
@@ -250,6 +247,20 @@
             background-size: cover;
             background-position: center;
             color: white;
+            border-radius: 15px;
+        }
+
+        .input-field {
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #000;
+            width: 60%;
+            margin: 10px auto;
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            background-color: #fff;
+            color: #000;
         }
 
         .button-container {
@@ -271,28 +282,12 @@
             border-color: #ff4d4d;
         }
 
-        .input-field {
-            padding: 10px;
-            border-radius: 15px;
-            width: 50%;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            font-size: 1.1em;
-            text-align: center;
-            border: 1px solid black;
-        }
-
-        .modal-content p {
-            margin: 0;
-            padding: 10px;
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.1);
+        .swiper-container .swiper-pagination {
+            z-index: 0;
         }
 
     </style>
 </head>
-
 <body>
 
     <div class="container">
@@ -305,7 +300,7 @@
                 <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
             </div>
             <div class="right-section">
-                <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button>
+                <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button> <!-- Открытие модального окна для пополнения -->
                 <div id="balance">Баланс: 1000₽</div>
             </div>
         </div>
@@ -325,7 +320,7 @@
                     <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
-                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div>
+                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div> <!-- Новый контейнер -->
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
@@ -439,7 +434,7 @@
         }
 
         // Запуск логики в зависимости от наличия tg_id
-        window.onload = async function () {
+        window.onload = async function() {
             const tgId = getQueryParam('tg_id');
             if (tgId) {
                 const data = await fetchData(tgId);
@@ -510,7 +505,7 @@
             }
         }
 
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             const detailsModal = document.getElementById('details-modal');
             const rechargeModal = document.getElementById('recharge-modal');
             if (event.target === detailsModal) {
@@ -528,5 +523,4 @@
     </script>
 
 </body>
-
 </html>
