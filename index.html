@@ -222,12 +222,40 @@
             z-index: 10;
         }
 
+        .modal-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .content-container {
+            padding: 15px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-image: url('https://i.imgur.com/Ab6tx3G.png');
+            background-size: cover;
+            background-position: center;
+            width: 48%;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .content-container-large {
+            width: 100%;
+            margin-bottom: 10px;
+            background-image: url('https://i.imgur.com/Ab6tx3G.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            border-radius: 15px;
+        }
+
         .input-field {
             padding: 10px;
             border-radius: 15px;
             border: 1px solid #000;
-            width: 70%;
-            margin: 20px auto 0;
+            width: 60%;
+            margin: 20px auto 40px auto; /* Увеличиваем отступ снизу */
             display: block;
             text-align: center;
             font-size: 1.1em;
@@ -252,6 +280,10 @@
         .form-button:hover {
             background-color: #ff4d4d;
             border-color: #ff4d4d;
+        }
+
+        .swiper-container .swiper-pagination {
+            z-index: 0;
         }
 
     </style>
@@ -302,8 +334,10 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeRechargeModal()">&times;</span>
 
-                <p>Введите сумму для пополнения:</p>
-                <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="input-field">
+                <div class="content-container-large">
+                    <p>Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
+                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="input-field">
+                </div>
                 <div class="button-container">
                     <button class="form-button" onclick="submitRecharge()">Далее</button>
                 </div>
