@@ -254,8 +254,8 @@
             padding: 10px;
             border-radius: 15px;
             border: 1px solid #000;
-            width: 60%;
-            margin: 20px auto 40px auto; /* Увеличиваем отступ снизу */
+            width: 50%;
+            margin: 10px auto;
             display: block;
             text-align: center;
             font-size: 1.1em;
@@ -286,6 +286,43 @@
             z-index: 0;
         }
 
+        /* Стиль для нового модального окна */
+        .modal-recharge {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-recharge-content {
+            background-image: url('https://i.imgur.com/JDB6plautwds3c9GVcuZYQJZ.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 350px;
+            width: 80%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-recharge-content p {
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: white;
+            display: none;
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -300,7 +337,7 @@
                 <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
             </div>
             <div class="right-section">
-                <button class="recharge-button">Пополнить</button>
+                <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button> <!-- Открытие модального окна для пополнения -->
                 <div id="balance">Баланс: 1000₽</div>
             </div>
         </div>
@@ -329,6 +366,18 @@
             </div>
         </div>
 
+        <!-- Новое модальное окно для пополнения баланса -->
+        <div class="modal-recharge" id="recharge-modal">
+            <div class="modal-recharge-content">
+                <span class="close-btn" onclick="closeRechargeModal()">&times;</span>
+                <p>Введите сумму для пополнения...</p>
+                <input type="number" id="recharge-amount" class="input-field" min="2000" max="30000" placeholder="2000">
+                <div id="error-message" class="error-message">СУММА ДОЛЖНА БЫТЬ МЕЖДУ 2000 И 30000 РУБЛЕЙ.</div>
+                <div class="button-container">
+                    <button class="form-button" onclick="submitRecharge()">Далее</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -470,6 +519,38 @@
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
+        }
+
+        function openRechargeModal() {
+            document.getElementById('recharge-modal').style.display = 'flex';
+        }
+
+        function closeRechargeModal() {
+            document.getElementById('recharge-modal').style.display = 'none';
+        }
+
+        function submitRecharge() {
+            const amount = document.getElementById('recharge-amount').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            if (amount < 2000 || amount > 30000) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+                alert(`Вы выбрали пополнение на сумму: ${amount}₽`);
+                closeRechargeModal();
+                // Логика для обработки пополнения
+            }
+        }
+
+        window.onclick = function(event) {
+            const detailsModal = document.getElementById('details-modal');
+            const rechargeModal = document.getElementById('recharge-modal');
+            if (event.target === detailsModal) {
+                detailsModal.style.display = 'none';
+            } else if (event.target === rechargeModal) {
+                rechargeModal.style.display = 'none';
+            }
         }
 
         // Получение параметра из URL
