@@ -207,7 +207,7 @@
             padding: 20px;
             border-radius: 15px;
             max-width: 350px;
-            width: 90%; /* Уменьшена ширина */
+            width: 90%;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -228,6 +228,18 @@
             margin-bottom: 10px;
         }
 
+        .content-container {
+            padding: 15px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-image: url('https://i.imgur.com/Ab6tx3G.png');
+            background-size: cover;
+            background-position: center;
+            width: 48%;
+            box-sizing: border-box;
+            color: white;
+        }
+
         .content-container-large {
             width: 100%;
             margin-bottom: 10px;
@@ -235,8 +247,20 @@
             background-size: cover;
             background-position: center;
             color: white;
-            border-radius: 15px; /* Закруглены углы контейнера */
+            border-radius: 15px;
+        }
+
+        .input-field {
             padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #000;
+            width: 60%;
+            margin: 10px auto;
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            background-color: #fff;
+            color: #000;
         }
 
         .button-container {
@@ -258,30 +282,8 @@
             border-color: #ff4d4d;
         }
 
-        .input-field {
-            padding: 10px;
-            border-radius: 20px; /* Закруглены углы поля ввода */
-            width: 60%; /* Уменьшена ширина поля ввода */
-            box-sizing: border-box;
-            border: 2px solid #ff6666;
-            font-size: 1em;
-            outline: none;
-            text-align: center;
-        }
-
         .swiper-container .swiper-pagination {
             z-index: 0;
-        }
-
-        /* Убираем стрелки для поля ввода на всех браузерах */
-        input[type=number]::-webkit-outer-spin-button,
-        input[type=number]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        input[type=number] {
-            -moz-appearance: textfield;
         }
 
     </style>
