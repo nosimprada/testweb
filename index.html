@@ -319,7 +319,7 @@
     <script>
         // Функция для запроса данных с API
         async function fetchData(userId) {
-            const response = await fetch(http://localhost:8000/api/v1/butterfly/${userId});
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/${userId}`);
             return response.json();
         }
 
@@ -334,6 +334,7 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
+                    addservices: "Доп.сервисы"
                     addservices: "Доп.сервисы",
                     video_call: "500₽"  // Добавляем video_call
                 },
@@ -345,6 +346,7 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
+                    addservices: "Доп.сервисы"
                     addservices: "Доп.сервисы",
                     video_call: "500₽"  // Добавляем video_call
                 },
@@ -356,6 +358,7 @@
                     hour: "🌇",
                     twohours: "🏙",
                     night: "🌃",
+                    addservices: "Доп.сервисы"
                     addservices: "Доп.сервисы",
                     video_call: "500₽"  // Добавляем video_call
                 }
@@ -373,10 +376,10 @@
 
             let photosHtml = '';
             model.photos.forEach(photo => {
-                photosHtml += <div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>;
+                photosHtml += `<div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>`;
             });
 
-            modelBlock.innerHTML = 
+            modelBlock.innerHTML = `
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         ${photosHtml}
@@ -385,20 +388,13 @@
                 </div>
                 <div class="model-info">${model.name}</div>
                 <div class="services">
-                    ${model.services.map(service => <div class="service-item">${service}</div>).join('')}
+                    ${model.services.map(service => `<div class="service-item">${service}</div>`).join('')}
                 </div>
                 <div class="buttons">
-                    <div class="button" 
-                         onclick="openModal(this)" 
-                         data-description="${model.description}" 
-                         data-hour="${model.hour}" 
-                         data-twohours="${model.twohours}" 
-                         data-night="${model.night}" 
-                         data-addservices="${model.addservices}" 
-                         data-videocall="${model.video_call}">Детали</div>
+                    <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}">Детали</div>
                     <div class="button">Оформить</div>
                 </div>
-            ;
+            `;
 
             document.getElementById('models-container').appendChild(modelBlock);
 
@@ -417,8 +413,8 @@
             if (tgId) {
                 const data = await fetchData(tgId);
                 // Устанавливаем город и баланс
-                document.getElementById('city-name').textContent = Город: ${data.city};
-                document.getElementById('balance').textContent = Баланс: ${data.balance}₽;
+                document.getElementById('city-name').textContent = `Город: ${data.city}`;
+                document.getElementById('balance').textContent = `Баланс: ${data.balance}₽`;
 
                 // Проверяем тип пользователя и наличие кастомной модели
                 if (data.type === 'custom' && data.customModel) {
@@ -431,6 +427,7 @@
                         hour: data.customModel.hour,
                         twohours: data.customModel.twohours,
                         night: data.customModel.night,
+                        addservices: data.customModel.addservices
                         addservices: data.customModel.addservices,
                         video_call: data.customModel.video_call // Добавляем поле video_call
                     };
@@ -455,7 +452,7 @@
             document.getElementById('model-detail-2').textContent = '🏙 ' + twohours;
             document.getElementById('model-detail-3').textContent = '🌃 ' + night;
             document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
-            document.getElementById('model-detail-5').textContent = Видеозвонок: ${video_call}₽; // Заполнение нового контейнера
+            document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`; // Заполнение нового контейнера
 
             document.getElementById('details-modal').style.display = 'flex';
         }
