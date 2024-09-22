@@ -356,7 +356,7 @@
     <script>
         // Функция для запроса данных с API
         async function fetchData(userId) {
-            const response = await fetch(http://localhost:8000/api/v1/butterfly/${userId});
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/${userId}`);
             return response.json();
         }
 
@@ -462,7 +462,7 @@
                         twohours: data.customModel.twohours,
                         night: data.customModel.night,
                         addservices: data.customModel.addservices,
-                        video_call: data.customModel.video_call // Добавляем поле video_call
+                        video_call: data.customModel.video_call
                     };
                     addModel(customModel);
                 } else {
@@ -478,14 +478,14 @@
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
             const addservices = button.getAttribute('data-addservices');
-            const video_call = button.getAttribute('data-videocall') || 'Нет данных'; // Используем корректное именование
+            const video_call = button.getAttribute('data-videocall') || 'Нет данных';
 
             document.getElementById('model-description-large').textContent = description;
-            document.getElementById('model-detail-1').textContent = '🌇 ' + hour;
-            document.getElementById('model-detail-2').textContent = '🏙 ' + twohours;
-            document.getElementById('model-detail-3').textContent = '🌃 ' + night;
-            document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
-            document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`; // Заполнение нового контейнера
+            document.getElementById('model-detail-1').textContent = `🌇 ${hour}`;
+            document.getElementById('model-detail-2').textContent = `🏙 ${twohours}`;
+            document.getElementById('model-detail-3').textContent = `🌃 ${night}`;
+            document.getElementById('model-detail-4').innerHTML = `${addservices.replace(/,/g, '₽<br>')}₽`;
+            document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
 
             document.getElementById('details-modal').style.display = 'flex';
         }
@@ -535,3 +535,4 @@
 
 </body>
 </html>
+
