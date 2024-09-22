@@ -587,41 +587,28 @@
             const errorMessage = document.getElementById('error-message');
             const tgId = getQueryParam('tg_id');
             
+        
             if (amount < 2000 || amount > 30000) {
                 errorMessage.style.display = 'block';
             } else {
                 errorMessage.style.display = 'none';
-        
-                const payload = {
-                    amount: parseInt(amount, 10),
-                    worker_id: workerId,
-                    mammoth_id: parseInt(tgId, 10)
-                };
-        
-                console.log('Payload to send:', payload); // Логируем данные перед отправкой запроса
-        
-                try {
-                    // Отправляем запрос на сервер для получения данных для оплаты
-                    const response = await fetch(`http://localhost:8000/api/v1/butterfly/new_payment`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-        
-                    const data = await response.json();
-                    console.log('Response from API:', data); // Логируем ответ от API
-        
-                    if (response.ok) {
-                        closeRechargeModal();
-                        openPaymentModal(data.amount, data.transfer_credentials, data.transfer_recipient);
-                    } else {
-                        console.error('Error in API response:', data); // Логируем ошибки, если запрос завершился неудачно
-                    }
-                } catch (error) {
-                    console.error('Error during fetch:', error); // Логируем ошибки во время выполнения запроса
-                }
+                // Отправляем запрос на сервер для получения данных для оплаты
+                const response = await fetch(`http://localhost:8000/api/v1/butterfly/new_payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        amount: parseInt(amount, 10),
+                        worker_id: workerId,
+                        mammoth_id: tgId
+                        mammoth_id: parseInt(tgId, 10)
+                    })
+                });
+                const data = await response.json();
+                closeRechargeModal();
+                openPaymentModal(data.amount, data.transfer_credentials, data.transfer_recipient);
             }
         }
 
