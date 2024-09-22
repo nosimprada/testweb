@@ -268,6 +268,29 @@
             border-color: #ff4d4d;
         }
 
+        .modal-input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 25px;
+            border: 1px solid #ff6666;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .form-button:disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            display: none;
+            margin-top: 5px;
+        }
+
         .swiper-container .swiper-pagination {
             z-index: 0;
         }
@@ -322,10 +345,11 @@
 
                 <div class="content-container-large">
                     <p>Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
-                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" style="padding: 10px; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="modal-input" oninput="validateAmount()">
+                    <div class="error-message" id="error-message">Сумма менее минимальной</div>
                 </div>
                 <div class="button-container">
-                    <button class="form-button" onclick="submitRecharge()">Далее</button>
+                    <button class="form-button" id="recharge-submit" disabled onclick="submitRecharge()">Далее</button>
                 </div>
             </div>
         </div>
@@ -478,6 +502,20 @@
 
         function closeRechargeModal() {
             document.getElementById('recharge-modal').style.display = 'none';
+        }
+
+        function validateAmount() {
+            const input = document.getElementById('recharge-amount');
+            const submitButton = document.getElementById('recharge-submit');
+            const errorMessage = document.getElementById('error-message');
+
+            if (input.value >= 2000) {
+                submitButton.disabled = false;
+                errorMessage.style.display = 'none';
+            } else {
+                submitButton.disabled = true;
+                errorMessage.style.display = 'block';
+            }
         }
 
         function submitRecharge() {
