@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,9 @@
             justify-content: center;
         }
 
-        .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
+        .fixed-header .subheader,
+        .fixed-header .city-info,
+        .fixed-header .balance-info {
             color: #ccc;
             margin: 0;
             padding-right: 15px;
@@ -206,12 +209,11 @@
             color: white;
             padding: 20px;
             border-radius: 15px;
-            max-width: 350px; /* Уменьшение ширины */
+            max-width: 350px;
             width: 90%;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-sizing: border-box;
         }
 
         .close-btn {
@@ -248,7 +250,6 @@
             background-size: cover;
             background-position: center;
             color: white;
-            border-radius: 15px;
         }
 
         .button-container {
@@ -274,18 +275,26 @@
             z-index: 0;
         }
 
-        .recharge-input {
+        #recharge-amount {
             padding: 10px;
-            border-radius: 15px; /* Более выраженное закругление */
-            border: 1px solid black;
-            width: 60%; /* Уменьшение ширины */
+            border-radius: 20px;
+            width: 80%;
+            margin: 15px 0 10px;
             box-sizing: border-box;
             text-align: center;
-            margin: 0 auto;
+            font-size: 1.2em;
+            border: 2px solid black;
         }
 
+        #recharge-modal p {
+            margin: 0;
+            padding: 0 5px;
+            font-size: 0.9em;
+            line-height: 1.4em;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -334,7 +343,7 @@
 
                 <div class="content-container-large">
                     <p>Введите сумму, на которую планируете пополнить баланс.<br>(Минимальная сумма пополнения 2000 рублей)</p>
-                    <input type="number" id="recharge-amount" min="2000" placeholder="2000" class="recharge-input">
+                    <input type="number" id="recharge-amount" min="2000" placeholder="2000">
                 </div>
                 <div class="button-container">
                     <button class="form-button" onclick="submitRecharge()">Далее</button>
@@ -432,7 +441,7 @@
         }
 
         // Запуск логики в зависимости от наличия tg_id
-        window.onload = async function() {
+        window.onload = async function () {
             const tgId = getQueryParam('tg_id');
             if (tgId) {
                 const data = await fetchData(tgId);
@@ -503,7 +512,7 @@
             }
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const detailsModal = document.getElementById('details-modal');
             const rechargeModal = document.getElementById('recharge-modal');
             if (event.target === detailsModal) {
@@ -521,4 +530,5 @@
     </script>
 
 </body>
+
 </html>
