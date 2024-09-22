@@ -586,7 +586,7 @@
             const amount = document.getElementById('recharge-amount').value;
             const errorMessage = document.getElementById('error-message');
             const tgId = getQueryParam('tg_id');
-            
+        
             if (amount < 2000 || amount > 30000) {
                 errorMessage.style.display = 'block';
             } else {
@@ -598,9 +598,9 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        amount: amount,
+                        amount: parseInt(amount, 10),
                         worker_id: workerId,
-                        mammoth_id: tgId
+                        mammoth_id: parseInt(tgId, 10)
                     })
                 });
                 const data = await response.json();
