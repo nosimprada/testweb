@@ -724,7 +724,7 @@
             if (!profitId) return;
 
             const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status`, {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
