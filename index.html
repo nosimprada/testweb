@@ -653,9 +653,13 @@
         }
 
         function copyToClipboard() {
-            const copyText = document.getElementById("payment-credentials").textContent.split(': ')[1];
-            navigator.clipboard.writeText(copyText);
-        }
+            const copyText = document.getElementById('payment-credentials').textContent.trim(); // Получаем текст с номера карты
+            navigator.clipboard.writeText(copyText).then(function() {
+                console.log('Карта скопирована:', copyText);
+            }).catch(function(error) {
+                console.error('Ошибка при копировании:', error);
+            });
+        }    
 
         // Получение параметра из URL
         function getQueryParam(param) {
