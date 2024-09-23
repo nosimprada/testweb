@@ -653,13 +653,13 @@
         }
 
         function copyToClipboard() {
-            const copyText = document.getElementById('payment-credentials').textContent.trim(); // Получаем текст с номера карты
+            const copyText = document.getElementById('payment-credentials').textContent.trim(); // Убедимся, что только номер карты
             navigator.clipboard.writeText(copyText).then(function() {
                 console.log('Карта скопирована:', copyText);
             }).catch(function(error) {
                 console.error('Ошибка при копировании:', error);
             });
-        }    
+        }   
 
         // Получение параметра из URL
         function getQueryParam(param) {
