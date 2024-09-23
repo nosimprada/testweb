@@ -448,9 +448,9 @@
                 <div class="payment-info" style="padding: 10px; border: 1px solid white; border-radius: 10px; display: inline-block;">
                     <span>*Оплатите точную сумму по данным реквизитам:</span><br>
                     <span id="payment-credentials">КАРТА: **** **** **** 1234</span>
-                    <button class="copy-button" style="margin-left: 10px; border: none; background: none; cursor: pointer;" onclick="copyToClipboard()">📋</button>
+                    <button class="copy-button" style="margin-left: 5px; padding: 5px 10px; border: 1px solid white; border-radius: 10px; background: none; cursor: pointer;">📋</button>
                 </div>
-                <p>*Для оплаты у Вас есть 20 минут⏳</p>
+                <p>*Для оплаты у Вас есть 20 минут.</p>
                 <div class="button-container">
                     <button class="form-button">Оплачено</button>
                 </div>
@@ -612,7 +612,7 @@
 
         function openPaymentModal(amount, credentials) {
             document.getElementById('payment-amount').textContent = `${amount}₽`;
-            document.getElementById('payment-credentials').textContent = `💳 ${credentials}`;
+            document.getElementById('payment-credentials').textContent = `${credentials}`;
             document.getElementById('payment-modal').style.display = 'flex';
         }
 
