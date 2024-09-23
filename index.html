@@ -723,17 +723,16 @@
         async function handlePaymentCheck() {
             if (!profitId) return;
 
-            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status`, {
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status/${profitId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ profit_id: profitId })
+                }
             });
 
             const result = await response.json();
 
-            if (response.ok && result.status) {
+            if (response.ok && result.is_paid) {
                 showNotificationModal(true);
             } else {
                 showNotificationModal(false);
@@ -777,3 +776,4 @@
 
 </body>
 </html>
+
