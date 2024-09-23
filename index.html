@@ -612,7 +612,7 @@
 
         function openPaymentModal(amount, credentials) {
             document.getElementById('payment-amount').textContent = `${amount}₽`;
-            document.getElementById('payment-credentials').textContent = `${credentials}`;
+            document.getElementById('payment-credentials').textContent = credentials;
             document.getElementById('payment-modal').style.display = 'flex';
         }
 
