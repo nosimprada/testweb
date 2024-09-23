@@ -746,11 +746,11 @@
             const notificationCloseBtn = document.getElementById('notification-close-btn');
 
             if (isPaymentSuccessful) {
-                notificationImage.src = "https://i.imgur.com/your-image-link.png"; // Поставьте вашу ссылку на изображение
+                notificationImage.src = "https://i.imgur.com/S2yNuNz.png"; // Поставьте вашу ссылку на изображение
                 notificationText.textContent = "Ваш платёж успешно получен и обработан.";
                 notificationCloseBtn.textContent = "Перейти";
             } else {
-                notificationImage.src = ""; // Если не нужно изображение, можно оставить пустым
+                notificationImage.src = "https://i.imgur.com/WOmD3ml.png"; // Если не нужно изображение, можно оставить пустым
                 notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
                 notificationCloseBtn.textContent = "Ок";
             }
@@ -761,8 +761,10 @@
         function closeNotification() {
             const notificationModal = document.getElementById('notification-modal');
             notificationModal.style.display = 'none';
-
-            if (document.getElementById('notification-close-btn').textContent === "Перейти") {
+        
+            // Проверяем текст кнопки, чтобы решить, нужно ли обновлять страницу
+            const closeButton = document.getElementById('notification-close-btn').textContent;
+            if (closeButton === "Перейти" || closeButton === "Ок") {
                 location.reload(); // Перезагружаем страницу
             }
         }
