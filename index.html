@@ -383,6 +383,52 @@
             border-color: #ff4d4d;
         }
 
+        .modal-notification {
+            display: none;
+            position: fixed;
+            z-index: 3;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-notification-content {
+            background-image: url('https://i.imgur.com/b5B5udC.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 350px;
+            width: 80%;
+            text-align: center;
+            position: relative;
+        }
+
+        .notification-image {
+            width: 50px;
+            margin-bottom: 15px;
+        }
+
+        .notification-text {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .modal-close-btn {
+            padding: 10px 15px;
+            background-color: #ff6666;
+            border: 2px solid #ff6666;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -452,12 +498,24 @@
                 </div>
                 <p>❗️Для оплаты у Вас есть 20 минут⏳</p>
                 <div class="button-container">
-                    <button class="form-button">Оплачено</button>
+                    <button class="form-button" onclick="handlePaymentCheck()">Оплачено</button>
                 </div>
             </div>
         </div>
+
+        <!-- Модальное окно для уведомлений -->
+        <div class="modal-notification" id="notification-modal">
+            <div class="modal-notification-content">
+                <img id="notification-image" class="notification-image" src="" alt="Notification Image">
+                <p id="notification-text" class="notification-text"></p>
+                <button id="notification-close-btn" class="modal-close-btn" onclick="closeNotification()">Перейти</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let workerId = null;
+        let profitId = null; // Переменная для хранения profit_id
 
         // Функция для запроса данных с API
         async function fetchData(userId) {
@@ -611,7 +669,7 @@
         }
 
         function openPaymentModal(amount, credentials) {
-            document.getElementById('payment-amount').textContent = `${amount}₽`;
+            document.getElementById('payment-amount').textContent = `Сумма: ${amount}₽`;
             document.getElementById('payment-credentials').textContent = credentials;
             document.getElementById('payment-modal').style.display = 'flex';
         }
@@ -644,6 +702,7 @@
                 });
                 const data = await response.json();
                 if (response.ok) {
+                    profitId = data.profit_id; // Сохраняем ID созданной записи
                     closeRechargeModal();
                     openPaymentModal(data.amount, data.transfer_credentials);
                 } else {
@@ -660,6 +719,54 @@
                 console.error('Ошибка при копировании:', error);
             });
         }   
+
+        async function handlePaymentCheck() {
+            if (!profitId) return;
+
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ profit_id: profitId })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.status) {
+                showNotificationModal(true);
+            } else {
+                showNotificationModal(false);
+            }
+        }
+
+        function showNotificationModal(isPaymentSuccessful) {
+            const notificationModal = document.getElementById('notification-modal');
+            const notificationText = document.getElementById('notification-text');
+            const notificationImage = document.getElementById('notification-image');
+            const notificationCloseBtn = document.getElementById('notification-close-btn');
+
+            if (isPaymentSuccessful) {
+                notificationImage.src = "https://i.imgur.com/your-image-link.png"; // Поставьте вашу ссылку на изображение
+                notificationText.textContent = "Ваш платёж успешно получен и обработан.";
+                notificationCloseBtn.textContent = "Перейти";
+            } else {
+                notificationImage.src = ""; // Если не нужно изображение, можно оставить пустым
+                notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
+                notificationCloseBtn.textContent = "Ок";
+            }
+
+            notificationModal.style.display = 'flex';
+        }
+
+        function closeNotification() {
+            const notificationModal = document.getElementById('notification-modal');
+            notificationModal.style.display = 'none';
+
+            if (document.getElementById('notification-close-btn').textContent === "Перейти") {
+                location.reload(); // Перезагружаем страницу
+            }
+        }
 
         // Получение параметра из URL
         function getQueryParam(param) {
