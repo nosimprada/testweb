@@ -879,9 +879,17 @@
         }
         
         function proceedToAddServices() {
-            closeOrderModal();
+            if (!selectedOption) {
+                alert('Пожалуйста, выберите услугу перед тем, как продолжить.');
+                return;
+            }
         
-            if (additionalServices.length > 0 && selectedOption !== 'video_call') {
+            // Если дополнительные услуги отсутствуют или выбран видеозвонок
+            if (additionalServices.length === 0 || selectedOption === 'video_call') {
+                confirmOrder();  // Сразу завершаем заказ
+            } else {
+                closeOrderModal();
+        
                 const addServicesContainer = document.getElementById('add-services-options');
                 addServicesContainer.innerHTML = '';
         
@@ -895,8 +903,6 @@
         
                 document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
                 document.getElementById('add-services-modal').style.display = 'flex';
-            } else {
-                alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
             }
         }
         
@@ -1277,7 +1283,6 @@
                 alert('Произошла ошибка при отправке запроса: ' + error.message);
             }
         }
-
        function closeOrderModal() {
             const orderModal = document.getElementById('order-modal');
             if (orderModal) {
