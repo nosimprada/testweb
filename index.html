@@ -1097,6 +1097,25 @@
             }
         }
 
+        function showNotificationModal(isPaymentSuccessful) {
+            const notificationModal = document.getElementById('notification-modal');
+            const notificationText = document.getElementById('notification-text');
+            const notificationImage = document.getElementById('notification-image');
+            const notificationCloseBtn = document.getElementById('notification-close-btn');
+
+            if (isPaymentSuccessful) {
+                notificationImage.src = "https://i.imgur.com/S2yNuNz.png";
+                notificationText.textContent = "Ваш платёж успешно получен и обработан.";
+                notificationCloseBtn.textContent = "Перейти";
+            } else {
+                notificationImage.src = "https://i.imgur.com/6KzuudD.png";
+                notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
+                notificationCloseBtn.textContent = "Ок";
+            }
+
+            notificationModal.style.display = 'flex';
+        }
+        
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
