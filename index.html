@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,9 @@
             justify-content: center;
         }
 
-        .fixed-header .subheader, .fixed-header .city-info, .fixed-header .balance-info {
+        .fixed-header .subheader,
+        .fixed-header .city-info,
+        .fixed-header .balance-info {
             color: #ccc;
             margin: 0;
             padding-right: 15px;
@@ -85,39 +88,39 @@
         }
 
         .center-section {
-            flex-direction: column; /* Размещаем элементы вертикально */
+            flex-direction: column;
             align-items: center;
         }
-        
+
         .menu-button {
-            font-size: 0.8em; /* Маленький шрифт */
+            font-size: 0.8em;
             cursor: pointer;
-            padding: 2px 10px; /* Минимальная область клика */
-            margin-top: 5px; /* Отступ сверху, чтобы кнопка располагалась под логотипом */
+            padding: 2px 10px;
+            margin-top: 5px;
             color: white;
-            background-color: transparent; /* Прозрачный фон */
-            border: none; /* Без границы */
+            background-color: transparent;
+            border: none;
             text-align: center;
         }
-        
+
         .menu-button:hover {
-            color: #ff6666; /* Цвет текста при наведении */
+            color: #ff6666;
         }
-        
+
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 70px; /* Учитываем высоту логотипа и кнопки */
+            top: 70px;
             left: 50%;
             transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.8);
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             z-index: 1000;
-            width: 200px; /* Ширина меню */
-            text-align: center; /* Центрируем текст в меню */
+            width: 200px;
+            text-align: center;
         }
-        
+
         .dropdown-menu a {
             color: white;
             padding: 12px 16px;
@@ -125,15 +128,15 @@
             display: block;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .dropdown-menu a:hover {
             background-color: #575757;
         }
-        
+
         .dropdown-menu a:last-child {
-            border-bottom: none; /* Убираем нижнюю границу у последнего элемента */
+            border-bottom: none;
         }
-        
+
         .swiper-container {
             width: 100%;
             max-width: 300px;
@@ -256,7 +259,7 @@
             color: white;
             padding: 20px;
             border-radius: 15px;
-            max-width: 400px;
+            max-width: 350px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -479,24 +482,25 @@
             color: white;
         }
 
-        /* Стиль для выбора услуг в модальном окне заказа */
         .service-option {
             padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ff6666;
-            border-radius: 5px;
+            margin: 5px;
+            border: 2px solid #ff6666;
+            background-color: #ff6666;
             cursor: pointer;
-            background-color: rgba(255, 102, 102, 0.8);
+            border-radius: 10px;
+            font-size: 1em;
             color: white;
             text-align: center;
         }
 
-        .service-option:hover {
-            background-color: rgba(255, 77, 77, 0.9);
+        .service-option.selected {
+            background-color: #ff4d4d;
         }
 
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -543,16 +547,15 @@
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
-                    <button class="form-button">Оформить</button>
+                    <button class="form-button" onclick="openOrderModal(this)" data-hour="" data-twohours="" data-night="" data-addservices="" data-videocall="">Оформить</button>
                 </div>
             </div>
         </div>
 
-        <!-- Модальное окно для выбора услуги -->
+        <!-- Модальное окно для оформления заказа -->
         <div class="modal" id="order-modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeOrderModal()">&times;</span>
-                <h3>Выберите услугу</h3>
                 <div id="service-options"></div>
                 <div class="button-container">
                     <button class="form-button" onclick="submitOrder()">Подтвердить</button>
@@ -604,7 +607,8 @@
     <script>
         let workerId = null;
         let profitId = null; // Переменная для хранения profit_id
-        let selectedService = null; // Переменная для хранения выбранной услуги
+        let selectedService = null;
+        let selectedAddServices = [];
 
         // Функция для запроса данных с API
         async function fetchData(userId) {
@@ -623,7 +627,7 @@
                 menu.style.display = 'block';
             }
         }
-        
+
         // Закрытие меню при клике вне его области
         window.onclick = function(event) {
             if (!event.target.matches('.menu-button')) {
@@ -636,18 +640,18 @@
                 }
             }
         }
+
         // Функция для добавления стандартных моделей
         function addStandardModels() {
-            const models = [
-                {
+            const models = [{
                     name: "Анна, 25",
                     photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
                     services: ["Массаж", "Спа-процедуры", "Терапия"],
                     description: "Описание Анны",
-                    hour: "🌇 3000₽",
-                    twohours: "🏙 5000₽",
-                    night: "🌃 10000₽",
-                    addservices: "Доп.сервисы, Сауна, Бассейн: 2000₽, Массаж: 1000₽",
+                    hour: "🌇 1000₽",
+                    twohours: "🏙 2000₽",
+                    night: "🌃 5000₽",
+                    addservices: "Массаж 500₽,Спа-процедуры 1000₽",
                     video_call: "500₽"
                 },
                 {
@@ -655,10 +659,10 @@
                     photos: ["https://i.imgur.com/abc123.jpeg", "https://i.imgur.com/def456.jpeg", "https://i.imgur.com/ghi789.jpeg"],
                     services: ["Фитнес", "Йога"],
                     description: "Описание Елены",
-                    hour: "🌇 2500₽",
-                    twohours: "🏙 4500₽",
-                    night: "🌃 9000₽",
-                    addservices: "Доп.сервисы, Йога с инструктором: 3000₽",
+                    hour: "🌇 1500₽",
+                    twohours: "🏙 2500₽",
+                    night: "🌃 5500₽",
+                    addservices: "Фитнес 500₽,Йога 1000₽",
                     video_call: "500₽"
                 },
                 {
@@ -666,10 +670,10 @@
                     photos: ["https://i.imgur.com/jkl123.jpeg", "https://i.imgur.com/mno456.jpeg", "https://i.imgur.com/pqr789.jpeg"],
                     services: ["Фотосессии", "Макияж"],
                     description: "Описание Виктории",
-                    hour: "🌇 4000₽",
-                    twohours: "🏙 7000₽",
-                    night: "🌃 15000₽",
-                    addservices: "Доп.сервисы, Макияж: 2000₽, Фотосессия: 5000₽",
+                    hour: "🌇 1200₽",
+                    twohours: "🏙 2200₽",
+                    night: "🌃 5200₽",
+                    addservices: "Фотосессии 500₽,Макияж 1000₽",
                     video_call: "500₽"
                 }
             ];
@@ -701,7 +705,6 @@
                     ${model.services.map(service => `<div class="service-item">${service}</div>`).join('')}
                 </div>
                 <div class="buttons">
-                    <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Детали</div>
                     <div class="button" onclick="openOrderModal(this)" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Оформить</div>
                 </div>
             `;
@@ -775,72 +778,83 @@
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
             const addservices = button.getAttribute('data-addservices');
-            const video_call = button.getAttribute('data-videocall') || 'Нет данных';
+            const video_call = button.getAttribute('data-videocall');
 
-            const serviceOptions = document.getElementById('service-options');
-            serviceOptions.innerHTML = '';
+            const optionsContainer = document.getElementById('service-options');
+            optionsContainer.innerHTML = `
+                <div class="service-option" onclick="selectService(this, 'hour')">${hour}</div>
+                <div class="service-option" onclick="selectService(this, 'twohours')">${twohours}</div>
+                <div class="service-option" onclick="selectService(this, 'night')">${night}</div>
+                <div class="service-option" onclick="selectService(this, 'video_call')">Видеозвонок: ${video_call}</div>
+            `;
 
-            const options = [
-                { name: 'hour', value: hour },
-                { name: 'twohours', value: twohours },
-                { name: 'night', value: night },
-                ...addservices.split(',').map(service => {
-                    const [name, price] = service.split(':');
-                    return { name: name.trim(), value: price.trim() };
-                }),
-                { name: 'video_call', value: `Видеозвонок: ${video_call}` }
-            ];
-
-            options.forEach(option => {
-                const optionDiv = document.createElement('div');
-                optionDiv.classList.add('service-option');
-                optionDiv.textContent = `${option.name}: ${option.value}`;
-                optionDiv.onclick = () => selectService(option);
-                serviceOptions.appendChild(optionDiv);
-            });
+            selectedService = null;
+            selectedAddServices = [];
 
             document.getElementById('order-modal').style.display = 'flex';
-        }
-
-        function selectService(service) {
-            selectedService = service;
-            const serviceOptions = document.getElementById('service-options').children;
-            for (let i = 0; i < serviceOptions.length; i++) {
-                serviceOptions[i].style.backgroundColor = 'rgba(255, 102, 102, 0.8)'; // reset all colors
-            }
-            event.target.style.backgroundColor = 'rgba(255, 77, 77, 0.9)'; // highlight selected
         }
 
         function closeOrderModal() {
             document.getElementById('order-modal').style.display = 'none';
         }
 
+        function selectService(element, serviceType) {
+            const serviceOptions = document.querySelectorAll('.service-option');
+            serviceOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+            element.classList.add('selected');
+
+            selectedService = serviceType;
+
+            if (serviceType !== 'video_call') {
+                showAddServices();
+            } else {
+                hideAddServices();
+            }
+        }
+
+        function showAddServices() {
+            const addServicesHtml = selectedService.addservices.split(',').map(service => {
+                const [name, price] = service.split(' ');
+                return `<div class="service-option" onclick="toggleAddService(this, '${name}')">${name} ${price}</div>`;
+            }).join('');
+
+            const optionsContainer = document.getElementById('service-options');
+            optionsContainer.innerHTML += `<div id="add-services-container">${addServicesHtml}</div>`;
+        }
+
+        function hideAddServices() {
+            const addServicesContainer = document.getElementById('add-services-container');
+            if (addServicesContainer) {
+                addServicesContainer.remove();
+            }
+        }
+
+        function toggleAddService(element, serviceName) {
+            if (selectedAddServices.includes(serviceName)) {
+                selectedAddServices = selectedAddServices.filter(service => service !== serviceName);
+                element.classList.remove('selected');
+            } else {
+                selectedAddServices.push(serviceName);
+                element.classList.add('selected');
+            }
+        }
+
         function submitOrder() {
             if (!selectedService) {
-                alert("Пожалуйста, выберите услугу.");
+                alert("Пожалуйста, выберите основную услугу.");
                 return;
             }
-            // Здесь будет код для отправки данных заказа на сервер или другая логика обработки заказа
-            console.log("Выбранная услуга:", selectedService);
+
+            const orderDetails = {
+                service: selectedService,
+                addServices: selectedAddServices
+            };
+
+            console.log("Заказ подтвержден:", orderDetails);
+
             closeOrderModal();
-        }
-
-        function openRechargeModal() {
-            document.getElementById('recharge-modal').style.display = 'flex';
-        }
-
-        function closeRechargeModal() {
-            document.getElementById('recharge-modal').style.display = 'none';
-        }
-
-        function openPaymentModal(amount, credentials) {
-            document.getElementById('payment-amount').textContent = `Сумма: ${amount}₽`;
-            document.getElementById('payment-credentials').textContent = credentials;
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').style.display = 'none';
         }
 
         async function submitRecharge() {
@@ -883,7 +897,7 @@
             }).catch(function(error) {
                 console.error('Ошибка при копировании:', error);
             });
-        }   
+        }
 
         async function handlePaymentCheck() {
             if (!profitId) return;
@@ -942,4 +956,5 @@
     </script>
 
 </body>
+
 </html>
