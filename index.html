@@ -1297,6 +1297,16 @@
             window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
         }
         
+        function closeAddServicesModal() {
+            const addServicesModal = document.getElementById('add-services-modal');
+            if (addServicesModal) {
+                addServicesModal.style.display = 'none';
+            }
+        }
+        
+        function cancelOrder() {
+            closeAddServicesModal();  // Закрываем модальное окно
+        }
     </script>
 
 </body>
