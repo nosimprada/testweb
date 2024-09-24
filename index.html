@@ -84,24 +84,38 @@
             border-color: #ff4d4d;
         }
 
+        .center-section {
+            flex-direction: column; /* Размещаем элементы вертикально */
+            align-items: center;
+        }
+        
         .menu-button {
-            font-size: 1.5em;
+            font-size: 0.8em; /* Маленький шрифт */
             cursor: pointer;
-            padding: 0 15px;
-            margin-left: 10px;
+            padding: 2px 10px; /* Минимальная область клика */
+            margin-top: 5px; /* Отступ сверху, чтобы кнопка располагалась под логотипом */
             color: white;
+            background-color: transparent; /* Прозрачный фон */
+            border: none; /* Без границы */
+            text-align: center;
+        }
+        
+        .menu-button:hover {
+            color: #ff6666; /* Цвет текста при наведении */
         }
         
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 60px; /* Расположение под плашкой */
+            top: 70px; /* Учитываем высоту логотипа и кнопки */
+            left: 50%;
+            transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.8);
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             z-index: 1000;
             width: 200px; /* Ширина меню */
-            text-align: left;
+            text-align: center; /* Центрируем текст в меню */
         }
         
         .dropdown-menu a {
@@ -477,7 +491,7 @@
             </div>
             <div class="center-section">
                 <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
-                <div class="menu-button" onclick="toggleMenu()">≡</div> <!-- Кнопка меню -->
+                <div class="menu-button" onclick="toggleMenu()">НАВИГАЦИЯ</div> <!-- Кнопка меню -->
                 <div class="dropdown-menu" id="dropdown-menu">
                     <a href="#about-us">О нас</a>
                     <a href="#models">Модели</a>
