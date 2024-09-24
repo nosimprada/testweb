@@ -570,11 +570,11 @@
                     <div class="content-container" id="model-detail-2">Деталь 2</div>
                 </div>
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
-                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div> <!-- Новый контейнер -->
+                <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div>
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
-                    <button class="form-button">Оформить</button>
+                    <button class="form-button" id="details-order-button">Оформить</button>
                 </div>
             </div>
         </div>
@@ -882,19 +882,18 @@
             const hour = button.getAttribute('data-hour');
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
-            const addservices = button.getAttribute('data-addservices');
             const video_call = button.getAttribute('data-videocall');
+        
+            document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
+            document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
+            document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
+            document.getElementById('video_call-option').textContent = `Видеозвонок: ${video_call}₽`;
+        
+            document.getElementById('order-modal').style.display = 'flex';
+        }
 
-            // Здесь можно сохранить данные в переменные или использовать их для формирования заказа
-            console.log('Заказанные услуги:');
-            console.log('Час:', hour);
-            console.log('Два часа:', twohours);
-            console.log('Ночь:', night);
-            console.log('Доп. сервисы:', addservices);
-            console.log('Видеозвонок:', video_call);
-
-            // Открытие модального окна для оформления заказа
-            // Здесь можно добавить логику для отображения этих данных в модальном окне
+        function closeOrderModal() {
+            document.getElementById('order-modal').style.display = 'none';
         }
 
         function openRechargeModal() {
