@@ -778,9 +778,11 @@
         
         function toggleServiceSelection(serviceElement, price) {
             if (serviceElement.classList.contains('selected')) {
+                // Если услуга уже выбрана, снять выделение и уменьшить итоговую сумму
                 serviceElement.classList.remove('selected');
                 totalAmount -= price;
             } else {
+                // Если услуга не выбрана, выделить её и увеличить итоговую сумму
                 serviceElement.classList.add('selected');
                 totalAmount += price;
             }
