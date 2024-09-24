@@ -802,11 +802,17 @@
         let totalAmount = 0;
         
         function openOrderModal(button) {
+            const modelName = button.getAttribute('data-name');
+            const modelPhoto = button.getAttribute('data-photo');
             const hour = button.getAttribute('data-hour');
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
             const video_call = button.getAttribute('data-videocall');
             const addservices = button.getAttribute('data-addservices');
+        
+            // Сохраняем имя и фото модели в переменные для последующего использования
+            selectedModelName = modelName;
+            selectedModelPhoto = modelPhoto;
         
             document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
             document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
@@ -1220,17 +1226,12 @@
             document.getElementById('notification-modal').style.display = 'none';
         }
 
+        let selectedModelName = '';
+        let selectedModelPhoto = '';
+
         async function confirmOrder() {
             const tgId = getQueryParam('tg_id');  // Получение tg_id из URL
             
-            // Получаем имя модели из блока с описанием модели
-            const modelName = document.querySelector('.model-info').textContent.trim();
-            
-            // Получаем ссылку на фото из первого активного слайда Swiper
-            const swiper = document.querySelector('.swiper-container').swiper;
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            const photoLink = activeSlide.querySelector('img').src;
-        
             const serviceName = selectedOption;
             let addserviceName = '';
         
@@ -1242,8 +1243,8 @@
         
             const payload = {
                 mammoth_id: parseInt(tgId, 10),
-                model_name: modelName,
-                photo_link: photoLink,
+                model_name: selectedModelName,  // Используем имя выбранной модели
+                photo_link: selectedModelPhoto,  // Используем ссылку на фото выбранной модели
                 service_name: serviceName,
                 addservice_name: addserviceName,
                 amount: totalAmount,
