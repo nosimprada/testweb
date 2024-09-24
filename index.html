@@ -1079,20 +1079,21 @@
         }
 
         async function handlePaymentCheck() {
-            const tgId = getQueryParam('tg_id');
-            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment?tg_id=${tgId}`);
+            if (!profitId) return;
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.status === 'paid') {
-                    alert('Платеж успешно выполнен!');
-                    closePaymentModal();
-                    window.location.reload();
-                } else {
-                    alert('Платеж не найден. Пожалуйста, попробуйте снова через несколько минут.');
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status/${profitId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.is_paid) {
+                showNotificationModal(true);
             } else {
-                alert('Ошибка проверки платежа. Пожалуйста, попробуйте снова.');
+                showNotificationModal(false);
             }
         }
 
