@@ -1055,24 +1055,25 @@
             } else {
                 errorMessage.style.display = 'none';
                 const payload = {
-                    tg_id: tgId,
-                    amount: amount
+                    amount: parseInt(amount, 10),
+                    worker_id: workerId,
+                    mammoth_id: parseInt(tgId, 10)
                 };
-
-                const response = await fetch('http://localhost:8000/api/v1/butterfly/recharge', {
+                console.log("Payload to send:", payload);
+                const response = await fetch(`http://localhost:8000/api/v1/butterfly/new_payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
-
+                const data = await response.json();
                 if (response.ok) {
-                    const data = await response.json();
-                    openPaymentModal(data.amount, data.credentials);
+                    profitId = data.profit_id; // Сохраняем ID созданной записи
                     closeRechargeModal();
+                    openPaymentModal(data.amount, data.transfer_credentials);
                 } else {
-                    alert('Ошибка пополнения. Пожалуйста, попробуйте снова.');
+                    console.log("Error in API response:", data);
                 }
             }
         }
