@@ -314,8 +314,6 @@
         }
 
         .button-container {
-            display: flex;
-            justify-content: center;
             margin-top: 10px;
         }
 
@@ -571,7 +569,7 @@
         
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 10px;
         }
 
@@ -594,7 +592,7 @@
                     <a href="#orders">Заказы</a>
                     <a href="#rules">Правила</a>
                     <a href="#guarantees">Гарантии</a>
-                    <a href="#support">Тех.Поддержка</а>
+                    <a href="#support">Тех.Поддержка</a>
                 </div>
             </div>
             <div class="right-section">
@@ -607,6 +605,7 @@
             <!-- Здесь будут добавляться модели -->
         </div>
 
+        <!-- Модальное окно с деталями модели -->
         <!-- Модальное окно с деталями модели -->
         <div class="modal" id="details-modal">
             <div class="modal-content">
@@ -653,7 +652,7 @@
                 <div id="final-amount">Итого: 0₽</div>
                 <div style="margin-top: 10px;">Если вам это не интересно, не выбирайте ничего, просто нажмите кнопку "Подтвердить".</div>
                 <div class="button-row">
-                    <button class="form-button" onclick="closeAddServicesModal()">Отменить</button>
+                    <button class="form-button" onclick="cancelOrder()">Отменить</button>
                     <button class="form-button" onclick="confirmOrder()">Подтвердить</button>
                 </div>
             </div>
@@ -690,12 +689,27 @@
             </div>
         </div>
 
+        <!-- Модальное окно для дополнительных услуг -->
+        <div class="modal-add-services" id="add-services-modal">
+            <div class="modal-add-services-content">
+                <span class="close-btn" onclick="closeAddServicesModal()">&times;</span>
+                <h2 style="font-size: 1.2em; text-align: center;">*Для данной модели есть доступные доп сервисы*</h2>
+                <div id="add-services-options"></div>
+                <div id="final-amount">Итого: 0₽</div>
+                <div style="margin-top: 10px;">Если вам это не интересно, не выбирайте ничего, просто нажмите кнопку "Подтвердить".</div>
+                <div class="button-row">
+                    <button class="form-button" onclick="closeAddServicesModal()">Отменить</button>
+                    <button class="form-button" onclick="confirmOrder()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Модальное окно для уведомлений -->
         <div class="modal-notification" id="notification-modal">
             <div class="modal-notification-content">
                 <img id="notification-image" class="notification-image" src="" alt="Notification Image">
                 <p id="notification-text" class="notification-text"></p>
-                <button id="notification-close-btn" class="modal-close-btn" onclick="openMyOrdersPage()">Перейти</button>
+                <button id="notification-close-btn" class="modal-close-btn" onclick="closeNotification()">Перейти</button>
             </div>
         </div>
     </div>
@@ -795,7 +809,7 @@
                 document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
                 document.getElementById('add-services-modal').style.display = 'flex';
             } else {
-                confirmOrder();
+                alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
             }
         }
         
@@ -812,65 +826,163 @@
             document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
         }
         
-        async function confirmOrder() {
-            const tgId = getQueryParam('tg_id');  // Получение tg_id из URL
-            const modelName = document.getElementById('details-modal').querySelector('.model-info').textContent;
-            const photoLink = document.querySelector('.swiper-slide img').src;
-            const serviceName = selectedOption;
-            let addserviceName = '';
-        
-            // Получаем выбранные дополнительные услуги
-            const selectedServices = document.querySelectorAll('.additional-service.selected');
-            if (selectedServices.length > 0) {
-                addserviceName = Array.from(selectedServices).map(service => service.textContent.split(':')[0].trim()).join(', ');
-            }
-        
-            const payload = {
-                mammoth_id: parseInt(tgId, 10),
-                model_name: modelName,
-                photo_link: photoLink,
-                service_name: serviceName,
-                addservice_name: addserviceName,
-                amount: totalAmount,
-                status: "new"
-            };
-        
-            try {
-                const response = await fetch('http://localhost:8000/api/v1/butterfly/create_order', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-        
-                if (response.ok) {
-                    showNotificationModal();
-                } else {
-                    const errorData = await response.json();
-                    alert('Произошла ошибка при создании заказа: ' + errorData.detail);
-                }
-            } catch (error) {
-                alert('Произошла ошибка при отправке запроса: ' + error.message);
-            }
+        function confirmOrder() {
+            alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
+            closeAddServicesModal();
         }
-
-        function showNotificationModal() {
-            const notificationModal = document.getElementById('notification-modal');
-            const notificationText = document.getElementById('notification-text');
-            const notificationImage = document.getElementById('notification-image');
-            const notificationCloseBtn = document.getElementById('notification-close-btn');
-
-            notificationImage.src = "https://i.imgur.com/S2yNuNz.png";
-            notificationText.textContent = "Ваш заказ был успешно создан. Вы можете найти его в разделе 'Мои заказы'.";
-            notificationCloseBtn.textContent = "Перейти";
-
-            notificationModal.style.display = 'flex';
+        
+        function cancelOrder() {
+            closeAddServicesModal();
         }
-
+        
         function closeAddServicesModal() {
             document.getElementById('add-services-modal').style.display = 'none';
         }
+
+        let workerId = null;
+        let profitId = null; // Переменная для хранения profit_id
+
+        // Функция для запроса данных с API
+        async function fetchData(userId) {
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/${userId}`);
+            const data = await response.json();
+            workerId = data.worker_id;  // Сохраняем worker_id для дальнейшего использования
+            console.log("Worker ID:", workerId);
+            return data;
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        }
+        
+        // Закрытие меню при клике вне его области
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                const dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+        // Функция для добавления стандартных моделей
+        function addStandardModels() {
+            const models = [
+                {
+                    name: "Анна, 25",
+                    photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
+                    services: ["Массаж", "Спа-процедуры", "Терапия"],
+                    description: "Описание Анны",
+                    hour: "2500₽",
+                    twohours: "7500₽",
+                    night: "12500₽",
+                    addservices: "Доп.сервисы1: 1000, Доп.Сервисы2: 1500",
+                    video_call: "500"
+                },
+                {
+                    name: "Елена, 28",
+                    photos: ["https://i.imgur.com/abc123.jpeg", "https://i.imgur.com/def456.jpeg", "https://i.imgur.com/ghi789.jpeg"],
+                    services: ["Фитнес", "Йога"],
+                    description: "Описание Елены",
+                    hour: "2500₽",
+                    twohours: "7500₽",
+                    night: "12500₽",
+                    addservices: "",
+                    video_call: "500"
+                },
+                {
+                    name: "Виктория, 30",
+                    photos: ["https://i.imgur.com/jkl123.jpeg", "https://i.imgur.com/mno456.jpeg", "https://i.imgur.com/pqr789.jpeg"],
+                    services: ["Фотосессии", "Макияж"],
+                    description: "Описание Виктории",
+                    hour: "2500₽",
+                    twohours: "7500₽",
+                    night: "12500₽",
+                    addservices: "Доп.сервисы1: 2500",
+                    video_call: "500"
+                }
+            ];
+
+            models.forEach(model => {
+                addModel(model);
+            });
+        }
+
+        // Функция для добавления модели в DOM
+        function addModel(model) {
+            const modelBlock = document.createElement('div');
+            modelBlock.classList.add('model-block');
+
+            let photosHtml = '';
+            model.photos.forEach(photo => {
+                photosHtml += `<div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>`;
+            });
+
+            modelBlock.innerHTML = `
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        ${photosHtml}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="model-info">${model.name}</div>
+                <div class="services">
+                    ${model.services.map(service => `<div class="service-item">${service}</div>`).join('')}
+                </div>
+                <div class="buttons">
+                    <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Детали</div>
+                    <div class="button" onclick="openOrderModal(this)" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Оформить</div>
+                </div>
+            `;
+
+            document.getElementById('models-container').appendChild(modelBlock);
+
+            new Swiper(modelBlock.querySelector('.swiper-container'), {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        }
+
+        // Запуск логики в зависимости от наличия tg_id
+        window.onload = async function() {
+            const tgId = getQueryParam('tg_id');
+            if (tgId) {
+                const data = await fetchData(tgId);
+                // Устанавливаем город и баланс
+                document.getElementById('city-name').textContent = `Город: ${data.city}`;
+                document.getElementById('balance').textContent = `Баланс: ${data.balance}₽`;
+
+                // Проверяем тип пользователя и наличие кастомной модели
+                if (data.type === 'custom' && data.customModel) {
+                    document.getElementById('model-count').textContent = 'Модели: 11';
+                    const customModel = {
+                        name: data.customModel.name,
+                        photos: data.customModel.photos,
+                        services: data.customModel.services,
+                        description: data.customModel.description,
+                        hour: data.customModel.hour,
+                        twohours: data.customModel.twohours,
+                        night: data.customModel.night,
+                        addservices: data.customModel.addservices,
+                        video_call: data.customModel.video_call
+                    };
+                    addModel(customModel);
+                } else {
+                    document.getElementById('model-count').textContent = 'Модели: 10';
+                }
+                addStandardModels();
+            }
+        };
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
@@ -984,6 +1096,25 @@
                 showNotificationModal(false);
             }
         }
+
+        function showNotificationModal(isPaymentSuccessful) {
+            const notificationModal = document.getElementById('notification-modal');
+            const notificationText = document.getElementById('notification-text');
+            const notificationImage = document.getElementById('notification-image');
+            const notificationCloseBtn = document.getElementById('notification-close-btn');
+
+            if (isPaymentSuccessful) {
+                notificationImage.src = "https://i.imgur.com/S2yNuNz.png";
+                notificationText.textContent = "Ваш платёж успешно получен и обработан.";
+                notificationCloseBtn.textContent = "Перейти";
+            } else {
+                notificationImage.src = "https://i.imgur.com/6KzuudD.png";
+                notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
+                notificationCloseBtn.textContent = "Ок";
+            }
+
+            notificationModal.style.display = 'flex';
+        }
         
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -997,10 +1128,6 @@
             }).catch(err => {
                 alert('Ошибка при копировании: ' + err);
             });
-        }
-
-        function openMyOrdersPage() {
-            window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
         }
 
         function closeNotification() {
@@ -1040,7 +1167,8 @@
                 });
         
                 if (response.ok) {
-                    showNotificationModal();
+                    alert('Ваш заказ был успешно создан. Вы можете найти его в разделе *мои заказы*.');
+                    openMyOrdersPage();
                 } else {
                     const errorData = await response.json();
                     alert('Произошла ошибка при создании заказа: ' + errorData.detail);
@@ -1049,8 +1177,16 @@
                 alert('Произошла ошибка при отправке запроса: ' + error.message);
             }
         }
+
+        function openMyOrdersPage() {
+            window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
+        }
+
+        function closeAddServicesModal() {
+            document.getElementById('add-services-modal').style.display = 'none';
+        }
+        
     </script>
 
 </body>
 </html>
-
