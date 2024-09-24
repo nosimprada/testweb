@@ -727,9 +727,9 @@
             const video_call = button.getAttribute('data-videocall') || 'Нет данных';
 
             document.getElementById('model-description-large').textContent = description;
-            document.getElementById('model-detail-1').textContent = '🌇Час:' + hour + '₽';
-            document.getElementById('model-detail-2').textContent = '🏙Два часа:' + twohours + '₽';
-            document.getElementById('model-detail-3').textContent = '🌃Ночь:' + night + '₽';
+            document.getElementById('model-detail-1').textContent = '🌇Час: ' + hour;
+            document.getElementById('model-detail-2').textContent = '🏙Два часа: ' + twohours;
+            document.getElementById('model-detail-3').textContent = '🌃Ночь: ' + night;
             document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
             document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
 
