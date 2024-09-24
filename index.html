@@ -631,7 +631,7 @@
                     <div class="service-option" id="video_call-option" onclick="selectOption('video_call')">Видеозвонок: </div>
                 </div>
                 <div id="total-amount" style="text-align: center; margin-top: 20px; font-size: 1.2em;">Итого: 0₽</div>
-                <button class="form-button" style="margin-top: 20px;" onclick="proceedToAddServices()">Далее</button>
+                <button id="proceed-button" class="form-button" style="margin-top: 20px;" onclick="proceedToAddServices()" disabled>Далее</button>
             </div>
         </div>
 
@@ -728,13 +728,16 @@
         function selectOption(option) {
             selectedOption = option;
         
+            // Удаляем выделение со всех опций
             document.getElementById('hour-option').classList.remove('selected');
             document.getElementById('twohours-option').classList.remove('selected');
             document.getElementById('night-option').classList.remove('selected');
             document.getElementById('video_call-option').classList.remove('selected');
         
+            // Выделяем выбранную опцию
             document.getElementById(`${option}-option`).classList.add('selected');
         
+            // Обновляем итоговую сумму в зависимости от выбора
             switch (option) {
                 case 'hour':
                     basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1].replace('₽', ''));
@@ -752,6 +755,17 @@
         
             totalAmount = basePrice;
             document.getElementById('total-amount').textContent = `Итого: ${totalAmount}₽`;
+        
+            // Активируем кнопку "Далее", если выбрана хотя бы одна услуга
+            document.getElementById('proceed-button').disabled = false;
+        }
+        
+        function proceedToAddServices() {
+            if (!selectedOption) {
+                alert('Пожалуйста, выберите услугу перед тем, как продолжить.');
+                return;
+            }
+            // Остальная логика для обработки перехода к дополнительным услугам
         }
         
         function proceedToAddServices() {
