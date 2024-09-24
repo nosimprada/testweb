@@ -84,52 +84,40 @@
             border-color: #ff4d4d;
         }
 
-        /* Центрируем кнопку навигации */
         .menu-button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #ff6666;
-            border: 2px solid #ff6666;
-            color: white;
+            font-size: 1.5em;
             cursor: pointer;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1em;
-            display: inline-block;
-            font-family: Arial, sans-serif;
-            transition: background-color 0.3s, border-color 0.3s;
+            padding: 0 15px;
+            margin-left: 10px;
+            color: white;
         }
         
-        .menu-button:hover {
-            background-color: #ff4d4d;
-            border-color: #ff4d4d;
-        }
-        
-        /* Стили для выпадающего меню */
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px;
+            top: 60px; /* Расположение под плашкой */
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            text-align: center;
             z-index: 1000;
+            width: 200px; /* Ширина меню */
+            text-align: left;
         }
         
         .dropdown-menu a {
-            display: block;
-            padding: 8px 0;
             color: white;
+            padding: 12px 16px;
             text-decoration: none;
-            font-family: Arial, sans-serif;
-            transition: color 0.3s;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .dropdown-menu a:hover {
-            color: #ff6666;
+            background-color: #575757;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none; /* Убираем нижнюю границу у последнего элемента */
         }
         
         .swiper-container {
@@ -489,7 +477,7 @@
             </div>
             <div class="center-section">
                 <img src="https://i.imgur.com/QP0tpU2.png" alt="Butterfly Logo">
-                <div class="menu-button" onclick="toggleMenu()">ᨆНАВИГАЦИЯᨆ</div> <!-- Кнопка навигации -->
+                <div class="menu-button" onclick="toggleMenu()">≡</div> <!-- Кнопка меню -->
                 <div class="dropdown-menu" id="dropdown-menu">
                     <a href="#about-us">О нас</a>
                     <a href="#models">Модели</a>
@@ -499,7 +487,6 @@
                     <a href="#guarantees">Гарантии</a>
                     <a href="#support">Тех.Поддержка</a>
                 </div>
-            </div>
             </div>
             <div class="right-section">
                 <button class="recharge-button" onclick="openRechargeModal()">Пополнить</button> <!-- Открытие модального окна для пополнения -->
@@ -762,7 +749,7 @@
             const amount = document.getElementById('recharge-amount').value;
             const errorMessage = document.getElementById('error-message');
             const tgId = getQueryParam('tg_id');
-            
+
             if (amount < 2000 || amount > 30000) {
                 errorMessage.style.display = 'block';
             } else {
@@ -841,7 +828,7 @@
         function closeNotification() {
             const notificationModal = document.getElementById('notification-modal');
             notificationModal.style.display = 'none';
-        
+
             // Проверяем текст кнопки, чтобы решить, нужно ли обновлять страницу
             const closeButton = document.getElementById('notification-close-btn').textContent;
             if (closeButton === "Перейти" || closeButton === "Ок") {
@@ -858,4 +845,3 @@
 
 </body>
 </html>
-
