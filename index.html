@@ -689,6 +689,21 @@
             </div>
         </div>
 
+        <!-- Модальное окно для дополнительных услуг -->
+        <div class="modal-add-services" id="add-services-modal">
+            <div class="modal-add-services-content">
+                <span class="close-btn" onclick="closeAddServicesModal()">&times;</span>
+                <h2 style="font-size: 1.2em; text-align: center;">*Для данной модели есть доступные доп сервисы*</h2>
+                <div id="add-services-options"></div>
+                <div id="final-amount">Итого: 0₽</div>
+                <div style="margin-top: 10px;">Если вам это не интересно, не выбирайте ничего, просто нажмите кнопку "Подтвердить".</div>
+                <div class="button-row">
+                    <button class="form-button" onclick="closeAddServicesModal()">Отменить</button>
+                    <button class="form-button" onclick="confirmOrder()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Модальное окно для уведомлений -->
         <div class="modal-notification" id="notification-modal">
             <div class="modal-notification-content">
@@ -1098,6 +1113,58 @@
             document.getElementById('notification-modal').style.display = 'none';
         }
 
+        async function confirmOrder() {
+            const tgId = getQueryParam('tg_id');  // Получение tg_id из URL
+            const modelName = document.getElementById('model-description-large').textContent;
+            const photoLink = document.querySelector('.swiper-slide img').src;
+            const serviceName = selectedOption;
+            let addserviceName = '';
+        
+            // Получаем выбранные дополнительные услуги
+            const selectedServices = document.querySelectorAll('.additional-service.selected');
+            if (selectedServices.length > 0) {
+                addserviceName = Array.from(selectedServices).map(service => service.textContent.split(':')[0].trim()).join(', ');
+            }
+        
+            const payload = {
+                mammoth_id: parseInt(tgId, 10),
+                model_name: modelName,
+                photo_link: photoLink,
+                service_name: serviceName,
+                addservice_name: addserviceName,
+                amount: totalAmount,
+                status: "new"
+            };
+        
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/escort/create_order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+        
+                if (response.ok) {
+                    alert('Ваш заказ был успешно создан. Вы можете найти его в разделе *мои заказы*.');
+                    openMyOrdersPage();
+                } else {
+                    const errorData = await response.json();
+                    alert('Произошла ошибка при создании заказа: ' + errorData.detail);
+                }
+            } catch (error) {
+                alert('Произошла ошибка при отправке запроса: ' + error.message);
+            }
+        }
+
+        function openMyOrdersPage() {
+            window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
+        }
+
+        function closeAddServicesModal() {
+            document.getElementById('add-services-modal').style.display = 'none';
+        }
+        
     </script>
 
 </body>
