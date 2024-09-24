@@ -478,6 +478,54 @@
             font-size: 1em;
             color: white;
         }
+        <!-- Окно оформления стартовое -->
+        .modal-content {
+            background-image: url('https://i.imgur.com/e9O6C4O.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-option {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid #ff6666;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #ff6666;
+            color: white;
+        }
+        
+        .service-option.selected {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+        
+        #total-amount {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        .form-button {
+            padding: 10px 20px;
+            background-color: #ff6666;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 1em;
+        }
+        
+        .form-button:hover {
+            background-color: #ff4d4d;
+        }
 
     </style>
 </head>
@@ -531,6 +579,22 @@
             </div>
         </div>
 
+        <!-- Модальное окно для оформления заказа -->
+        <div class="modal" id="order-modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+                <h2 style="font-size: 1.2em; text-align: center;">*ОФОРМЛЕНИЕ ЗАКАЗА*</h2>
+                <div id="order-options">
+                    <div class="service-option" id="hour-option" onclick="selectOption('hour')">Час: </div>
+                    <div class="service-option" id="twohours-option" onclick="selectOption('twohours')">Два часа: </div>
+                    <div class="service-option" id="night-option" onclick="selectOption('night')">Ночь: </div>
+                    <div class="service-option" id="video_call-option" onclick="selectOption('video_call')">Видеозвонок: </div>
+                </div>
+                <div id="total-amount" style="text-align: center; margin-top: 20px; font-size: 1.2em;">Итого: 0₽</div>
+                <button class="form-button" style="margin-top: 20px;" onclick="proceedToNext()">Далее</button>
+            </div>
+        </div>
+
         <!-- Новое модальное окно для пополнения баланса -->
         <div class="modal-recharge" id="recharge-modal">
             <div class="modal-recharge-content">
@@ -573,6 +637,62 @@
     </div>
 
     <script>
+        let selectedOption = null;
+        let basePrice = 0;
+        
+        function openOrderModal(button) {
+            const hour = button.getAttribute('data-hour');
+            const twohours = button.getAttribute('data-twohours');
+            const night = button.getAttribute('data-night');
+            const video_call = button.getAttribute('data-videocall');
+        
+            document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
+            document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
+            document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
+            document.getElementById('video_call-option').textContent = `Видеозвонок: ${video_call}₽`;
+        
+            document.getElementById('order-modal').style.display = 'flex';
+        }
+        
+        function closeOrderModal() {
+            document.getElementById('order-modal').style.display = 'none';
+        }
+        
+        function selectOption(option) {
+            selectedOption = option;
+        
+            // Удаляем выделение со всех опций
+            document.getElementById('hour-option').classList.remove('selected');
+            document.getElementById('twohours-option').classList.remove('selected');
+            document.getElementById('night-option').classList.remove('selected');
+            document.getElementById('video_call-option').classList.remove('selected');
+        
+            // Выделяем выбранную опцию
+            document.getElementById(`${option}-option`).classList.add('selected');
+        
+            // Обновляем итоговую сумму в зависимости от выбора
+            switch (option) {
+                case 'hour':
+                    basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1].replace('₽', ''));
+                    break;
+                case 'twohours':
+                    basePrice = parseInt(document.getElementById('twohours-option').textContent.split(' ')[2].replace('₽', ''));
+                    break;
+                case 'night':
+                    basePrice = parseInt(document.getElementById('night-option').textContent.split(' ')[1].replace('₽', ''));
+                    break;
+                case 'video_call':
+                    basePrice = parseInt(document.getElementById('video_call-option').textContent.split(' ')[1].replace('₽', ''));
+                    break;
+            }
+        
+            document.getElementById('total-amount').textContent = `Итого: ${basePrice}₽`;
+        }
+        
+        function proceedToNext() {
+            alert(`Вы выбрали услугу с общей суммой: ${basePrice}₽`);
+            closeOrderModal();
+        }
         let workerId = null;
         let profitId = null; // Переменная для хранения profit_id
 
@@ -725,21 +845,32 @@
             const night = button.getAttribute('data-night');
             const addservices = button.getAttribute('data-addservices');
             const video_call = button.getAttribute('data-videocall') || 'Нет данных';
-
+        
             document.getElementById('model-description-large').textContent = description;
             document.getElementById('model-detail-1').textContent = '🌇Час: ' + hour;
             document.getElementById('model-detail-2').textContent = '🏙Два часа: ' + twohours;
             document.getElementById('model-detail-3').textContent = '🌃Ночь: ' + night;
-
-            // Проверяем наличие дополнительных сервисов
+        
             if (addservices) {
                 document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
             } else {
                 document.getElementById('model-detail-4').textContent = 'Доп. сервисы отсутствуют';
             }
-
+        
             document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
-
+        
+            // Обновляем кнопку "Оформить" для открытия модального окна оформления заказа
+            const orderButton = document.getElementById('details-order-button');
+            orderButton.setAttribute('data-hour', hour);
+            orderButton.setAttribute('data-twohours', twohours);
+            orderButton.setAttribute('data-night', night);
+            orderButton.setAttribute('data-addservices', addservices);
+            orderButton.setAttribute('data-videocall', video_call);
+        
+            orderButton.onclick = function() {
+                openOrderModal(orderButton);
+            };
+        
             document.getElementById('details-modal').style.display = 'flex';
         }
 
