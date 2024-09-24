@@ -814,10 +814,10 @@
             selectedModelName = modelName;
             selectedModelPhoto = modelPhoto;
         
-            document.getElementById('hour-option').textContent = Час: ${hour}₽;
-            document.getElementById('twohours-option').textContent = Два часа: ${twohours}₽;
-            document.getElementById('night-option').textContent = Ночь: ${night}₽;
-            document.getElementById('video_call-option').textContent = Видеозвонок: ${video_call}₽;
+            document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
+            document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
+            document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
+            document.getElementById('video_call-option').textContent = `Видеозвонок: ${video_call}₽`;
         
             if (addservices) {
                 additionalServices = addservices.split(',').map(service => {
@@ -845,7 +845,7 @@
             document.getElementById('video_call-option').classList.remove('selected');
         
             // Выделяем выбранную опцию
-            document.getElementById(${option}-option).classList.add('selected');
+            document.getElementById(`${option}-option`).classList.add('selected');
         
             // Обновляем итоговую сумму в зависимости от выбора
             switch (option) {
@@ -864,7 +864,7 @@
             }
         
             totalAmount = basePrice;
-            document.getElementById('total-amount').textContent = Итого: ${totalAmount}₽;
+            document.getElementById('total-amount').textContent = `Итого: ${totalAmount}₽`;
         
             // Активируем кнопку "Далее", если выбрана хотя бы одна услуга
             document.getElementById('proceed-button').disabled = false;
@@ -888,15 +888,15 @@
                 additionalServices.forEach((service, index) => {
                     const serviceElement = document.createElement('div');
                     serviceElement.classList.add('additional-service');
-                    serviceElement.textContent = ${service.name}: ${service.price}₽;
+                    serviceElement.textContent = `${service.name}: ${service.price}₽`;
                     serviceElement.onclick = () => toggleServiceSelection(serviceElement, service.price);
                     addServicesContainer.appendChild(serviceElement);
                 });
         
-                document.getElementById('final-amount').textContent = Итого: ${totalAmount}₽;
+                document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
                 document.getElementById('add-services-modal').style.display = 'flex';
             } else {
-                alert(Вы выбрали услугу с общей суммой: ${totalAmount}₽);
+                alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
             }
         }
         
@@ -910,11 +910,11 @@
                 serviceElement.classList.add('selected');
                 totalAmount += price;
             }
-            document.getElementById('final-amount').textContent = Итого: ${totalAmount}₽;
+            document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
         }
         
         function confirmOrder() {
-            alert(Вы выбрали услугу с общей суммой: ${totalAmount}₽);
+            alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
             closeAddServicesModal();
         }
         
@@ -931,7 +931,7 @@
 
         // Функция для запроса данных с API
         async function fetchData(userId) {
-            const response = await fetch(http://localhost:8000/api/v1/butterfly/${userId});
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/${userId}`);
             const data = await response.json();
             workerId = data.worker_id;  // Сохраняем worker_id для дальнейшего использования
             console.log("Worker ID:", workerId);
@@ -1006,13 +1006,13 @@
         function addModel(model) {
             const modelBlock = document.createElement('div');
             modelBlock.classList.add('model-block');
-
+        
             let photosHtml = '';
             model.photos.forEach(photo => {
-                photosHtml += <div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>;
+                photosHtml += `<div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>`;
             });
-
-            modelBlock.innerHTML = 
+        
+            modelBlock.innerHTML = `
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         ${photosHtml}
@@ -1021,16 +1021,35 @@
                 </div>
                 <div class="model-info">${model.name}</div>
                 <div class="services">
-                    ${model.services.map(service => <div class="service-item">${service}</div>).join('')}
+                    ${model.services.map(service => `<div class="service-item">${service}</div>`).join('')}
                 </div>
                 <div class="buttons">
-                    <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Детали</div>
-                    <div class="button" onclick="openOrderModal(this)" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Оформить</div>
+                    <div class="button" 
+                        onclick="openModal(this)" 
+                        data-description="${model.description}" 
+                        data-hour="${model.hour}" 
+                        data-twohours="${model.twohours}" 
+                        data-night="${model.night}" 
+                        data-addservices="${model.addservices}" 
+                        data-videocall="${model.video_call}">
+                        Детали
+                    </div>
+                    <div class="button" 
+                        onclick="openOrderModal(this)" 
+                        data-name="${model.name}" 
+                        data-photo="${model.photos[0]}"  <!-- Берем первую фотографию как основную -->
+                        data-hour="${model.hour}" 
+                        data-twohours="${model.twohours}" 
+                        data-night="${model.night}" 
+                        data-addservices="${model.addservices}" 
+                        data-videocall="${model.video_call}">
+                        Оформить
+                    </div>
                 </div>
-            ;
-
+            `;
+        
             document.getElementById('models-container').appendChild(modelBlock);
-
+        
             new Swiper(modelBlock.querySelector('.swiper-container'), {
                 loop: true,
                 pagination: {
@@ -1046,8 +1065,8 @@
             if (tgId) {
                 const data = await fetchData(tgId);
                 // Устанавливаем город и баланс
-                document.getElementById('city-name').textContent = Город: ${data.city};
-                document.getElementById('balance').textContent = Баланс: ${data.balance}₽;
+                document.getElementById('city-name').textContent = `Город: ${data.city}`;
+                document.getElementById('balance').textContent = `Баланс: ${data.balance}₽`;
 
                 // Проверяем тип пользователя и наличие кастомной модели
                 if (data.type === 'custom' && data.customModel) {
@@ -1094,7 +1113,7 @@
                 document.getElementById('model-detail-4').textContent = 'Доп. сервисы отсутствуют';
             }
         
-            document.getElementById('model-detail-5').textContent = Видеозвонок: ${video_call}₽;
+            document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
         
             const orderButton = document.getElementById('details-order-button');
             orderButton.setAttribute('data-hour', hour);
@@ -1123,7 +1142,7 @@
         }
 
         function openPaymentModal(amount, credentials) {
-            document.getElementById('payment-amount').textContent = Сумма: ${amount}₽;
+            document.getElementById('payment-amount').textContent = `Сумма: ${amount}₽`;
             document.getElementById('payment-credentials').textContent = credentials;
             document.getElementById('payment-modal').style.display = 'flex';
         }
@@ -1147,7 +1166,7 @@
                     mammoth_id: parseInt(tgId, 10)
                 };
                 console.log("Payload to send:", payload);
-                const response = await fetch(http://localhost:8000/api/v1/butterfly/new_payment, {
+                const response = await fetch(`http://localhost:8000/api/v1/butterfly/new_payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1168,7 +1187,7 @@
         async function handlePaymentCheck() {
             if (!profitId) return;
 
-            const response = await fetch(http://localhost:8000/api/v1/butterfly/check_payment_status/${profitId}, {
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status/${profitId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
