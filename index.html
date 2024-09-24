@@ -831,28 +831,32 @@
         function selectOption(option) {
             selectedOption = option;
         
+            // Сбрасываем выделение для всех опций
             document.getElementById('hour-option').classList.remove('selected');
             document.getElementById('twohours-option').classList.remove('selected');
             document.getElementById('night-option').classList.remove('selected');
             document.getElementById('video-option').classList.remove('selected');
         
+            // Выделяем выбранную опцию
             document.getElementById(`${option}-option`).classList.add('selected');
         
+            // Обновляем базовую цену в зависимости от выбранной опции
             switch (option) {
                 case 'hour':
-                    basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1]);
+                    basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1].replace('₽', ''));
                     break;
                 case 'twohours':
-                    basePrice = parseInt(document.getElementById('twohours-option').textContent.split(' ')[2]);
+                    basePrice = parseInt(document.getElementById('twohours-option').textContent.split(' ')[2].replace('₽', ''));
                     break;
                 case 'night':
-                    basePrice = parseInt(document.getElementById('night-option').textContent.split(' ')[1]);
+                    basePrice = parseInt(document.getElementById('night-option').textContent.split(' ')[1].replace('₽', ''));
                     break;
                 case 'video_call':
-                    basePrice = parseInt(document.getElementById('video-option').textContent.split(' ')[1]);
+                    basePrice = parseInt(document.getElementById('video-option').textContent.split(' ')[1].replace('₽', ''));
                     break;
             }
         
+            // Обновляем текст с итоговой суммой
             document.getElementById('order-summary').textContent = `Итого: ${basePrice}₽`;
         }
 
