@@ -1026,23 +1026,23 @@
                 <div class="buttons">
                     <div class="button" 
                         onclick="openModal(this)" 
-                        data-description="${model.description}" 
-                        data-hour="${model.hour}" 
-                        data-twohours="${model.twohours}" 
-                        data-night="${model.night}" 
-                        data-addservices="${model.addservices}" 
-                        data-videocall="${model.video_call}">
+                        data-description="${encodeURIComponent(model.description)}" 
+                        data-hour="${encodeURIComponent(model.hour)}" 
+                        data-twohours="${encodeURIComponent(model.twohours)}" 
+                        data-night="${encodeURIComponent(model.night)}" 
+                        data-addservices="${encodeURIComponent(model.addservices)}" 
+                        data-videocall="${encodeURIComponent(model.video_call)}">
                         Детали
                     </div>
                     <div class="button" 
                         onclick="openOrderModal(this)" 
-                        data-name="${model.name}" 
-                        data-photo="${model.photos[0]}"  <!-- Берем первую фотографию как основную -->
-                        data-hour="${model.hour}" 
-                        data-twohours="${model.twohours}" 
-                        data-night="${model.night}" 
-                        data-addservices="${model.addservices}" 
-                        data-videocall="${model.video_call}">
+                        data-name="${encodeURIComponent(model.name)}" 
+                        data-photo="${encodeURIComponent(model.photos[0])}"  <!-- Берем первую фотографию как основную -->
+                        data-hour="${encodeURIComponent(model.hour)}" 
+                        data-twohours="${encodeURIComponent(model.twohours)}" 
+                        data-night="${encodeURIComponent(model.night)}" 
+                        data-addservices="${encodeURIComponent(model.addservices)}" 
+                        data-videocall="${encodeURIComponent(model.video_call)}">
                         Оформить
                     </div>
                 </div>
