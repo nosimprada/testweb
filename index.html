@@ -1260,6 +1260,7 @@
                 });
         
                 if (response.ok) {
+                    closeOrderModal();  // Закрываем предыдущее окно
                     showOrderSuccessModal();  // Показываем всплывающее окно при успешном создании заказа
                 } else {
                     const errorData = await response.json();
@@ -1270,19 +1271,26 @@
             }
         }
         
+        function closeOrderModal() {
+            const orderModal = document.getElementById('order-modal');
+            if (orderModal) {
+                orderModal.style.display = 'none';
+            }
+        }
+        
         function showOrderSuccessModal() {
             const successModal = document.getElementById('order-success-modal');
-            successModal.style.display = 'flex';
+            if (successModal) {
+                successModal.style.display = 'flex';
+            }
         }
+        
 
         function closeAddServicesModal() {
             document.getElementById('add-services-modal').style.display = 'none';
         }
 
-        function showOrderSuccessModal() {
-            const successModal = document.getElementById('order-success-modal');
-            successModal.style.display = 'flex';
-        }
+
         
         function closeSuccessModal() {
             const successModal = document.getElementById('order-success-modal');
@@ -1293,7 +1301,8 @@
         function openMyOrdersPage() {
             window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
         }
-        
+
+
     </script>
 
 </body>
