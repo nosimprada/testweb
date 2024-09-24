@@ -886,7 +886,7 @@
         
             // Если дополнительные услуги отсутствуют или выбран видеозвонок
             if (additionalServices.length === 0 || selectedOption === 'video_call') {
-                confirmOrder();  // Сразу завершаем заказ
+                confirmOrder();  // Сразу завершаем заказ, видеозвонок будет записан как сервис
             } else {
                 closeOrderModal();
         
@@ -1255,7 +1255,7 @@
                 mammoth_id: parseInt(tgId, 10),
                 model_name: selectedModelName,  // Используем имя выбранной модели
                 photo_link: selectedModelPhoto,  // Используем ссылку на фото выбранной модели
-                service_name: serviceName,
+                service_name: serviceName,  // Включаем видеозвонок, если он выбран
                 addservice_name: addserviceName,
                 amount: totalAmount,
                 status: "new"
