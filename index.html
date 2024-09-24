@@ -1260,7 +1260,8 @@
                 });
         
                 if (response.ok) {
-                    closeOrderModal();  // Закрываем предыдущее окно
+                    closeOrderModal();  // Закрываем предыдущее окно (окно заказа)
+                    closeAddServicesModal();  // Закрываем окно дополнительных услуг, если оно открыто
                     showOrderSuccessModal();  // Показываем всплывающее окно при успешном создании заказа
                 } else {
                     const errorData = await response.json();
@@ -1271,10 +1272,17 @@
             }
         }
 
-        function closeOrderModal() {
+       function closeOrderModal() {
             const orderModal = document.getElementById('order-modal');
-            if (orderModal && orderModal.style.display === 'flex') {
+            if (orderModal) {
                 orderModal.style.display = 'none';
+            }
+        }
+        
+        function closeAddServicesModal() {
+            const addServicesModal = document.getElementById('add-services-modal');
+            if (addServicesModal) {
+                addServicesModal.style.display = 'none';
             }
         }
         
