@@ -478,20 +478,6 @@
             font-size: 1em;
             color: white;
         }
-        <!-- Окно оформления стартовое -->
-        .modal-content {
-            background-image: url('https://i.imgur.com/e9O6C4O.png');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
         
         .service-option {
             margin: 10px 0;
@@ -525,6 +511,60 @@
         
         .form-button:hover {
             background-color: #ff4d4d;
+        }
+
+        /* Дополнительные услуги */
+        .modal-add-services {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-add-services-content {
+            background-image: url('https://i.imgur.com/e9O6C4O.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .additional-service {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid #ff6666;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #ff6666;
+            color: white;
+        }
+
+        .additional-service.selected {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+
+        #final-amount {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
         }
 
     </style>
@@ -574,7 +614,7 @@
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
 
                 <div class="button-container">
-                    <button class="form-button" id="details-order-button">Оформить</button>
+                    <button id="details-order-button" class="form-button">Оформить</button>
                 </div>
             </div>
         </div>
@@ -591,11 +631,26 @@
                     <div class="service-option" id="video_call-option" onclick="selectOption('video_call')">Видеозвонок: </div>
                 </div>
                 <div id="total-amount" style="text-align: center; margin-top: 20px; font-size: 1.2em;">Итого: 0₽</div>
-                <button class="form-button" style="margin-top: 20px;" onclick="proceedToNext()">Далее</button>
+                <button class="form-button" style="margin-top: 20px;" onclick="proceedToAddServices()">Далее</button>
             </div>
         </div>
 
-        <!-- Новое модальное окно для пополнения баланса -->
+        <!-- Модальное окно для дополнительных услуг -->
+        <div class="modal-add-services" id="add-services-modal">
+            <div class="modal-add-services-content">
+                <span class="close-btn" onclick="closeAddServicesModal()">&times;</span>
+                <h2 style="font-size: 1.2em; text-align: center;">*Для данной модели есть доступные доп сервисы*</h2>
+                <div id="add-services-options"></div>
+                <div id="final-amount">Итого: 0₽</div>
+                <div style="margin-top: 10px;">Если вам это не интересно, не выбирайте ничего, просто нажмите кнопку "Подтвердить".</div>
+                <div class="button-row">
+                    <button class="form-button" onclick="cancelOrder()">Отменить</button>
+                    <button class="form-button" onclick="confirmOrder()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для пополнения баланса -->
         <div class="modal-recharge" id="recharge-modal">
             <div class="modal-recharge-content">
                 <span class="close-btn" onclick="closeRechargeModal()">&times;</span>
@@ -639,17 +694,29 @@
     <script>
         let selectedOption = null;
         let basePrice = 0;
+        let additionalServices = [];
+        let totalAmount = 0;
         
         function openOrderModal(button) {
             const hour = button.getAttribute('data-hour');
             const twohours = button.getAttribute('data-twohours');
             const night = button.getAttribute('data-night');
             const video_call = button.getAttribute('data-videocall');
+            const addservices = button.getAttribute('data-addservices');
         
             document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
             document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
             document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
             document.getElementById('video_call-option').textContent = `Видеозвонок: ${video_call}₽`;
+        
+            if (addservices) {
+                additionalServices = addservices.split(',').map(service => {
+                    const [name, price] = service.split(':');
+                    return { name: name.trim(), price: parseInt(price.trim(), 10) };
+                });
+            } else {
+                additionalServices = [];
+            }
         
             document.getElementById('order-modal').style.display = 'flex';
         }
@@ -661,16 +728,13 @@
         function selectOption(option) {
             selectedOption = option;
         
-            // Удаляем выделение со всех опций
             document.getElementById('hour-option').classList.remove('selected');
             document.getElementById('twohours-option').classList.remove('selected');
             document.getElementById('night-option').classList.remove('selected');
             document.getElementById('video_call-option').classList.remove('selected');
         
-            // Выделяем выбранную опцию
             document.getElementById(`${option}-option`).classList.add('selected');
         
-            // Обновляем итоговую сумму в зависимости от выбора
             switch (option) {
                 case 'hour':
                     basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1].replace('₽', ''));
@@ -686,13 +750,57 @@
                     break;
             }
         
-            document.getElementById('total-amount').textContent = `Итого: ${basePrice}₽`;
+            totalAmount = basePrice;
+            document.getElementById('total-amount').textContent = `Итого: ${totalAmount}₽`;
         }
         
-        function proceedToNext() {
-            alert(`Вы выбрали услугу с общей суммой: ${basePrice}₽`);
+        function proceedToAddServices() {
             closeOrderModal();
+        
+            if (additionalServices.length > 0 && selectedOption !== 'video_call') {
+                const addServicesContainer = document.getElementById('add-services-options');
+                addServicesContainer.innerHTML = '';
+        
+                additionalServices.forEach((service, index) => {
+                    const serviceElement = document.createElement('div');
+                    serviceElement.classList.add('additional-service');
+                    serviceElement.textContent = `${service.name}: ${service.price}₽`;
+                    serviceElement.onclick = () => toggleServiceSelection(serviceElement, service.price);
+                    addServicesContainer.appendChild(serviceElement);
+                });
+        
+                document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
+                document.getElementById('add-services-modal').style.display = 'flex';
+            } else {
+                alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
+            }
         }
+        
+        function toggleServiceSelection(serviceElement, price) {
+            if (serviceElement.classList.contains('selected')) {
+                serviceElement.classList.remove('selected');
+                totalAmount -= price;
+            } else {
+                serviceElement.classList.add('selected');
+                totalAmount += price;
+            }
+            document.getElementById('final-amount').textContent = `Итого: ${totalAmount}₽`;
+        }
+        
+        function confirmOrder() {
+            alert(`Вы выбрали услугу с общей суммой: ${totalAmount}₽`);
+            closeAddServicesModal();
+        }
+        
+        function cancelOrder() {
+            closeAddServicesModal();
+            alert('Вы отменили заказ.');
+        }
+        
+        function closeAddServicesModal() {
+            document.getElementById('add-services-modal').style.display = 'none';
+        }
+
         let workerId = null;
         let profitId = null; // Переменная для хранения profit_id
 
@@ -737,7 +845,7 @@
                     hour: "2500₽",
                     twohours: "7500₽",
                     night: "12500₽",
-                    addservices: "Доп.сервисы1, Доп.Сервисы2",
+                    addservices: "Доп.сервисы1: 1000, Доп.Сервисы2: 1500",
                     video_call: "500"
                 },
                 {
@@ -859,7 +967,6 @@
         
             document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
         
-            // Обновляем кнопку "Оформить" для открытия модального окна оформления заказа
             const orderButton = document.getElementById('details-order-button');
             orderButton.setAttribute('data-hour', hour);
             orderButton.setAttribute('data-twohours', twohours);
@@ -876,24 +983,6 @@
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
-        }
-
-        function openOrderModal(button) {
-            const hour = button.getAttribute('data-hour');
-            const twohours = button.getAttribute('data-twohours');
-            const night = button.getAttribute('data-night');
-            const video_call = button.getAttribute('data-videocall');
-        
-            document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
-            document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
-            document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
-            document.getElementById('video_call-option').textContent = `Видеозвонок: ${video_call}₽`;
-        
-            document.getElementById('order-modal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            document.getElementById('order-modal').style.display = 'none';
         }
 
         function openRechargeModal() {
@@ -924,83 +1013,43 @@
             } else {
                 errorMessage.style.display = 'none';
                 const payload = {
-                    amount: parseInt(amount, 10),
-                    worker_id: workerId,
-                    mammoth_id: parseInt(tgId, 10)
+                    tg_id: tgId,
+                    amount: amount
                 };
-                console.log("Payload to send:", payload);
-                const response = await fetch(`http://localhost:8000/api/v1/butterfly/new_payment`, {
+
+                const response = await fetch('http://localhost:8000/api/v1/butterfly/recharge', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
-                const data = await response.json();
+
                 if (response.ok) {
-                    profitId = data.profit_id; // Сохраняем ID созданной записи
+                    const data = await response.json();
+                    openPaymentModal(data.amount, data.credentials);
                     closeRechargeModal();
-                    openPaymentModal(data.amount, data.transfer_credentials);
                 } else {
-                    console.log("Error in API response:", data);
+                    alert('Ошибка пополнения. Пожалуйста, попробуйте снова.');
                 }
             }
         }
-
-        function copyToClipboard() {
-            const copyText = document.getElementById('payment-credentials').textContent.trim();
-            navigator.clipboard.writeText(copyText).then(function() {
-                console.log('Карта скопирована:', copyText);
-            }).catch(function(error) {
-                console.error('Ошибка при копировании:', error);
-            });
-        }   
 
         async function handlePaymentCheck() {
-            if (!profitId) return;
+            const tgId = getQueryParam('tg_id');
+            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment?tg_id=${tgId}`);
 
-            const response = await fetch(`http://localhost:8000/api/v1/butterfly/check_payment_status/${profitId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status === 'paid') {
+                    alert('Платеж успешно выполнен!');
+                    closePaymentModal();
+                    window.location.reload();
+                } else {
+                    alert('Платеж не найден. Пожалуйста, попробуйте снова через несколько минут.');
                 }
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.is_paid) {
-                showNotificationModal(true);
             } else {
-                showNotificationModal(false);
-            }
-        }
-
-        function showNotificationModal(isPaymentSuccessful) {
-            const notificationModal = document.getElementById('notification-modal');
-            const notificationText = document.getElementById('notification-text');
-            const notificationImage = document.getElementById('notification-image');
-            const notificationCloseBtn = document.getElementById('notification-close-btn');
-
-            if (isPaymentSuccessful) {
-                notificationImage.src = "https://i.imgur.com/S2yNuNz.png";
-                notificationText.textContent = "Ваш платёж успешно получен и обработан.";
-                notificationCloseBtn.textContent = "Перейти";
-            } else {
-                notificationImage.src = "https://i.imgur.com/6KzuudD.png";
-                notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
-                notificationCloseBtn.textContent = "Ок";
-            }
-
-            notificationModal.style.display = 'flex';
-        }
-
-        function closeNotification() {
-            const notificationModal = document.getElementById('notification-modal');
-            notificationModal.style.display = 'none';
-
-            const closeButton = document.getElementById('notification-close-btn').textContent;
-            if (closeButton === "Перейти" || closeButton === "Ок") {
-                location.reload();
+                alert('Ошибка проверки платежа. Пожалуйста, попробуйте снова.');
             }
         }
 
@@ -1008,6 +1057,20 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
+
+        function copyToClipboard() {
+            const copyText = document.getElementById('payment-credentials').textContent;
+            navigator.clipboard.writeText(copyText).then(() => {
+                alert('Реквизиты скопированы в буфер обмена');
+            }).catch(err => {
+                alert('Ошибка при копировании: ' + err);
+            });
+        }
+
+        function closeNotification() {
+            document.getElementById('notification-modal').style.display = 'none';
+        }
+
     </script>
 
 </body>
