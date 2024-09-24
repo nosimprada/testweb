@@ -1270,10 +1270,10 @@
                 alert('Произошла ошибка при отправке запроса: ' + error.message);
             }
         }
-        
+
         function closeOrderModal() {
             const orderModal = document.getElementById('order-modal');
-            if (orderModal) {
+            if (orderModal && orderModal.style.display === 'flex') {
                 orderModal.style.display = 'none';
             }
         }
@@ -1285,24 +1285,18 @@
             }
         }
         
-
-        function closeAddServicesModal() {
-            document.getElementById('add-services-modal').style.display = 'none';
-        }
-
-
-        
         function closeSuccessModal() {
             const successModal = document.getElementById('order-success-modal');
-            successModal.style.display = 'none';
+            if (successModal) {
+                successModal.style.display = 'none';
+            }
             location.reload(); // Обновляем страницу после закрытия модального окна
         }
         
         function openMyOrdersPage() {
             window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
         }
-
-
+        
     </script>
 
 </body>
