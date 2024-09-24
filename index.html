@@ -566,6 +566,12 @@
             justify-content: space-between;
             margin-top: 20px;
         }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
 
     </style>
 </head>
@@ -600,10 +606,11 @@
         </div>
 
         <!-- Модальное окно с деталями модели -->
+        <!-- Модальное окно с деталями модели -->
         <div class="modal" id="details-modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
-
+        
                 <div class="content-container content-container-large" id="model-description-large">Описание модели</div>
                 <div class="modal-row">
                     <div class="content-container" id="model-detail-1">Деталь 1</div>
@@ -612,8 +619,9 @@
                 <div class="content-container content-container-large" id="model-detail-3">Деталь 3</div>
                 <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div>
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
-
+        
                 <div class="button-container">
+                    <button id="details-close-button" class="form-button" onclick="closeModal()">Закрыть</button>
                     <button id="details-order-button" class="form-button">Оформить</button>
                 </div>
             </div>
@@ -961,6 +969,10 @@
             }
         };
 
+        function closeModal() {
+            document.getElementById('details-modal').style.display = 'none';
+        }
+        
         function openModal(button) {
             const description = button.getAttribute('data-description');
             const hour = button.getAttribute('data-hour');
