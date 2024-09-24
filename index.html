@@ -1266,7 +1266,8 @@
                     showOrderSuccessModal();  // Показываем всплывающее окно при успешном создании заказа
                 } else {
                     const errorData = await response.json();
-                    alert('Произошла ошибка при создании заказа: ' + errorData.detail);
+                    console.error('Ошибка сервера:', errorData);  // Выводим полную ошибку в консоль
+                    alert('Произошла ошибка при создании заказа: ' + JSON.stringify(errorData));
                 }
             } catch (error) {
                 alert('Произошла ошибка при отправке запроса: ' + error.message);
