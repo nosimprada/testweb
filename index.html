@@ -1082,6 +1082,8 @@
             const night = button.getAttribute('data-night');
             const addservices = button.getAttribute('data-addservices');
             const video_call = button.getAttribute('data-videocall') || 'Нет данных';
+            const modelName = button.getAttribute('data-name'); // Получаем имя модели
+            const modelPhoto = button.getAttribute('data-photo'); // Получаем фото модели
         
             document.getElementById('model-description-large').textContent = description;
             document.getElementById('model-detail-1').textContent = '🌇Час: ' + hour;
@@ -1102,6 +1104,8 @@
             orderButton.setAttribute('data-night', night);
             orderButton.setAttribute('data-addservices', addservices);
             orderButton.setAttribute('data-videocall', video_call);
+            orderButton.setAttribute('data-name', modelName); // Передаем имя модели в кнопку
+            orderButton.setAttribute('data-photo', modelPhoto); // Передаем фото модели в кнопку
         
             orderButton.onclick = function() {
                 openOrderModal(orderButton);
