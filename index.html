@@ -643,6 +643,29 @@
             align-items: center;
             gap: 10px;
         }
+
+        .button-container-details {
+            display: flex;
+            justify-content: space-between; /* Размещаем кнопки по разным сторонам */
+            margin-top: 10px;
+            gap: 10px; /* Расстояние между кнопками */
+        }
+        
+        .form-button {
+            padding: 8px 15px;
+            background-color: #ff6666;
+            border: 2px solid #ff6666;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+            color: white;
+            flex: 1; /* Кнопки занимают равное пространство */
+        }
+        
+        .form-button:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
         
     </style>
 </head>
@@ -691,7 +714,7 @@
                 <div class="content-container content-container-large" id="model-detail-5">Видеозвонок</div>
                 <div class="content-container content-container-large" id="model-detail-4">Деталь 4</div>
         
-                <div class="button-container">
+                <div class="button-container-details"> <!-- Обновленное название контейнера -->
                     <button id="details-order-button" class="form-button">Оформить</button>
                     <button id="details-close-button" class="form-button" onclick="closeModal()">Закрыть</button>
                 </div>
