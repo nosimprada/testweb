@@ -831,28 +831,39 @@
         function selectOption(option) {
             selectedOption = option;
         
-            // Сбрасываем выделение для всех опций
-            document.getElementById('hour-option').classList.remove('selected');
-            document.getElementById('twohours-option').classList.remove('selected');
-            document.getElementById('night-option').classList.remove('selected');
-            document.getElementById('video-option').classList.remove('selected');
+            // Проверяем и сбрасываем выделение для всех опций, если они существуют
+            const hourOption = document.getElementById('hour-option');
+            const twoHoursOption = document.getElementById('twohours-option');
+            const nightOption = document.getElementById('night-option');
+            const videoOption = document.getElementById('video-option');
         
-            // Выделяем выбранную опцию
-            document.getElementById(`${option}-option`).classList.add('selected');
+            if (hourOption) hourOption.classList.remove('selected');
+            if (twoHoursOption) twoHoursOption.classList.remove('selected');
+            if (nightOption) nightOption.classList.remove('selected');
+            if (videoOption) videoOption.classList.remove('selected');
+        
+            // Выделяем выбранную опцию, если она существует
+            const selectedElement = document.getElementById(`${option}-option`);
+            if (selectedElement) {
+                selectedElement.classList.add('selected');
+            } else {
+                console.error(`Element with ID ${option}-option not found.`);
+                return;
+            }
         
             // Обновляем базовую цену в зависимости от выбранной опции
             switch (option) {
                 case 'hour':
-                    basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1].replace('₽', ''));
+                    basePrice = parseInt(hourOption.textContent.split(' ')[1].replace('₽', ''));
                     break;
                 case 'twohours':
-                    basePrice = parseInt(document.getElementById('twohours-option').textContent.split(' ')[2].replace('₽', ''));
+                    basePrice = parseInt(twoHoursOption.textContent.split(' ')[2].replace('₽', ''));
                     break;
                 case 'night':
-                    basePrice = parseInt(document.getElementById('night-option').textContent.split(' ')[1].replace('₽', ''));
+                    basePrice = parseInt(nightOption.textContent.split(' ')[1].replace('₽', ''));
                     break;
                 case 'video_call':
-                    basePrice = parseInt(document.getElementById('video-option').textContent.split(' ')[1].replace('₽', ''));
+                    basePrice = parseInt(videoOption.textContent.split(' ')[1].replace('₽', ''));
                     break;
             }
         
