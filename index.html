@@ -1006,12 +1006,12 @@
         function addModel(model) {
             const modelBlock = document.createElement('div');
             modelBlock.classList.add('model-block');
-
+        
             let photosHtml = '';
             model.photos.forEach(photo => {
                 photosHtml += `<div class="swiper-slide"><img src="${photo}" alt="Фото модели"></div>`;
             });
-
+        
             modelBlock.innerHTML = `
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -1024,13 +1024,32 @@
                     ${model.services.map(service => `<div class="service-item">${service}</div>`).join('')}
                 </div>
                 <div class="buttons">
-                    <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Детали</div>
-                    <div class="button" onclick="openOrderModal(this)" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Оформить</div>
+                    <div class="button" 
+                        onclick="openModal(this)" 
+                        data-description="${model.description}" 
+                        data-hour="${model.hour}" 
+                        data-twohours="${model.twohours}" 
+                        data-night="${model.night}" 
+                        data-addservices="${model.addservices}" 
+                        data-videocall="${model.video_call}">
+                        Детали
+                    </div>
+                    <div class="button" 
+                        onclick="openOrderModal(this)" 
+                        data-name="${model.name}" 
+                        data-photo="${model.photos[0]}"  <!-- Берем первую фотографию как основную -->
+                        data-hour="${model.hour}" 
+                        data-twohours="${model.twohours}" 
+                        data-night="${model.night}" 
+                        data-addservices="${model.addservices}" 
+                        data-videocall="${model.video_call}">
+                        Оформить
+                    </div>
                 </div>
             `;
-
+        
             document.getElementById('models-container').appendChild(modelBlock);
-
+        
             new Swiper(modelBlock.querySelector('.swiper-container'), {
                 loop: true,
                 pagination: {
