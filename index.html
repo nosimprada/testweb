@@ -1125,7 +1125,7 @@
             const notificationText = document.getElementById('notification-text');
             const notificationImage = document.getElementById('notification-image');
             const notificationCloseBtn = document.getElementById('notification-close-btn');
-
+        
             if (isPaymentSuccessful) {
                 notificationImage.src = "https://i.imgur.com/S2yNuNz.png";
                 notificationText.textContent = "Ваш платёж успешно получен и обработан.";
@@ -1135,7 +1135,12 @@
                 notificationText.textContent = "Как только платёж будет получен и обработан, мы отправим Вам уведомление.";
                 notificationCloseBtn.textContent = "Ок";
             }
-
+        
+            // Привязываем к кнопке действие обновления страницы
+            notificationCloseBtn.onclick = function() {
+                location.reload();  // Обновляет текущую страницу
+            };
+        
             notificationModal.style.display = 'flex';
         }
         
