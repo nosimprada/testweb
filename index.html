@@ -614,9 +614,9 @@
                     photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
                     services: ["Массаж", "Спа-процедуры", "Терапия"],
                     description: "Описание Анны",
-                    hour: "Час: 2500₽",
-                    twohours: "Два часа: 7500₽",
-                    night: "Ночь: 12500₽",
+                    hour: "2500",
+                    twohours: "7500",
+                    night: "12500",
                     addservices: "Доп.сервисы1, Доп.Сервисы2",
                     video_call: "500"
                 },
@@ -625,9 +625,9 @@
                     photos: ["https://i.imgur.com/abc123.jpeg", "https://i.imgur.com/def456.jpeg", "https://i.imgur.com/ghi789.jpeg"],
                     services: ["Фитнес", "Йога"],
                     description: "Описание Елены",
-                    hour: "Час: 2500₽",
-                    twohours: "Два часа: 7500₽",
-                    night: "Ночь: 12500₽",
+                    hour: "2500",
+                    twohours: "7500",
+                    night: "12500",
                     addservices: "",
                     video_call: "500"
                 },
@@ -636,9 +636,9 @@
                     photos: ["https://i.imgur.com/jkl123.jpeg", "https://i.imgur.com/mno456.jpeg", "https://i.imgur.com/pqr789.jpeg"],
                     services: ["Фотосессии", "Макияж"],
                     description: "Описание Виктории",
-                    hour: "Час: 2500₽",
-                    twohours: "Два часа: 7500₽",
-                    night: "Ночь: 12500₽",
+                    hour: "2500₽",
+                    twohours: "7500",
+                    night: "12500",
                     addservices: "Доп.сервисы1",
                     video_call: "500"
                 }
@@ -727,9 +727,9 @@
             const video_call = button.getAttribute('data-videocall') || 'Нет данных';
 
             document.getElementById('model-description-large').textContent = description;
-            document.getElementById('model-detail-1').textContent = '🌇 ' + hour;
-            document.getElementById('model-detail-2').textContent = '🏙 ' + twohours;
-            document.getElementById('model-detail-3').textContent = '🌃 ' + night;
+            document.getElementById('model-detail-1').textContent = '🌇Час:' + hour + '₽';
+            document.getElementById('model-detail-2').textContent = '🏙Два часа:' + twohours + '₽';
+            document.getElementById('model-detail-3').textContent = '🌃Ночь:' + night + '₽';
             document.getElementById('model-detail-4').innerHTML = addservices.replace(/,/g, '₽<br>') + '₽';
             document.getElementById('model-detail-5').textContent = `Видеозвонок: ${video_call}₽`;
 
