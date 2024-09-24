@@ -479,6 +479,22 @@
             color: white;
         }
 
+        /* Стиль для выбора услуг в модальном окне заказа */
+        .service-option {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ff6666;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(255, 102, 102, 0.8);
+            color: white;
+            text-align: center;
+        }
+
+        .service-option:hover {
+            background-color: rgba(255, 77, 77, 0.9);
+        }
+
     </style>
 </head>
 <body>
@@ -532,6 +548,18 @@
             </div>
         </div>
 
+        <!-- Модальное окно для выбора услуги -->
+        <div class="modal" id="order-modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+                <h3>Выберите услугу</h3>
+                <div id="service-options"></div>
+                <div class="button-container">
+                    <button class="form-button" onclick="submitOrder()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Новое модальное окно для пополнения баланса -->
         <div class="modal-recharge" id="recharge-modal">
             <div class="modal-recharge-content">
@@ -576,6 +604,7 @@
     <script>
         let workerId = null;
         let profitId = null; // Переменная для хранения profit_id
+        let selectedService = null; // Переменная для хранения выбранной услуги
 
         // Функция для запроса данных с API
         async function fetchData(userId) {
@@ -615,33 +644,33 @@
                     photos: ["https://i.imgur.com/2t3B9lt.jpeg", "https://i.imgur.com/ww3eU0N.jpeg", "https://i.imgur.com/beqLFaO.jpeg"],
                     services: ["Массаж", "Спа-процедуры", "Терапия"],
                     description: "Описание Анны",
-                    hour: "🌇",
-                    twohours: "🏙",
-                    night: "🌃",
-                    addservices: "Доп.сервисы",
-                    video_call: "500"
+                    hour: "🌇 3000₽",
+                    twohours: "🏙 5000₽",
+                    night: "🌃 10000₽",
+                    addservices: "Доп.сервисы, Сауна, Бассейн: 2000₽, Массаж: 1000₽",
+                    video_call: "500₽"
                 },
                 {
                     name: "Елена, 28",
                     photos: ["https://i.imgur.com/abc123.jpeg", "https://i.imgur.com/def456.jpeg", "https://i.imgur.com/ghi789.jpeg"],
                     services: ["Фитнес", "Йога"],
                     description: "Описание Елены",
-                    hour: "🌇",
-                    twohours: "🏙",
-                    night: "🌃",
-                    addservices: "Доп.сервисы",
-                    video_call: "500"
+                    hour: "🌇 2500₽",
+                    twohours: "🏙 4500₽",
+                    night: "🌃 9000₽",
+                    addservices: "Доп.сервисы, Йога с инструктором: 3000₽",
+                    video_call: "500₽"
                 },
                 {
                     name: "Виктория, 30",
                     photos: ["https://i.imgur.com/jkl123.jpeg", "https://i.imgur.com/mno456.jpeg", "https://i.imgur.com/pqr789.jpeg"],
                     services: ["Фотосессии", "Макияж"],
                     description: "Описание Виктории",
-                    hour: "🌇",
-                    twohours: "🏙",
-                    night: "🌃",
-                    addservices: "Доп.сервисы",
-                    video_call: "500"
+                    hour: "🌇 4000₽",
+                    twohours: "🏙 7000₽",
+                    night: "🌃 15000₽",
+                    addservices: "Доп.сервисы, Макияж: 2000₽, Фотосессия: 5000₽",
+                    video_call: "500₽"
                 }
             ];
 
@@ -673,7 +702,7 @@
                 </div>
                 <div class="buttons">
                     <div class="button" onclick="openModal(this)" data-description="${model.description}" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Детали</div>
-                    <div class="button">Оформить</div>
+                    <div class="button" onclick="openOrderModal(this)" data-hour="${model.hour}" data-twohours="${model.twohours}" data-night="${model.night}" data-addservices="${model.addservices}" data-videocall="${model.video_call}">Оформить</div>
                 </div>
             `;
 
@@ -739,6 +768,61 @@
 
         function closeModal() {
             document.getElementById('details-modal').style.display = 'none';
+        }
+
+        function openOrderModal(button) {
+            const hour = button.getAttribute('data-hour');
+            const twohours = button.getAttribute('data-twohours');
+            const night = button.getAttribute('data-night');
+            const addservices = button.getAttribute('data-addservices');
+            const video_call = button.getAttribute('data-videocall') || 'Нет данных';
+
+            const serviceOptions = document.getElementById('service-options');
+            serviceOptions.innerHTML = '';
+
+            const options = [
+                { name: 'hour', value: hour },
+                { name: 'twohours', value: twohours },
+                { name: 'night', value: night },
+                ...addservices.split(',').map(service => {
+                    const [name, price] = service.split(':');
+                    return { name: name.trim(), value: price.trim() };
+                }),
+                { name: 'video_call', value: `Видеозвонок: ${video_call}` }
+            ];
+
+            options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('service-option');
+                optionDiv.textContent = `${option.name}: ${option.value}`;
+                optionDiv.onclick = () => selectService(option);
+                serviceOptions.appendChild(optionDiv);
+            });
+
+            document.getElementById('order-modal').style.display = 'flex';
+        }
+
+        function selectService(service) {
+            selectedService = service;
+            const serviceOptions = document.getElementById('service-options').children;
+            for (let i = 0; i < serviceOptions.length; i++) {
+                serviceOptions[i].style.backgroundColor = 'rgba(255, 102, 102, 0.8)'; // reset all colors
+            }
+            event.target.style.backgroundColor = 'rgba(255, 77, 77, 0.9)'; // highlight selected
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').style.display = 'none';
+        }
+
+        function submitOrder() {
+            if (!selectedService) {
+                alert("Пожалуйста, выберите услугу.");
+                return;
+            }
+            // Здесь будет код для отправки данных заказа на сервер или другая логика обработки заказа
+            console.log("Выбранная услуга:", selectedService);
+            closeOrderModal();
         }
 
         function openRechargeModal() {
