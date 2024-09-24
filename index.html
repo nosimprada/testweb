@@ -596,6 +596,51 @@
             margin-top: 10px;
         }
 
+        /* Стиль кнопки "Мои заказы" */
+        .my-orders-button {
+            width: 150px;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #ff6666;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 1em;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .my-orders-button:hover {
+            background-color: #ff4d4d;
+        }
+        
+        /* Стиль кнопки "Закрыть" */
+        .close-modal-button {
+            width: 150px;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #666666;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 1em;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal-button:hover {
+            background-color: #4d4d4d;
+        }
+        
+        /* Центрирование кнопок внутри контейнера */
+        .modal .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
         
     </style>
 </head>
@@ -651,6 +696,18 @@
             </div>
         </div>
 
+        <!-- Модальное окно для успешного создания заказа -->
+        <div class="modal" id="order-success-modal">
+            <div class="modal-content">
+                <img id="success-image" src="https://i.imgur.com/S2yNuNz.png" alt="Success" style="width: 50px; margin-bottom: 15px;">
+                <p id="order-success-text">Заказ успешно создан!</p>
+                <div class="button-container">
+                    <button id="my-orders-button" class="my-orders-button" onclick="openMyOrdersPage()">Мои заказы</button>
+                    <button id="close-button" class="close-modal-button" onclick="closeSuccessModal()">Закрыть</button>
+                </div>
+            </div>
+        </div>
+        
         <!-- Модальное окно для оформления заказа -->
         <div class="modal" id="order-modal">
             <div class="modal-content">
@@ -1214,12 +1271,24 @@
             }
         }
 
-        function openMyOrdersPage() {
-            window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
-        }
 
         function closeAddServicesModal() {
             document.getElementById('add-services-modal').style.display = 'none';
+        }
+
+        function showOrderSuccessModal() {
+            const successModal = document.getElementById('order-success-modal');
+            successModal.style.display = 'flex';
+        }
+        
+        function closeSuccessModal() {
+            const successModal = document.getElementById('order-success-modal');
+            successModal.style.display = 'none';
+            location.reload(); // Обновляем страницу после закрытия модального окна
+        }
+        
+        function openMyOrdersPage() {
+            window.location.href = 'https://your-website.com/my-orders';  // Замените на URL страницы "Мои заказы"
         }
         
     </script>
