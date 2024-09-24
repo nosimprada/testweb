@@ -830,14 +830,14 @@
 
         function selectOption(option) {
             selectedOption = option;
-
+        
             document.getElementById('hour-option').classList.remove('selected');
             document.getElementById('twohours-option').classList.remove('selected');
             document.getElementById('night-option').classList.remove('selected');
             document.getElementById('video-option').classList.remove('selected');
-
+        
             document.getElementById(`${option}-option`).classList.add('selected');
-
+        
             switch (option) {
                 case 'hour':
                     basePrice = parseInt(document.getElementById('hour-option').textContent.split(' ')[1]);
@@ -852,7 +852,7 @@
                     basePrice = parseInt(document.getElementById('video-option').textContent.split(' ')[1]);
                     break;
             }
-
+        
             document.getElementById('order-summary').textContent = `Итого: ${basePrice}₽`;
         }
 
