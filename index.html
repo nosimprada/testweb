@@ -811,17 +811,16 @@
         }
 
         function openOrderModal(button) {
-            const hour = button.getAttribute('data-hour');
-            const twohours = button.getAttribute('data-twohours');
-            const night = button.getAttribute('data-night');
-            const video_call = button.getAttribute('data-videocall');
-            const addservices = button.getAttribute('data-addservices');
-
-            document.getElementById('hour-option').textContent = `Час: ${hour.split(' ')[1]}₽`;
-            document.getElementById('twohours-option').textContent = `Два часа: ${twohours.split(' ')[1]}₽`;
-            document.getElementById('night-option').textContent = `Ночь: ${night.split(' ')[1]}₽`;
+            const hour = button.getAttribute('data-hour').match(/\d+/)[0]; // Извлекаем только число
+            const twohours = button.getAttribute('data-twohours').match(/\d+/)[0];
+            const night = button.getAttribute('data-night').match(/\d+/)[0];
+            const video_call = button.getAttribute('data-videocall'); // Видеозвонок уже без текста
+        
+            document.getElementById('hour-option').textContent = `Час: ${hour}₽`;
+            document.getElementById('twohours-option').textContent = `Два часа: ${twohours}₽`;
+            document.getElementById('night-option').textContent = `Ночь: ${night}₽`;
             document.getElementById('video-option').textContent = `Видеозвонок: ${video_call}₽`;
-
+        
             document.getElementById('order-modal').style.display = 'flex';
         }
 
