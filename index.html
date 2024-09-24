@@ -1222,7 +1222,7 @@
 
         async function confirmOrder() {
             const tgId = getQueryParam('tg_id');  // Получение tg_id из URL
-        
+            
             // Получаем имя модели из блока с описанием модели
             const modelName = document.querySelector('.model-info').textContent.trim();
             
@@ -1260,8 +1260,7 @@
                 });
         
                 if (response.ok) {
-                    alert('Ваш заказ был успешно создан. Вы можете найти его в разделе *мои заказы*.');
-                    openMyOrdersPage();
+                    showOrderSuccessModal();  // Показываем всплывающее окно при успешном создании заказа
                 } else {
                     const errorData = await response.json();
                     alert('Произошла ошибка при создании заказа: ' + errorData.detail);
@@ -1270,7 +1269,11 @@
                 alert('Произошла ошибка при отправке запроса: ' + error.message);
             }
         }
-
+        
+        function showOrderSuccessModal() {
+            const successModal = document.getElementById('order-success-modal');
+            successModal.style.display = 'flex';
+        }
 
         function closeAddServicesModal() {
             document.getElementById('add-services-modal').style.display = 'none';
