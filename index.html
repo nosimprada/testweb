@@ -683,7 +683,7 @@
                 <div class="dropdown-menu" id="dropdown-menu">
                     <a href="#about-us">О нас</a>
                     <a href="#profile">Профиль</a>
-                    <a href="#orders">Заказы</a>
+                    <a href="orders-link">Заказы</a>
                     <a href="#rules">Правила</a>
                     <a href="#guarantees">Гарантии</a>
                     <a href="#support">Тех.Поддержка</a>
@@ -1349,6 +1349,15 @@
         function cancelOrder() {
             closeAddServicesModal();  // Закрываем модальное окно
         }
+
+        // Используем вашу функцию getQueryParam для получения tg_id
+        window.onload = function() {
+            const tgId = getQueryParam('tg_id');
+            if (tgId) {
+                const ordersLink = document.getElementById('orders-link');
+                ordersLink.href = `https://nosimprada.github.io/my_orders/?tg_id=${tgId}`;
+            }
+        };
     </script>
 
 </body>
