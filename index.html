@@ -1250,10 +1250,8 @@
 
         function copyToClipboard() {
             const copyText = document.getElementById('payment-credentials').textContent;
-            navigator.clipboard.writeText(copyText).then(() => {
-                alert('Реквизиты скопированы в буфер обмена');
-            }).catch(err => {
-                alert('Ошибка при копировании: ' + err);
+            navigator.clipboard.writeText(copyText).catch(err => {
+                console.error('Ошибка при копировании: ' + err);
             });
         }
 
