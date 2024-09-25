@@ -821,6 +821,14 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tgId = getQueryParam('tg_id');
+            if (tgId) {
+                const ordersLink = document.getElementById('orders-link');
+                ordersLink.href = `https://nosimprada.github.io/my_orders/?tg_id=${tgId}`;
+            }
+        });
+        
         let selectedOption = null;
         let basePrice = 0;
         let additionalServices = [];
