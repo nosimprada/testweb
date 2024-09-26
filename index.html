@@ -831,7 +831,9 @@
         
                 const ordersButton = document.getElementById('my-orders-button');
                 if (ordersButton) {
-                    ordersButton.href = `https://nosimprada.github.io/my_orders/?tg_id=${tgId}`;
+                    ordersButton.onclick = function() {
+                        window.location.href = `https://nosimprada.github.io/my_orders/?tg_id=${tgId}`;
+                    };
                 }
             }
         });
